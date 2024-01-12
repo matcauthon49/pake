@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.10) (preloaded format=pdflatex 2022.11.20)  20 DEC 2023 22:12
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.10) (preloaded format=pdflatex 2022.11.20)  10 JAN 2024 20:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -162,9 +162,6 @@ Package: amsthm 2020/05/29 v2.20.6
 \thm@postskip=\skip53
 \thm@headsep=\skip54
 \dth@everypar=\toks28
-)
-(C:\Users\naman\AppData\Local\Programs\MiKTeX\tex/latex/base\makeidx.sty
-Package: makeidx 2021/10/04 v1.0m Standard LaTeX package
 )
 (C:\Users\naman\AppData\Local\Programs\MiKTeX\tex/latex/thmtools\thmtools.sty
 Package: thmtools 2022/06/01 v0.73
@@ -700,14 +697,7 @@ Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
 z/libraries\tikzlibrarypositioning.code.tex
 File: tikzlibrarypositioning.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 )
-(C:\Users\naman\AppData\Local\Programs\MiKTeX\tex/latex/parskip\parskip.sty
-Package: parskip 2021-03-14 v2.0h non-zero parskip adjustments
-
-(C:\Users\naman\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.sty
-Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count315
-)) (C:\Users\naman\AppData\Local\Programs\MiKTeX\tex/latex/fancyhdr\fancyhdr.st
-y
+(C:\Users\naman\AppData\Local\Programs\MiKTeX\tex/latex/fancyhdr\fancyhdr.sty
 Package: fancyhdr 2022/05/18 v4.0.3 Extensive control of page headers and foote
 rs
 \f@nch@headwidth=\skip61
@@ -721,6 +711,7 @@ rs
 \f@nch@O@orf=\skip69
 )
 Package hyperref Info: Option `colorlinks' set `true' on input line 41.
+
 (C:\Users\naman\AppData\Local\Programs\MiKTeX\tex/latex/mdframed\mdframed.sty
 Package: mdframed 2013/07/01 1.9b: mdframed
 
@@ -732,10 +723,14 @@ Package: expl3 2022-08-23 L3 programming layer (loader)
 (C:\Users\naman\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdf
 tex.def
 File: l3backend-pdftex.def 2022-08-23 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count316
+\l__color_backend_stack_int=\count315
 \l__pdf_internal_box=\box64
 ))
 Package: xparse 2022-06-22 L3 Experimental document command parser
+)
+(C:\Users\naman\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.sty
+Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count316
 )
 (C:\Users\naman\AppData\Local\Programs\MiKTeX\tex/latex/zref\zref-abspage.sty
 Package: zref-abspage 2022-04-07 v2.34 Module abspage for zref (HO)
@@ -983,9 +978,27 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 110
 (C:\Users\naman\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
+Underfull \hbox (badness 10000) in paragraph at lines 119--120
+
+ []
+
 [1
 
 {C:/Users/naman/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
+Underfull \hbox (badness 10000) in paragraph at lines 123--124
+
+ []
+
+Package mdframed Info: mdframed detected package amsthm 
+ changed the theorem header of amsthm
+(mdframed)              on input line 132.
+Package mdframed Info: mdframed inside float 
+ mdframed uses option nobreak mdframed on input line 158.
+Package mdframed Info: mdframed inside a box 
+ mdframed uses option nobreak mdframed on input line 158.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.49998pt, for example:
@@ -994,18 +1007,27 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[2] (notes.aux)
+[2]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[3] (notes.aux)
 Package rerunfilecheck Info: File `notes.out' has not changed.
-(rerunfilecheck)             Checksum: 40CA9BB7B1B18C52F7B5CA5F359C5CE3;83.
+(rerunfilecheck)             Checksum: 49383D6D9E89D5A741A2FE088D0CBEC2;151.
  ) 
 Here is how much of TeX's memory you used:
- 24173 strings out of 477843
- 455354 string characters out of 2823598
- 764622 words of memory out of 3000000
- 42644 multiletter control sequences out of 15000+600000
+ 24254 strings out of 477843
+ 457445 string characters out of 2823598
+ 768834 words of memory out of 3000000
+ 42721 multiletter control sequences out of 15000+600000
  479276 words of font info for 66 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,11n,80p,1320b,451s stack positions out of 10000i,1000n,20000p,200000b,80000s
+ 84i,15n,80p,1320b,1141s stack positions out of 10000i,1000n,20000p,200000b,80000s
 <C:/Users/naman/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/
 cmbx12.pfb><C:/Users/naman/AppData/Local/Programs/MiKTeX/fonts/type1/public/ams
 fonts/cm/cmmi12.pfb><C:/Users/naman/AppData/Local/Programs/MiKTeX/fonts/type1/p
@@ -1016,12 +1038,14 @@ ms/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/naman/AppData/Local
 /Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmss12.pfb><C:/Users/naman/AppD
 ata/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmss8.pfb><C:/Users/na
 man/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:
-/Users/naman/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8
+/Users/naman/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6
 .pfb><C:/Users/naman/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/
-cm/cmti12.pfb>
-Output written on notes.pdf (2 pages, 126909 bytes).
+cm/cmsy8.pfb><C:/Users/naman/AppData/Local/Programs/MiKTeX/fonts/type1/public/a
+msfonts/cm/cmti12.pfb><C:/Users/naman/AppData/Local/Programs/MiKTeX/fonts/type1
+/public/amsfonts/symbols/msbm10.pfb>
+Output written on notes.pdf (3 pages, 158072 bytes).
 PDF statistics:
- 78 PDF objects out of 1000 (max. 8388607)
- 4 named destinations out of 1000 (max. 500000)
- 21 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 107 PDF objects out of 1000 (max. 8388607)
+ 14 named destinations out of 1000 (max. 500000)
+ 29 words of extra memory for PDF output out of 10000 (max. 10000000)
 
