@@ -2,8 +2,6 @@
 \usepackage[margin=1in, includeheadfoot]{geometry}
 
 \usepackage[dvipsnames]{xcolor}
-
-\usepackage[dvipsnames]{xcolor}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
@@ -14,6 +12,7 @@
 \usepackage{tikz}
 \usepackage{algpseudocode}
 \usepackage{multirow}
+\usepackage{framed}
 
 
 \usetikzlibrary{positioning}
@@ -28,7 +27,7 @@
 \fancyhead[R]{\thepage}
 \fancyfoot{}
 
-%\setlength\parindent{0pt}
+\setlength\parindent{0pt}
 
 \hypersetup{
 	colorlinks=true,
@@ -40,7 +39,7 @@
 	pdfpagemode=FullScreen,
 }
 
-\usepackage[framemethod=tikz]{mdframed}
+% \usepackage[framemethod=tikz]{mdframed}
 
 \declaretheorem[name=Theorem, numberwithin=section]{theorem}
 \declaretheorem[name=Lemma, numberwithin=section]{lemma}
@@ -123,12 +122,12 @@
 	We will be working with the following environment and dummy adversary. We note that it follows from the correctness of the protocol that in the real-world protocol execution $\env$ always outputs $1$, since the algorithm of $\env$ and $\adv$ is the same as that of an honest server.\\
 	
 	\begin{figure}[h]
-		\begin{mdframed}[
-			linecolor=black,
-			linewidth=1pt,
-			roundcorner=5pt,
-			backgroundcolor=white,
-			userdefinedwidth=\textwidth,
+		\begin{framed}[
+%			linecolor=black,
+%			linewidth=1pt,
+%			roundcorner=5pt,
+%			backgroundcolor=white,
+%			userdefinedwidth=\textwidth,
 			]
 			\vspace{2mm}
 			\textbf{\underline{Environment $\env$:}}
@@ -155,7 +154,7 @@
 				\item $\adv$ recieves $\msg{3}=K|\mathsf{Sig}$ and forwards this to $\env$.
 			\end{enumerate}
 			\vspace{2mm}
-		\end{mdframed}
+		\end{framed}
 		\caption{Our Setup.}
 		\label{fig:adv}
 	\end{figure}
