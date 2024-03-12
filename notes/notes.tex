@@ -107,6 +107,7 @@
 \newcommand{\rgets}{\xleftarrow{\$}}
 
 \def\xjy#1{\textcolor{blue}{Jiayu: #1}}
+\def\nam#1{\textcolor{red}{Naman: #1}}
 
 \begin{document}
 	\maketitle
@@ -166,12 +167,30 @@
 		\label{fig:adv}
 	\end{figure}
 
-	Assume that there exists a negligible function $\varepsilon:=\varepsilon(\lambda)$ such that there exists a simulator $\simulator$ for which $\env$ outputs $1$ with probability $1-\varepsilon$ in the ideal world. Before the formal execution of the protocol begins, $\simulator$ samples $\mathsf{crs}=(\mathbb{G}; g_1, g_2, h, c, d\in\mathbb{G}; H:\{0,1\}^{*}\rightarrow\mathbb{Z}_q)$. First, assume that CDH is hard over $(\mathbb{G}, p, h)$. Given any two elements $(h^a, h^b)$ where $a,b\rgets\mathbb{Z}_p$, consider any reduction $\mathcal{R}$ which does the following.
+	Assume that there exists a negligible function $\varepsilon:=\varepsilon(\lambda)$ such that there exists a simulator $\simulator$ for which $\env$ outputs $1$ with probability $1-\varepsilon$ in the ideal world. Before the formal execution of the protocol begins, $\simulator$ samples $\mathsf{crs}=(\mathbb{G}; g_1, g_2, h, c, d\in\mathbb{G}; H:\{0,1\}^{*}\rightarrow\mathbb{Z}_q)$. First, assume that CDH is hard over $(\mathbb{G}, p, h)$. Given any two elements $(h^a, h^b)$ where $a,b\rgets\mathbb{Z}_p$, consider any reduction $\mathcal{R}$ which does the following.\\
+	
+	\nam{I'm not completely convinced if this is the best way to write this; the proof is correct in the essentials, but I think this needs to be rewritten since I'm not sure what formal part $\mathcal{R}$ is playing here...}
 	
 	\begin{enumerate}
-		\item $\mathcal{R}$ waits to receive $(\newsession,\mathsf{sid},\user,\server,\pw)$ from $\user$.
-		\item 
+		\item $\mathcal{R}$ sends $(\newsession,\mathsf{sid}, \user, \server)$ to $\simulator$.
+		\item $\mathcal{R}$ waits to receive $\msg{1} = \mathsf{sid}|\mathsf{VK}|A|B|C|D$ in response. It sets $\pw=C/h^b$ and samples $x_2,y_2,w_2,r_2\rgets\mathbb{Z}_q$, setting
+		\begin{align*}
+			\alpha'&:=H(PIDs|A|B|C|D)\\
+			E &:= g_1^{x_2}g_2^{y_2}h^{a}(cd^{\alpha'})^{w_2}\\
+			F &:= g_1^{r_2}\\
+			G &:= g_2^{r_2}\\
+			I &:= h^{r_2}\cdot\pw\\
+			\beta &:= H(\msg{1}|Server|E|F|G|I)\\
+			J &:= (cd^{\beta})^{w_2}
+		\end{align*}
+		i.e., the same computation as that of the honest server with a special choice of $\pw$ and $z_2$ and sends $\msg{2}=\mathsf{sid}|E|F|G|I|J$ to $\simulator$.
+		\item $\mathcal{R}$ receives $K|\mathsf{Sig}$ and checks if $\mathsf{Vrfy}_\mathsf{VK}(\msg{1}|\msg{2}|K,\mathsf{Sig})=1$. If yes, it receives $\sk_C$ from $\simulator$, and calculates 
+		$$h'=\frac{\sk_C}{A^{x_2}B^{y_2}D^{w_2}K^{r_2}}.$$
+		\item $\mathcal{R}$ outputs $h'$.		
 	\end{enumerate}
+
+		We recall that $\sk_C=\sk_S$ with probability $1-\varepsilon$ by the assumption. Clearly in the protocol execution, we have, setting $C'=C/\pw=h^b$,
+		$$\sk_S = A^{x_2}B^{y_2}(C')^{z_2}D^{w_2}K^{r_2}=A^{x_2}B^{y_2}(h^b)^{a}D^{w_2}K^{r_2}$$ which clearly gives $h' = h^{ab}$ with probability $1-\varepsilon$, as claimed.\\
 	
 	
 	\textcolor{gray}{//everything below is deprecated comments.}\\

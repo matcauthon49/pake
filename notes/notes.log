@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.10) (preloaded format=pdflatex 2022.11.20)  12 MAR 2024 14:51
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.10) (preloaded format=pdflatex 2022.11.20)  12 MAR 2024 15:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -779,24 +779,24 @@ File: l3backend-pdftex.def 2022-08-23 L3 backend support: PDF output (pdfTeX)
 ) (notes.aux)
 \openout1 = `notes.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 111.
-LaTeX Font Info:    ... okay on input line 111.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 111.
-LaTeX Font Info:    ... okay on input line 111.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 111.
-LaTeX Font Info:    ... okay on input line 111.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 111.
-LaTeX Font Info:    ... okay on input line 111.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 111.
-LaTeX Font Info:    ... okay on input line 111.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 111.
-LaTeX Font Info:    ... okay on input line 111.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 111.
-LaTeX Font Info:    ... okay on input line 111.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 111.
-LaTeX Font Info:    ... okay on input line 111.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 111.
-LaTeX Font Info:    ... okay on input line 111.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 112.
+LaTeX Font Info:    ... okay on input line 112.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 112.
+LaTeX Font Info:    ... okay on input line 112.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 112.
+LaTeX Font Info:    ... okay on input line 112.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 112.
+LaTeX Font Info:    ... okay on input line 112.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 112.
+LaTeX Font Info:    ... okay on input line 112.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 112.
+LaTeX Font Info:    ... okay on input line 112.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 112.
+LaTeX Font Info:    ... okay on input line 112.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 112.
+LaTeX Font Info:    ... okay on input line 112.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 112.
+LaTeX Font Info:    ... okay on input line 112.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -866,34 +866,34 @@ G,.JBIG2,.JB2,.eps]
 fg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
-Package hyperref Info: Link coloring ON on input line 111.
+Package hyperref Info: Link coloring ON on input line 112.
  (notes.out) (notes.out)
 \@outlinefile=\write4
 \openout4 = `notes.out'.
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 113
+LaTeX Font Info:    Trying to load font information for U+msa on input line 114
 .
 
 (C:\Users\naman\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 113
+LaTeX Font Info:    Trying to load font information for U+msb on input line 114
 .
 
 (C:\Users\naman\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Underfull \hbox (badness 10000) in paragraph at lines 118--119
+Underfull \hbox (badness 10000) in paragraph at lines 119--120
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 120--121
+Underfull \hbox (badness 10000) in paragraph at lines 121--122
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 122--123
+Underfull \hbox (badness 10000) in paragraph at lines 123--124
 
  []
 
@@ -901,9 +901,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 122--123
 
 {C:/Users/naman/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
 Package hyperref Info: bookmark level for unknown theorem defaults to 0 on inpu
-t line 129.
+t line 130.
 
-Underfull \hbox (badness 10000) in paragraph at lines 134--135
+Underfull \hbox (badness 10000) in paragraph at lines 135--136
 
  []
 
@@ -911,7 +911,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 134--135
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 177--178
+Underfull \hbox (badness 10000) in paragraph at lines 170--171
 
  []
 
@@ -933,6 +933,15 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
 [3]
+Underfull \hbox (badness 10000) in paragraph at lines 193--194
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 196--197
+
+ []
+
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.49998pt, for example:
@@ -946,13 +955,13 @@ Package rerunfilecheck Info: File `notes.out' has not changed.
 (rerunfilecheck)             Checksum: 49383D6D9E89D5A741A2FE088D0CBEC2;151.
  ) 
 Here is how much of TeX's memory you used:
- 24631 strings out of 477843
- 469692 string characters out of 2823598
- 761072 words of memory out of 3000000
- 43112 multiletter control sequences out of 15000+600000
+ 24634 strings out of 477843
+ 469707 string characters out of 2823598
+ 760091 words of memory out of 3000000
+ 43113 multiletter control sequences out of 15000+600000
  481172 words of font info for 73 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,15n,80p,1451b,541s stack positions out of 10000i,1000n,20000p,200000b,80000s
+ 84i,15n,80p,1451b,623s stack positions out of 10000i,1000n,20000p,200000b,80000s
 <C:/Users/naman/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/
 cmbx12.pfb><C:/Users/naman/AppData/Local/Programs/MiKTeX/fonts/type1/public/ams
 fonts/cm/cmmi12.pfb><C:/Users/naman/AppData/Local/Programs/MiKTeX/fonts/type1/p
@@ -972,9 +981,9 @@ s/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/naman/AppData/Local/Programs/MiK
 TeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/naman/AppData/Local/Pro
 grams/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/naman/AppData/
 Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on notes.pdf (4 pages, 215446 bytes).
+Output written on notes.pdf (4 pages, 217575 bytes).
 PDF statistics:
- 135 PDF objects out of 1000 (max. 8388607)
- 17 named destinations out of 1000 (max. 500000)
+ 138 PDF objects out of 1000 (max. 8388607)
+ 19 named destinations out of 1000 (max. 500000)
  29 words of extra memory for PDF output out of 10000 (max. 10000000)
 
