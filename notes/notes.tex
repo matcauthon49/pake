@@ -194,7 +194,7 @@
 		We recall that $\sk_C=\sk_S$ with probability $1-\varepsilon$ by the assumption. Clearly in the protocol execution, we have, setting $C'=C/\pw=h^b$,
 		$$\sk_S = A^{x_2}B^{y_2}(C')^{z_2}D^{w_2}K^{r_2}=A^{x_2}B^{y_2}(h^b)^{a}D^{w_2}K^{r_2}$$ which clearly gives $h' = h^{ab}$ with probability $1-\varepsilon$, as claimed, contradicting the hardness of fixed-CDH.
 
-\xjy{Note that $\simulator$'s view while interacting with $\mathcal{R}$ is identical to $\simulator$'s view in the ideal world with the $\env$ in \Cref{fig:adv}; the difference is that $\env$ samples $\pw$ and $z_2$ on its own, whereas $\mathcal{R}$ sets $\pw = C/h^b$ and $z_2 = a$ --- which cannot be detected by $\simulator$. Let $C' = C/\pw = h^b$ and
+\xjy{Note that $\simulator$'s view while interacting with $\mathcal{R}$ is identical to $\simulator$'s view in the ideal world with environment $\env$ in \Cref{fig:adv}; the difference is that $\env$ samples $\pw$ and $z_2$ on its own, whereas $\mathcal{R}$ sets $\pw = C/h^b$ and $z_2 = a$ --- which cannot be detected by $\simulator$. Let $C' = C/\pw = h^b$ and
 $$\sk_S = A^{x_2}B^{y_2}(C')^{z_2}D^{w_2}K^{r_2}=A^{x_2}B^{y_2}(h^b)^{a}D^{w_2}K^{r_2}$$
 as what $\env$ would compute in its step 4; $\env$ outputs 1 if and only if $\sk_S = \sk$, so by our assumption on $\simulator$, in $\mathcal{R}$'s interaction with $\simulator$, $\sk_S = \sk$ with probability $1-\varepsilon$. But this gives $h' = h^{ab}$ with probability $1-\varepsilon$, i.e., $\mathcal{R}$ wins with probability $1-\varepsilon$, contradicting the hardness of fixed-CDH.}
 		\end{proof}
