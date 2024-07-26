@@ -24,7 +24,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 
-\fancyhead[L]{\textbf{KOY is not UC-Secure}}
+\fancyhead[L]{\textbf{On the UC-(In)Security of PAKE Protocols Without Random Oracles}}
 \fancyhead[R]{\thepage}
 \fancyfoot{}
 
@@ -48,7 +48,7 @@
 \declaretheorem[name=Definition, numberwithin=section]{definition}
 
 \usepackage[english]{babel}
-\title{\textbf{KOY is not UC-Secure}}
+\title{\textbf{On the UC-(In)Security of PAKE Protocols Without Random Oracles}}
 \author{Naman Kumar}
 
 %------- General Macros
@@ -94,6 +94,7 @@
 
 \newcommand{\env}{\mathcal{Z}}
 \newcommand{\adv}{\mathcal{A}}
+\newcommand{\red}{\mathcal{R}}
 \newcommand{\pake}{\mathcal{F}_{\mathsf{PAKE}}}
 \newcommand{\user}{\mathsf{User}}
 \newcommand{\sk}{\mathsf{sk}}
@@ -160,10 +161,10 @@ X_2 = K^{r_2} = F^{x_1}G^{y_1}(I/\pw)^{z_1}J^{w_1}
 \]
 Computing $X_2$ is not a problem for $\simulator$, since $\msg{2} = E|F|G|I|J$ is provided to $\simulator$ directly from the environment; $\simulator$ chose $x_1, y_1, z_1, w_1$ on its own; and $\simulator$ has extracted $\pw$. However, $\simulator$ is not able to compute $X_1$. At first glance, computing $X_1 = E^{r_1}$ might appear feasible as $\simulator$ received $E$ as part of $\msg{2}$ and sampled $r_1$ before sending $\msg{1}$. However, the problem is that \emph{the password guess $\pw'$ that $\simulator$ uses while generating $\msg{1}$ is likely incorrect}; as a result, $E^{r_1}$ that $\simulator$ computes is actually equal to $A^{x_2}B^{y_2}(C/\pw')^{z_2}D^{w_2}$, whereas the correct value should be $A^{x_2}B^{y_2}(C/\pw)^{z_2}D^{w_2}$. This means that $\simulator$ must know $(\pw/\pw')^{z_2}$ in order to compute the correct $\sk$, which is infeasible unless $\pw'=\pw$ (whose probability is $1/\mathcal{|D|}$).
 
-\paragraph{UC-AGM security of KOY.}
-By examining the game-based security proof of the KOY protocol, one can see that the above attack is essentially the only scenario where the UC-security can be broken; in particular, the cases where the adversary assumes the role of the user, as well as the adversary makes an incorrect password guess (by sending the Cramer--Shoup ciphertext of some $\pw^* \neq \pw$, or sending some group elements that are not a Cramer--Shoup ciphertext), can be simulated in UC without any issue. However, the above attack can be simulated in the AGM, as the simulator $\simulator$ can extract $x_2, y_2, z_2, w_2$ from an algebraic environment.\\
+\paragraph{Simulating the session key in AGM.}
+% By examining the game-based security proof of the KOY protocol, one can see that the above attack is essentially the only scenario where the UC-security can be broken; in particular, the cases where the adversary assumes the role of the user, as well as the adversary makes an incorrect password guess (by sending the Cramer--Shoup ciphertext of some $\pw^* \neq \pw$, or sending some group elements that are not a Cramer--Shoup ciphertext), can be simulated in UC without any issue. 
 
-In more detail, suppose $\env$ runs the above attack and sends $E$ as part of $\msg{2}$. At this point all group elements that $\env$ has seen are $g_1,g_2,h,c,d$ from $\crs$, $A,B,C,D$ from $\msg{1}$, and $\pw$. An algebraic $\env$ must ``explain'' how $E$ is computed; for now let's ignore $A,B,C,D,\pw$ and assume $\env$ computes
+Our next critical observation is that the session key in the above attack can be simulated if we resort to the AGM, as the simulator $\simulator$ can extract $x_2, y_2, z_2, w_2$ from an algebraic environment. In more detail, suppose $\env$ runs the above attack and sends $E$ as part of $\msg{2}$. At this point all group elements that $\env$ has seen are $g_1,g_2,h,c,d$ from $\crs$, $A,B,C,D$ from $\msg{1}$, and $\pw$. An algebraic $\env$ must ``explain'' how $E$ is computed; for now let's ignore $A,B,C,D,\pw$ and assume $\env$ computes
 \[
 E = g_1^{x_2}g_2^{y_2}h^{z_2}(cd^\alpha)^{w_2}
 \]
@@ -179,11 +180,28 @@ X_1 &= E^{r_1} \\
     &= g_1^{r_1x_2+r_1^2 x_2'} g_2^{r_1y_2+r_1^2 y_2'} h^{r_1z_2+r_1^2 z_2'} (cd^\alpha)^{r_1w_2+r_1^2 w_2'} \\
     &= A^{x_2+r_1x_2'} B^{y_2+r_1y_2'} \left(\frac{C}{\pw}\right)^{z_2+r_1z_2'} D^{w_2+r_1w_2'}
 \end{align*}	
-Similar to above, in the ideal world $\simulator$ can compute $X_1$ according to the last equation. However, now the expression of $X_1$ involves $r_1$, which poses a potential issue while arguing for indistinguishability. At some point in the proof, we need to replace the real Cramer--Shoup ciphertext with an encryption of some ``dummy'' $\pw'$; therefore, we need Cramer--Shoup to be secure \emph{even if the adversary additionally sees $X_1$} --- otherwise $\env$ can distinguish the real world (which uses the real ciphertext) and the ideal world (which uses the ``dummy''ciphertext) by looking at \emph{both} $\msg{1}$ and $\sk$. The problem is that unlike the simpler case above, here the reduction to the security of Cramer--Shoup cannot simulate $X_1$ trivially, since it does not know the randomness $r_1$.
+Similar to above, in the ideal world $\simulator$ can compute $X_1$ according to the last equation. A difference is that now the expression of $X_1$ involves the Cramer--Shoup randomness $r_1$, which is not a problem for $\simulator$ as $\simulator$ chose $r_1$ itself while sending $\msg{1}$.\\
 
-\xjy{This is actually interesting, and I am not sure how the argument would go. Perhaps the starting point is to consider ElGamal first: roughly, you need ElGamal to be secure even if the ciphertext is something like $(g^r, h^r\cdot m, g^{r^2}, h^{r^2})$. My intuition is that you probably need some sort of non-standard assumption (similar to square Diffie--Hellman)? I think we can do ElGamal as a warm-up (perhaps even write it down) and then move on to Cramer--Shoup} \\
+We assumed above that the exponents of $c$ and $d^\alpha$ are always equal in the representation of $E$, and so are $C$ and $1/\pw$; it is clear that $\simulator$ can compute the correct $\sk$ even if they are different, since it knows $r_1$ and all the necessary exponents chosen by $\env$.
 
-\xjy{There is another scenario that might cause some actual trouble: $\env$ simply sets $E = c$. In the real world $X_1 = c^{r_1}$, and Cramer--Shoup is not CCA-secure if the adversary additionally knows $c^{r_1}$ (so the step where you replace $A|B|C|D$ with a dummy ciphertext might not go through). On the other hand it is also unclear whether this is a real attack, since in the Cramer--Shoup reduction the decryption oracle is used in a very limited manner. So I am not sure whether KOY is secure in UC-AGM... I think the way to go is to pinpoint what exact property Cramer--Shoup needs to satisfy in order for KOY to be UC-AGM-secure, and then see whether that property holds}
+\paragraph{Further subtleties in UC.}
+As we have just seen, one critical difference between game-based security and UC-security is that in UC indistinguishability between the real view and the simulated view must remain \emph{even when the environment sees the key of a successfully attacked session}, whereas in the game-based setting the adversary simply wins (and the simulator can ``give up'' on simulating the session key) once the attack on a session is successful. While the session key itself can be simulated in the AGM, this poses another potential issue that is more subtle: after seeing the session key, the environment might go back and check the validity of previous protocol messages using this information.\\
+
+In more detail, assume again that the adversary interacts with $\user$ by running $\server$'s algorithm on $\user$'s password $\pw$. When $\user$'s session completes, the environment $\env$ sees $\user$'s session key $\sk = X_1X_2$ and the last message $\msg{3} = K|\sigma$. Since $\env$ can compute $X_2$ as $K^{r_2}$ (since $r_2$ is chosen by $\env$ itself), it can recover $X_1 = E^{r_1}$ (where $r_1$ is the randomness used in $\msg{1}$). Recall that in the ideal world the Cramer--Shoup ciphertext $A|B|C|D$ generated by the simulator $\simulator$ is an encryption of some $\pw'$ that is unlikely to be the ``correct'' $\pw$, so $\env$ must not be able to detect this fact even after seeing $E^{r_1}$. In other words, (very roughly) \emph{Cramer--Shoup must be secure even if the adversary sees $E^{r_1}$ for some $E$ of its choice}.\\
+
+Below we analyze two simple attacks using this strategy:
+\begin{enumerate}
+  \item Say $\env$ chooses $E = A = g_1^{r_1}$; then $E^{r_1} = g_1^{r_1^2}$. If 2-DL is easy in the group\footnote{The 2-DL problem is: given $(g^x,g^{x^2})$ for $x \gets \mathbb{Z}_q$, compute $x$. We do not know the relative hardness between 2-DL and DDH, and it has been show that 2-DL and CDH are separate in the AGM \cite{C:BauFucLos20}.}, then $\env$ can recover $r_1$ after $\user$'s session completes, and check if $C = h^{r_1} \cdot \pw$. In the real world this equation holds, whereas in the ideal world it does not if $\simulator$ chose the ``wrong'' $\pw' \neq \pw$ to encrypt while simulating $\msg{1}$. In fact, it seems that for the KOY protocol to be UC-AGM-secure, we need the \xjy{FILL IN} assumption. \xjy{I think the assumption should be Decisional Square Diffie--Hellman (DSDH), which says that given $g^x$, it is hard to distinguish $g^{x^2}$ from random. Note that this implies 2-DL (given $(g^x,Y)$ where $Y$ is either $g^{x^2}$ or random, the DSDH solver can feed $(g^x,Y)$ to the 2-DL solver and distinguish by observing whether the 2-DL solver wins or not)}
+  \item Say $\env$ chooses $E = c$; then $E^{r_1} = c^{r_1}$. But Cramer--Shoup is obviously \emph{not} CCA-secure if the adversary additionally sees $c^{r_1}$. What saves us here is that $\env$ sees $E^{r_1}$ \emph{at the end of $\user$'s session}. Indeed, the reduction $\red$ to the security of Cramer--Shoup roughly works as follows:
+      \begin{enumerate}
+        \item $\red$ embeds the challenge ciphertext as $\msg{1}$, $\user$'s first message intercepted by $\adv$;
+        \item When $\adv$ sends $\msg{1}^*$ to $\server$ and $\msg{2}^*$ to $\user$, $\red$ needs to query the decryption oracle to extract the password guesses contained in these two messages
+        \item Finally, if the password guess in $\msg{2}^*$ is correct, $\red$ needs to simulate $\sk$.
+      \end{enumerate}
+      $c^{r_1}$ is needed only in step (c), which happens after all decryption oracle queries have been made. Therefore, we only need Cramer--Shoup to remain CCA-secure if the adversary \emph{is restricted to making all decryption oracle queries before learning $c^{r_1}$}. We will show that Cramer--Shoup indeed satisfies this property in \xjy{FILL IN} \xjy{I think this should work, but it needs to be double checked}
+\end{enumerate}
+By examining the game-based security proof of the KOY protocol, one can see that the above attacks are essentially the only scenarios where the UC-security might be broken, and the security argument for all other cases (including the adversary sending a message that contains an incorrect password guess, or modifies the signature) is essentially identical to the game-based proof. \xjy{I hope so...}
+
 	\subsection{Proof of UC-Insecurity}
 
 	\begin{theorem}
