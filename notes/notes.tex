@@ -172,17 +172,15 @@ In the real world $\user$ would compute $X_1 = E^{r_1}$, which is equal to $A^{x
 
 Next, suppose $\env$ computes
 \[
-E = g_1^{x_2}g_2^{y_2}h^{z_2}(cd^\alpha)^{w_2}A^{x_2'}B^{y_2'}\left(\frac{C}{\pw}\right)^{z_2'}D^{w_2'}
+E = g_1^{x_2}g_2^{y_2}h^{z_2}c^{w_2}d^{v_2}A^{x_2'}B^{y_2'}C^{z_2'}D^{w_2'}\pw^{p_2}
 \]
-The argument in this case is more involved. In the real world $\user$ would compute
+In the real world $\user$ would compute
 \begin{align*}
 X_1 &= E^{r_1} \\
-    &= g_1^{r_1x_2+r_1^2 x_2'} g_2^{r_1y_2+r_1^2 y_2'} h^{r_1z_2+r_1^2 z_2'} (cd^\alpha)^{r_1w_2+r_1^2 w_2'} \\
-    &= A^{x_2+r_1x_2'} B^{y_2+r_1y_2'} \left(\frac{C}{\pw}\right)^{z_2+r_1z_2'} D^{w_2+r_1w_2'}
+    &= g_1^{r_1x_2} g_2^{r_1y_2} h^{r_1z_2} c^{r_1w_2} d^{r_1v_2} A^{r_1x_2'} B^{r_1y_2'} C^{r_1z_2'} D^{r_1w_2'} \pw^{r_1p_2} \\
+    &= g_1^{r_1x_2} g_2^{r_1y_2} \left(\frac{C}{\pw}\right)^{z_2} c^{r_1w_2} d^{r_1v_2} A^{r_1x_2'} B^{r_1y_2'} C^{r_1z_2'} D^{r_1w_2'} \pw^{r_1p_2}
 \end{align*}	
-Similar to above, in the ideal world $\simulator$ can compute $X_1$ according to the last equation. A difference is that now the expression of $X_1$ involves the Cramer--Shoup randomness $r_1$, which is not a problem for $\simulator$ as $\simulator$ chose $r_1$ itself while sending $\msg{1}$.\\
-
-We assumed above that the exponents of $c$ and $d^\alpha$ are equal in the representation of $E$, and so are $C$ and $1/\pw$; it is clear that $\simulator$ can compute the correct $\sk$ even if they are different, since it knows $r_1$ and all the necessary exponents chosen by $\env$.
+Again, in the ideal world $\simulator$ can compute $X_1$ according to the last equation; the key point is that given $A|B|C|D$, the only place where the ``wrong'' password $\pw'$ is used lies in $h$, so we only need to ``correct'' $h^{r_1}$ from $C/\pw'$ to $C/\pw$. A difference is that now the expression of $X_1$ involves the Cramer--Shoup randomness $r_1$, which is not a problem for $\simulator$ as $\simulator$ chose $r_1$ itself while sending $\msg{1}$. (Of course, we have $A = g_1^{r_1}$, so the $g_1^{r_1x_2} A^{r_1x_2'}$ part can be rewritten as $A^{x_2+r_1x_2'}$, and so on.)
 
 \paragraph{Further subtleties in UC.}
 As we have just seen, one critical difference between game-based security and UC-security is that in UC indistinguishability between the real view and the simulated view must remain \emph{even when the environment sees the key of a successfully attacked session}, whereas in the game-based setting the adversary simply wins (and the simulator can ``give up'' on simulating the session key) once the attack on a session is successful. While the session key itself can be simulated in the AGM, this poses another potential issue that is more subtle: after seeing the session key, the environment might go back and check the validity of previous protocol messages using this information.\\
@@ -191,7 +189,7 @@ In more detail, assume again that the adversary interacts with $\user$ by runnin
 
 Below we analyze two simple attacks using this strategy:
 \begin{enumerate}
-  \item Say $\env$ chooses $E = A = g_1^{r_1}$; then $E^{r_1} = g_1^{r_1^2}$. If 2-DL is easy in the group\footnote{The 2-DL problem is: given $(g^x,g^{x^2})$ for $x \gets \mathbb{Z}_q$, compute $x$. We do not know the relative hardness between 2-DL and DDH, and it has been shown that 2-DL and CDH are separate in the AGM \cite{C:BauFucLos20}.}, then $\env$ can recover $r_1$ after $\user$'s session completes, and check if $C = h^{r_1} \cdot \pw$. In the real world this equation holds, whereas in the ideal world it does not if $\simulator$ chose the ``wrong'' $\pw' \neq \pw$ to encrypt while simulating $\msg{1}$. In fact, it seems that for the KOY protocol to be UC-AGM-secure, we need the \xjy{FILL IN} assumption. \xjy{I think the assumption should be Decisional Square Diffie--Hellman (DSDH), which says that given $g^x$, it is hard to distinguish $g^{x^2}$ from random. Note that this implies 2-DL (given $(g^x,Y)$ where $Y$ is either $g^{x^2}$ or random, the DSDH solver can feed $(g^x,Y)$ to the 2-DL solver and distinguish by observing whether the 2-DL solver wins or not)}
+  \item Say $\env$ chooses $E = A = g_1^{r_1}$; then $E^{r_1} = g_1^{r_1^2}$. If 2-DL is easy in the group\footnote{The 2-DL problem is: given $(g^x,g^{x^2})$ for $x \gets \mathbb{Z}_q$, compute $x$. We do not know the relative hardness between 2-DL and DDH, and it has been shown that 2-DL and CDH are separate in the   AGM \cite{C:BauFucLos20}.}, then $\env$ can recover $r_1$ after $\user$'s session completes, and check if $C = h^{r_1} \cdot \pw$. In the real world this equation holds, whereas in the ideal world it does not if $\simulator$ chose the ``wrong'' $\pw' \neq \pw$ to encrypt while simulating $\msg{1}$. In fact, it seems that for the KOY protocol to be UC-AGM-secure, we need the \xjy{FILL IN} assumption. \xjy{I think the assumption should be Decisional Square Diffie--Hellman (DSDH), which says that given $g^x$, it is hard to distinguish $g^{x^2}$ from random. Note that this implies 2-DL (given $(g^x,Y)$ where $Y$ is either $g^{x^2}$ or random, the DSDH solver can feed $(g^x,Y)$ to the 2-DL solver and distinguish by observing whether the 2-DL solver wins or not)}
   \item Say $\env$ chooses $E = c$; then $E^{r_1} = c^{r_1}$. But Cramer--Shoup is obviously \emph{not} CCA-secure if the adversary additionally sees $c^{r_1}$. What saves us here is that $\env$ sees $E^{r_1}$ \emph{only at the end of $\user$'s session}. Indeed, the reduction $\red$ to the security of Cramer--Shoup roughly works as follows:
       \begin{enumerate}
         \item $\red$ embeds the challenge ciphertext as $\msg{1}$, $\user$'s first message intercepted by $\adv$;
