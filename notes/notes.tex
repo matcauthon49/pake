@@ -170,7 +170,7 @@ E = g_1^{x_2}g_2^{y_2}h^{z_2}(cd^\alpha)^{w_2}
 \]
 In the real world $\user$ would compute $X_1 = E^{r_1}$, which is equal to $A^{x_2}B^{y_2}(C/\pw)^{z_2}D^{w_2}$. In the ideal world, as explained above, $\simulator$ cannot compute $X_1$ as $E^{r_1}$ since it chose the wrong $\pw'$ with high probability while generating $A,B,C,D$; however, after extracting the correct $\pw$ from $\msg{2}$, $\simulator$ can still compute $X_1$ as $A^{x_2}B^{y_2}(C/\pw)^{z_2}D^{w_2}$, since now it sees the algebraic coefficients $x_2,y_2,z_2,w_2$ from $\env$. In this way $\simulator$ generates $X_1$ that is indistinguishable from the real world.\\
 
-Next, suppose $\env$ computes
+In the general case, suppose $\env$ computes
 \[
 E = g_1^{x_2}g_2^{y_2}h^{z_2}c^{w_2}d^{v_2}A^{x_2'}B^{y_2'}C^{z_2'}D^{w_2'}\pw^{p_2}
 \]
