@@ -182,7 +182,7 @@ X_1 &= E^{r_1} \\
 \end{align*}	
 Similar to above, in the ideal world $\simulator$ can compute $X_1$ according to the last equation. A difference is that now the expression of $X_1$ involves the Cramer--Shoup randomness $r_1$, which is not a problem for $\simulator$ as $\simulator$ chose $r_1$ itself while sending $\msg{1}$.\\
 
-We assumed above that the exponents of $c$ and $d^\alpha$ are always equal in the representation of $E$, and so are $C$ and $1/\pw$; it is clear that $\simulator$ can compute the correct $\sk$ even if they are different, since it knows $r_1$ and all the necessary exponents chosen by $\env$.
+We assumed above that the exponents of $c$ and $d^\alpha$ are equal in the representation of $E$, and so are $C$ and $1/\pw$; it is clear that $\simulator$ can compute the correct $\sk$ even if they are different, since it knows $r_1$ and all the necessary exponents chosen by $\env$.
 
 \paragraph{Further subtleties in UC.}
 As we have just seen, one critical difference between game-based security and UC-security is that in UC indistinguishability between the real view and the simulated view must remain \emph{even when the environment sees the key of a successfully attacked session}, whereas in the game-based setting the adversary simply wins (and the simulator can ``give up'' on simulating the session key) once the attack on a session is successful. While the session key itself can be simulated in the AGM, this poses another potential issue that is more subtle: after seeing the session key, the environment might go back and check the validity of previous protocol messages using this information.\\
