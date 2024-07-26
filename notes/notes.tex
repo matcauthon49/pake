@@ -200,7 +200,7 @@ Below we analyze two simple attacks using this strategy:
       \end{enumerate}
       $c^{r_1}$ is needed only in step (c), which happens after all decryption oracle queries have been made. Therefore, we only need Cramer--Shoup to remain CCA-secure if the adversary \emph{is restricted to making all decryption oracle queries before learning $c^{r_1}$}. We will show that Cramer--Shoup indeed satisfies this property in \xjy{FILL IN} \xjy{I think this should work, but it needs to be double checked}
 \end{enumerate}
-By examining the game-based security proof of the KOY protocol, one can see that the above attacks are essentially the only scenarios where the UC-security might be broken, and the security argument for all other cases (including the adversary sending a message that contains an incorrect password guess, or modifies the signature) is essentially identical to the game-based proof. \xjy{I hope so...}
+By inspecting the game-based security proof of the KOY protocol, one can see that the above attacks are essentially the only scenarios where the UC-security might be broken, and the security argument for all other cases (including the adversary sending a message that contains an incorrect password guess, or modifying the signature) is essentially identical to the game-based proof. \xjy{I hope so...}
 
 	\subsection{Proof of UC-Insecurity}
 
