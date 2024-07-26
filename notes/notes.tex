@@ -196,7 +196,7 @@ Below we analyze two simple attacks using this strategy:
       \begin{enumerate}
         \item $\red$ embeds the challenge ciphertext as $\msg{1}$, $\user$'s first message intercepted by $\adv$;
         \item When $\adv$ sends $\msg{1}^*$ to $\server$ and $\msg{2}^*$ to $\user$, $\red$ needs to query the decryption oracle to extract the password guesses contained in these two messages;
-        \item Finally, if the password guess in $\msg{2}^*$ is correct, $\red$ needs to simulate $\sk_U$. (This step is not needed in the game-based proof.)\footnote{We omit the remaining step which is to simulate $\msg{3}^*$ and $\server$'s session key $\sk_S$, as it is inconsequential to our main point.}
+        \item Finally, if the password guess in $\msg{2}^*$ is correct, $\red$ needs to simulate $\sk_U$. (This step is not needed in the game-based proof.)\footnote{We omit the remaining steps which are to simulate $\msg{3}$, and on $\msg{3}^*$ simulate $\server$'s session key $\sk_S$, as they are inconsequential to our main point.}
       \end{enumerate}
       $c^{r_1}$ is needed only in step (c), which happens after all decryption oracle queries have been made. Therefore, we only need Cramer--Shoup to remain CCA-secure if the adversary \emph{is restricted to making all decryption oracle queries before learning $c^{r_1}$}. We will show that Cramer--Shoup indeed satisfies this property in \xjy{FILL IN} \xjy{I think this should work, but it needs to be double checked}
 \end{enumerate}
