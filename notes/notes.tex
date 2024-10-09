@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper]{article}
+\documentclass[10pt,a4paper]{article}
 \usepackage[margin=1in, includeheadfoot]{geometry}
 
 \usepackage[dvipsnames]{xcolor}
@@ -24,7 +24,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 
-\fancyhead[L]{\textbf{On the UC-(In)Security of PAKE Protocols Without Random Oracles}}
+\fancyhead[L]{\textbf{On the UC-(In)Security of PAKE Protocols in the Plain Model}}
 \fancyhead[R]{\thepage}
 \fancyfoot{}
 
@@ -48,8 +48,8 @@
 \declaretheorem[name=Definition, numberwithin=section]{definition}
 
 \usepackage[english]{babel}
-\title{\textbf{On the UC-(In)Security of PAKE Protocols Without Random Oracles}}
-\author{Naman Kumar}
+\title{\textbf{On the UC-(In)Security of PAKE Protocols in the Plain Model}}
+\author{Naman Kumar, Jiayu Xu}
 
 %------- General Macros
 
@@ -108,6 +108,10 @@
 \newcommand{\server}{\mathsf{Server}}
 \newcommand{\msg}[1]{\mathsf{msg}_{#1}}
 \newcommand{\rgets}{\xleftarrow{\$}}
+\newcommand{\G}{\mathbb{G}}
+\newcommand{\ct}{\mathsf{ct}}
+\newcommand{\st}{\mathsf{st}}
+\newcommand{\sign}{\mathsf{Sign}}
 
 \def\xjy#1{\textcolor{blue}{Jiayu: #1}}
 \def\nam#1{\textcolor{red}{Naman: #1}}
@@ -119,14 +123,18 @@
 
 \section{UC-(In)Security of the KOY Protocol}
 \subsection{Protocol Description}
-\xjy{Insert the description of KOY (revised to fit the UC formality) here}
+\xjy{Insert the description of KOY (revised to fit the UC formality) here.} \nam{I've made edits, clarified the scheme.}\\
 
-We provide a high-level description of the protocol, as well as why it is secure. The CRS is the public key of the Cramer--Shoup encryption scheme, $(g_1, g_2, h, c, d)$; we stress that unlike in the PKI setting, the protocol does not involve parties sending their public keys to each other, and no one knows the corresponding secret key. To execute the protocol,
+We provide a high-level description of the protocol along with a sketch of the security proof below. Let $\G$ be an algebraic group in which DDH is believed to be hard and define $\crs := (g_1, g_2, h, c, d)$ to be uniformly sampled from $\G^5$; we set this to be the common random string. Note that $\crs$ can be interpreted to be a degenerate Cramer-Shoup public key with an unknown secret key.
+
 \begin{itemize}
-  \item $\user$ generates a pair of keys for a one-time signature scheme $(\VK,\SK)$, and encrypts its password $\pw$, with label $\VK$, using Cramer--Shoup encryption (let $r_1$ be the randomness). The resulting ciphertext is four group elements $(A,B,C,D) = (g_1^{r_1}, g_2^{r_1}, h^{r_1} \cdot\pw, (cd^\alpha)^{r_1})$, which $\user$ sends to $\server$ together with $\VK$. Note that $A$, $B$, $C' = C/\pw$, $D$ are all in the form of $g^{r_1}$ where $g$ is some group element that $\server$ can compute, so they also serve as a message in a Diffie--Hellman-like protocol.
-  \item $\server$, upon receiving $\VK,A,B,C,D$, samples its ``Diffie--Hellman exponents'' $x_2,y_2,z_2,w_2$, and computes $E = g_1^{x_2}g_2^{y_2}h^{z_2}(cd^\alpha)^{w_2}$.\footnote{Note that $\alpha = H(\VK|A|B|C)$, so $\server$ must wait for $\user$'s message before proceeding.} Furthermore, $\server$ encrypts $\pw$, with label $\msg{1}$ and $E$, using Cramer--Shoup encryption (let $r_2$ be the randomness). The resulting ciphertext is $(F,G,I,J) = (g_1^{r_2}, g_2^{r_2}, h^{r_2} \cdot\pw, (cd^\beta)^{r_2})$, which $\server$ sends to $\user$ together with $E$.
-  \item Symmetrically, $\user$, upon receiving $E,F,G,I,J$, samples its ``Diffie--Hellman exponents'' $x_1,y_1,z_1,w_1$, and computes $K = g_1^{x_1}g_2^{y_1}h^{z_1}(cd^\beta)^{w_1}$. $\user$ then signs the protocol transcript $\msg{1}|\msg{2}|K$ using $\SK$, and sends $K$ together with the signature to $\server$.
-  \item $\server$ verifies the signature, and aborts if it is invalid. Otherwise the session key $\sk$ is defined as the product of
+  \item $\user$ begins by generating a pair of keys $(\VK,\SK)$ for a one-time signature scheme and encrypts its password $\pw$ with label $\VK$ using the Cramer-Shoup public key embedded in the CRS. Let $H$ be a collision-resistant hash function and $r_1$ be the randomness used during encryption. The resulting ciphertext consists of four group elements $\ct_1 := (A,B,C,D) = (g_1^{r_1}, g_2^{r_1}, h^{r_1} \cdot\pw, (cd^\alpha)^{r_1})$ where $\alpha = H(\VK, A, B, C)$. $\user$ then sends $\msg{1} := (\VK, \ct_1)$ to $\server$. Note that $A$, $B$, $C' = C/\pw$, $D$ are all of the form $g^{r_1}$ where $g$ is some group element that $\server$ can compute, so they also serve as a message in a Diffie--Hellman-like protocol.
+  
+  \item Upon receiving $(\VK,A,B,C,D)$, the $\server$ samples its `Diffie--Hellman exponents' $(x_2, y_2, z_2, w_2)$, and computes $E = g_1^{x_2}g_2^{y_2}h^{z_2}(cd^\alpha)^{w_2}$.\footnote{Note that $\alpha = H(\VK|A|B|C)$, so $\server$ must wait for $\user$'s message before proceeding.} Furthermore, $\server$ encrypts $\pw$ with label $(\msg{1}, E)$ using Cramer--Shoup encryption as done by $\user$ in $\msg{1}$. Let $r_2$ be the randomness used in encryption. The resulting ciphertext is $\ct_2:=(F,G,I,J) = (g_1^{r_2}, g_2^{r_2}, h^{r_2} \cdot\pw, (cd^\beta)^{r_2})$. $\server$ sends $\msg{2} = (E,\ct_2)$ to $\user$.
+  
+  \item Symmetrically, $\user$ upon receiving $(E,\ct_2)$ samples its own `Diffie--Hellman exponents' $(x_1,y_1,z_1,w_1)$ and computes $K = g_1^{x_1}g_2^{y_1}h^{z_1}(cd^\beta)^{w_1}$. It signs the protocol transcript $\st = \sign_\SK(\msg{1}|\msg{2}|K)$, and sends $\msg{3} = (K, \st)$ to the server.
+  
+  \item $\server$ verifies the signature $\st$ and aborts if it is invalid. Otherwise the session key $\sk$ is defined as the product of
       \[
       X_1 = E^{r_1} = A^{x_2}B^{y_2}(C/\pw)^{z_2}D^{w_2}
       \]
@@ -189,7 +197,7 @@ In more detail, assume again that the adversary interacts with $\user$ by runnin
 
 Below we analyze two simple attacks using this strategy:
 \begin{enumerate}
-  \item Say $\env$ chooses $E = A = g_1^{r_1}$; then $E^{r_1} = g_1^{r_1^2}$. If 2-DL is easy in the group\footnote{The 2-DL problem is: given $(g^x,g^{x^2})$ for $x \gets \mathbb{Z}_q$, compute $x$. We do not know the relative hardness between 2-DL and DDH, and it has been shown that 2-DL and CDH are separate in the   AGM \cite{C:BauFucLos20}.}, then $\env$ can recover $r_1$ after $\user$'s session completes, and check if $C = h^{r_1} \cdot \pw$. In the real world this equation holds, whereas in the ideal world it does not if $\simulator$ chose the ``wrong'' $\pw' \neq \pw$ to encrypt while simulating $\msg{1}$. In fact, it seems that for the KOY protocol to be UC-AGM-secure, we need the \xjy{FILL IN} assumption. \xjy{I think the assumption should be Decisional Square Diffie--Hellman (DSDH), which says that given $g^x$, it is hard to distinguish $g^{x^2}$ from random. Note that this implies 2-DL (given $(g^x,Y)$ where $Y$ is either $g^{x^2}$ or random, the DSDH solver can feed $(g^x,Y)$ to the 2-DL solver and distinguish by observing whether the 2-DL solver wins or not)}
+  \item Say $\env$ chooses $E = A = g_1^{r_1}$; then $E^{r_1} = g_1^{r_1^2}$. If 2-DL is easy in the group\footnote{The 2-DL problem is: given $(g^x,g^{x^2})$ for $x \gets \mathbb{Z}_q$, compute $x$. We do not know the relative hardness between 2-DL and DDH, and it has been shown that 2-DL and CDH are separate in the AGM \cite{C:BauFucLos20}.}, then $\env$ can recover $r_1$ after $\user$'s session completes, and check if $C = h^{r_1} \cdot \pw$. In the real world this equation holds, whereas in the ideal world it does not if $\simulator$ chose the ``wrong'' $\pw' \neq \pw$ to encrypt while simulating $\msg{1}$. In fact, it seems that for the KOY protocol to be UC-AGM-secure, we need the \xjy{FILL IN} assumption. \xjy{I think the assumption should be Decisional Square Diffie--Hellman (DSDH), which says that given $g^x$, it is hard to distinguish $g^{x^2}$ from random. Note that this implies 2-DL (given $(g^x,Y)$ where $Y$ is either $g^{x^2}$ or random, the DSDH solver can feed $(g^x,Y)$ to the 2-DL solver and distinguish by observing whether the 2-DL solver wins or not)}
   \item Say $\env$ chooses $E = c$; then $E^{r_1} = c^{r_1}$. But Cramer--Shoup is obviously \emph{not} CCA-secure if the adversary additionally sees $c^{r_1}$. What saves us here is that $\env$ sees $E^{r_1}$ \emph{only at the end of $\user$'s session}. Indeed, the reduction $\red$ to the security of Cramer--Shoup roughly works as follows:
       \begin{enumerate}
         \item $\red$ embeds the challenge ciphertext as $\msg{1}$, $\user$'s first message intercepted by $\adv$;
@@ -222,7 +230,7 @@ By inspecting the game-based security proof of the KOY protocol, one can see tha
 			\vspace{2mm}
 			\textbf{\underline{Environment $\env$:}}
 			\begin{enumerate}\setcounter{enumi}{-1}
-                \item \xjy{$\env$ receives the CRS $(g_1, g_2, h, c, d)$}.
+                \item $\env$ receives the CRS $(g_1, g_2, h, c, d)$.
 				\item $\env$ selects $\pw\xleftarrow{\$}\mathcal{PW}$, where $\mathcal{PW}\subseteq\mathbb{G}$ is the password dictionary. It then sends $(\newsession,\mathsf{sid},\user,\server,\pw)$ to $\user$.
 				\item $\env$ receives $\msg{1} = \mathsf{sid}|\mathsf{VK}|A|B|C|D$ from $\adv$ and samples $x_2, y_2, z_2, w_2, r_2\xleftarrow{\$}\mathbb{Z}_q$. It then sets 
 				\begin{align*}
@@ -244,12 +252,15 @@ By inspecting the game-based security proof of the KOY protocol, one can see tha
 		\label{fig:adv}
 	\end{figure}
 
-	Assume that there exists a negligible function $\varepsilon:=\varepsilon(\lambda)$ such that there exists a ``successful'' simulator $\simulator$ for which $\env$ outputs $1$ with probability $1-\varepsilon$ in the ideal world. First, assume that CDH is hard over $(\mathbb{G}, p, h)$. Consider reduction $\mathcal{R}$ which does the following. \xjy{that runs the simulator $\simulator$ as follows (note that $\mathcal{R}$ plays the role of the environment $\env$, the PAKE functionality $\pake$, and the dummy parties $\user$ and $\server$ combined):}\\
+	Assume that there exists a negligible function $\varepsilon:=\varepsilon(\lambda)$ such that there exists a ``successful'' simulator $\simulator$ for which $\env$ outputs $1$ with probability $1-\varepsilon$ in the ideal world. First, assume that CDH is hard over $(\mathbb{G}, p, h)$. Consider reduction $\mathcal{R}$ that runs the simulator $\simulator$ as follows (note that $\mathcal{R}$ plays the role of the environment $\env$, the PAKE functionality $\pake$, and the dummy parties $\user$ and $\server$ combined):\\
 	
-	\nam{I'm not completely convinced if this is the best way to write this; the proof is correct in the essentials, but I think this needs to be rewritten since I'm not sure what formal part $\mathcal{R}$ is playing here...}
+	% \nam{I'm not completely convinced if this is the best way to write this; the proof is correct in the essentials, but I think this needs to be rewritten since I'm not sure what formal part $\mathcal{R}$ is playing here...}
 	
 	\begin{enumerate}\setcounter{enumi}{-1}
-        \item $\mathcal{R}$ receives $\mathsf{crs}=(g_1, g_2, h, c, d)$ from $\simulator$, outputs $h$ to its challenger, and receives $(h^a, h^b)$ where $a,b\rgets\mathbb{Z}_p$. \xjy{I moved ``receiving the CRS'' as the 0th step of the formal description of the reduction (and the environment)} \xjy{Is the group order $p$ or $q$? It is called $p$ in this step but $q$ in the second step}
+        \item $\mathcal{R}$ receives $\mathsf{crs}=(g_1, g_2, h, c, d)$ from $\simulator$, outputs $h$ to its challenger, and receives $(h^a, h^b)$ where $a,b\rgets\mathbb{Z}_p$. 
+        
+        %\xjy{I moved ``receiving the CRS'' as the 0th step of the formal description of the reduction (and the environment)} \xjy{Is the group order $p$ or $q$? It is called $p$ in this step but $q$ in the second step}
+        
 		\item $\mathcal{R}$ sends $(\newsession,\mathsf{sid}, \user, \server)$ to $\simulator$.
 		\item $\mathcal{R}$ waits to receive $\msg{1} = \mathsf{sid}|\mathsf{VK}|A|B|C|D$ in response (as the first message from $\user$ to $\server$). It then sets $\pw:=C/h^b$ and samples $x_2,y_2,w_2,r_2\rgets\mathbb{Z}_q$, setting
 		\begin{align*}
@@ -261,22 +272,19 @@ By inspecting the game-based security proof of the KOY protocol, one can see tha
 			\beta &:= H(\msg{1}|E|F|G|I)\\
 			J &:= (cd^{\beta})^{w_2}
 		\end{align*}
-		i.e., the same computation as that of the honest server with a special choice of $\pw$ and $z_2$ \xjy{the special choice of $\pw = C/h^b$ and $z_2 = a$}, and sends $\msg{2}:=\mathsf{sid}|E|F|G|I|J$ to $\simulator$.
-		\item $\mathcal{R}$ receives $\msg{3}=\mathsf{sid}|K|\sigma$ (as the second message from $\user$ to $\server$) and $(\mathsf{sid},\sk)$ from $\simulator$ (as $\user$'s output to $\env$), and checks if $\mathsf{Vrfy}_\mathsf{VK}(\msg{1}|\msg{2}|K,\sigma)=1$. If yes, \xjy{If not, $\mathcal{R}$ aborts. Otherwise} it calculates 
+		i.e., the same computation as that of the honest server with the special choice of $\pw = C/h^b$ and $z_2 = a$, and sends $\msg{2}:=\mathsf{sid}|E|F|G|I|J$ to $\simulator$.
+		\item $\mathcal{R}$ receives $\msg{3}=\mathsf{sid}|K|\sigma$ (as the second message from $\user$ to $\server$) and $(\mathsf{sid},\sk)$ from $\simulator$ (as $\user$'s output to $\env$), and checks if $\mathsf{Vrfy}_\mathsf{VK}(\msg{1}|\msg{2}|K,\sigma)=1$. If not, $\mathcal{R}$ aborts. Otherwise it calculates 
 		$$h'=\frac{\sk}{A^{x_2}B^{y_2}D^{w_2}K^{r_2}}.$$
 		\item $\mathcal{R}$ outputs $h'$.		
 	\end{enumerate}
 
-		We recall that $\sk_C=\sk_S$ with probability $1-\varepsilon$ by the assumption. Clearly in the protocol execution, we have, setting $C'=C/\pw=h^b$,
-		$$\sk_S = A^{x_2}B^{y_2}(C')^{z_2}D^{w_2}K^{r_2}=A^{x_2}B^{y_2}(h^b)^{a}D^{w_2}K^{r_2}$$ which clearly gives $h' = h^{ab}$ with probability $1-\varepsilon$, as claimed, contradicting the hardness of fixed-CDH.
-
-\xjy{Note that $\simulator$'s view while interacting with $\mathcal{R}$ is identical to $\simulator$'s view in the ideal world with environment $\env$ in \Cref{fig:adv}; the difference is that $\env$ samples $\pw$ and $z_2$ on its own, whereas $\mathcal{R}$ sets $\pw = C/h^b$ and $z_2 = a$ --- which cannot be detected by $\simulator$. Let $C' = C/\pw = h^b$ and
-$$\sk_S = A^{x_2}B^{y_2}(C')^{z_2}D^{w_2}K^{r_2}=A^{x_2}B^{y_2}(h^b)^{a}D^{w_2}K^{r_2}$$
-as what $\env$ would compute in its step 4; $\env$ outputs 1 if and only if $\sk_S = \sk$, so by our assumption on $\simulator$, in $\mathcal{R}$'s interaction with $\simulator$, $\sk_S = \sk$ with probability $1-\varepsilon$. But this gives $h' = h^{ab}$ with probability $1-\varepsilon$, i.e., $\mathcal{R}$ wins with probability $1-\varepsilon$, contradicting the hardness of fixed-CDH.}
-		\end{proof}
+		Note that $\simulator$'s view while interacting with $\mathcal{R}$ is identical to $\simulator$'s view in the ideal world with environment $\env$ in \Cref{fig:adv}; the difference is that $\env$ samples $\pw$ and $z_2$ on its own, whereas $\mathcal{R}$ sets $\pw = C/h^b$ and $z_2 = a$ --- which cannot be detected by $\simulator$. Let $C' = C/\pw = h^b$ and
+		$$\sk_S = A^{x_2}B^{y_2}(C')^{z_2}D^{w_2}K^{r_2}=A^{x_2}B^{y_2}(h^b)^{a}D^{w_2}K^{r_2}$$
+		as what $\env$ would compute in its step 4; $\env$ outputs 1 if and only if $\sk_S = \sk$, so by our assumption on $\simulator$, in $\mathcal{R}$'s interaction with $\simulator$, $\sk_S = \sk$ with probability $1-\varepsilon$. But this gives $h' = h^{ab}$ with probability $1-\varepsilon$, i.e., $\mathcal{R}$ wins with probability $1-\varepsilon$, contradicting the hardness of fixed-CDH.
+\end{proof}
 	
 	
-	\textcolor{gray}{//everything below is deprecated comments.}\\
+	\textcolor{gray}{// everything below is deprecated comments.}\\
 
 	
 	First, we will assume the hardness of CDH over the group $(\mathbb{G},g,p)$. Let Let $g^a,g^b$ be two elements where $a,b\xleftarrow{\$}\mathbb{Z}_p$. 
