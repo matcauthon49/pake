@@ -36,7 +36,7 @@
 	filecolor=red,  
 	citecolor=red,    
 	urlcolor=blue,
-	pdftitle={Games on Graphs \#1},
+	pdftitle={On the UC-(In)Security of PAKE Protocols in the Plain Model},
 	pdfpagemode=FullScreen,
 }
 
@@ -101,6 +101,7 @@
 \newcommand{\pw}{\mathsf{pw}}
 \newcommand{\VK}{\mathsf{VK}}
 \newcommand{\SK}{\mathsf{SK}}
+\newcommand{\PK}{\mathsf{PK}}
 \newcommand{\crs}{\mathsf{crs}}
 \newcommand{\newsession}{\mathsf{NewSession}}
 \newcommand{\testpwd}{\mathsf{TestPwd}}
@@ -112,6 +113,15 @@
 \newcommand{\ct}{\mathsf{ct}}
 \newcommand{\st}{\mathsf{st}}
 \newcommand{\sign}{\mathsf{Sign}}
+
+\newcommand{\enc}{\mathsf{Enc}}
+\newcommand{\keygen}{\mathsf{KeyGen}}
+\newcommand{\PKE}{\mathsf{PKE}}
+\newcommand{\dec}{\mathsf{dec}}
+\newcommand{\negl}{\mathsf{negl}}
+\newcommand{\aux}{\mathsf{aux}}
+
+\newcommand{\drcca}{\mathsf{AdvDRCCA}}
 
 \def\xjy#1{\textcolor{blue}{Jiayu: #1}}
 \def\nam#1{\textcolor{red}{Naman: #1}}
@@ -306,6 +316,70 @@ By inspecting the game-based security proof of the KOY protocol, one can see tha
 	
 	\pagebreak
 	\appendix
+	
+	\section{Cramer-Shoup Security}
+	
+	In this section we prove the delayed-reveal-CCA security of the Cramer-Shoup Cryptosystem. We first start by defining the delayed-reveal-CCA game.
+	
+		\begin{figure}[h]
+		\begin{framed}
+			% [
+			%			linecolor=black,
+			%			linewidth=1pt,
+			%			roundcorner=5pt,
+			%			backgroundcolor=white,
+			%			userdefinedwidth=\textwidth,
+			%			]
+			\vspace{2mm}
+			\textbf{Stage 1:} The adversary queries a \textit{key generation oracle}. The key generation oracle computes $(\PK,\SK)\leftarrow\enc.\keygen$ and responds with $\PK$.
+			
+			\vspace{2mm}
+			
+			\textbf{Stage 2:} The adversary makes a sequence of calls to a decryption oracle. For each  decryption oracle query, the adversary submits a ciphertext $\psi$, and the decryption
+			oracle responds with $\PKE.\dec(1^\lambda, \SK,\psi)$.
+			
+			\vspace{2mm}
+			
+			\textbf{Stage 3:} The adversary submits two messages $m_0, m_1\in\PKE.\mathsf{MsgSpace}_{\lambda,\PK}$ to an encryption oracle. We require that $|m_0| = |m_1|$.
+			
+			On input $(m_0, m_1)$, the encryption oracle computes $$\sigma\rgets\{0,1\};\psi^{*}\rgets\PKE.\enc(1^\lambda,\PKE,m_\sigma)$$ and responds with the target ciphertext $\sigma^{*}$.
+			
+			\vspace{2mm}
+			
+			\textbf{Stage 4:} The adversary continues to make calls to the decryption oracle, subject only to the restriction that a submitted ciphertext $\psi$ is not identical to $\psi^{*}$.
+			
+			\vspace{2mm}
+			
+			\textbf{Stage 5:} The adversary submits a $\mathsf{halt}$ statement to an \textit{auxilliary oracle}, which responds with some auxiliary information $\mathsf{aux}$. From this point on the adversary no longer has access to the decryption oracle, and is not able to make any further queries.
+			
+			\vspace{2mm}
+			
+			\textbf{Stage 6:} The adversary outputs $\hat{\sigma}\in\{0,1\}$.
+			
+		\end{framed}
+		\caption{The Delayed-Reveal-CCA game.}
+		\label{fig:dcca}
+	\end{figure}
+
+	We define the delayed-reveal-CCA advantage with auxiliary information $\aux$ of the adversary $\adv$ against $\PKE$ at $\lambda$, denoted as $\drcca(\lambda)$ to be $|\Pr[\sigma = \hat{\sigma}] - 1/2|$ in the above attack game with corresponding value of $\aux$. We say that $\PKE$ is delayed-reveal-CCA secure with auxiliary information $\aux$ if there exists some negligible function $\negl$ such that for all $\lambda$, $$\drcca(\lambda)\leq\negl(\lambda).$$
+	
+	\begin{theorem}
+		If the DDH and the SDH assumptions hold for $\mathbb{G}$ and the hash function $H$ is Target Collision-Resistant, then the Cramer-Shoup Encryption Scheme (\nam{to define}) is delayed-reveal-CCA secure with auxiliary information $\aux = (x_1,x_2,y_1,y_2,g_1^{r^2},g_2^{r^2})$.
+	\end{theorem}
+
+	\nam{Brief Sketch of the Argument}
+	
+	\begin{itemize}
+		\item Game 1 is the same.
+		\item Game 2 sets the $(g_1^{r^2}, g_2^{r^2})$ as an output of the encryption oracle. Note that this can only increase the power of the adversary, as the adversary is also allowed to make decryption queries that involve $(g_1^{r^2}, g_2^{r^2})$. It follows that $|\Pr[T_1]-1/2]|\leq|\Pr[T_2]-1/2|.$
+		\item Game 3 replaces $g_i^{r^2}$ with random values, which follows from SDH.\nam{Think about this more, do the DDH and SDH have to be `compatible'??.}
+		\item Game 4 is Game 2.
+		\item Game 5 is Game 3.
+		\item Game 6 is Game 4. The argument in lemma $6$ holds even if $X$ is completely public, ie. it only requires $z_1$ and $z_2$ to be uniformly and randomly distributed (and hence `unknown'). This is implicit in lemma $6$ --  we just need to point it out.
+		\item Game 7 is Game 5. The arguments in lemmas $7$ and $8$ hold if certain values of $X$ are unknown, but these values only need to be unknown at the time of the decryption oracle query, which is true. Hence, the probability that a `bad' decryption oracle query is still negligible, and both the lemmas follow (relatively) unchanged.
+	\end{itemize}
+
+	This should complete the proof. \nam{Complete the whole proof.}
 	
 %	\bibliographystyle{alpha}
 %	\bibliography{references}
