@@ -19,7 +19,7 @@
 \usetikzlibrary{positioning}
 
 \usepackage{thmtools}
-%\usepackage[skip=6pt]{parskip}
+\usepackage[skip=6pt]{parskip}
 
 \usepackage{fancyhdr}
 \pagestyle{fancy}
@@ -120,8 +120,14 @@
 \newcommand{\dec}{\mathsf{dec}}
 \newcommand{\negl}{\mathsf{negl}}
 \newcommand{\aux}{\mathsf{aux}}
+\newcommand{\hk}{\mathsf{hk}}
+\newcommand{\lab}{\mathsf{label}}
 
 \newcommand{\drcca}{\mathsf{AdvDRCCA}}
+\newcommand{\game}{\mathbf{G}}
+\newcommand{\estep}[1]{\mathbf{E#1}}
+\newcommand{\dstep}[1]{\mathbf{D#1}}
+\newcommand{\reject}{\mathsf{reject}}
 
 \def\xjy#1{\textcolor{blue}{Jiayu: #1}}
 \def\nam#1{\textcolor{red}{Naman: #1}}
@@ -133,7 +139,7 @@
 
 \section{UC-(In)Security of the KOY Protocol}
 \subsection{Protocol Description}
-\xjy{Insert the description of KOY (revised to fit the UC formality) here.} \nam{I've made edits, clarified the scheme.}\\
+\xjy{Insert the description of KOY (revised to fit the UC formality) here.} \nam{I've made edits, clarified the scheme.}
 
 We provide a high-level description of the protocol along with a sketch of the security proof below. Let $\G$ be an algebraic group in which DDH is believed to be hard and define $\crs := (g_1, g_2, h, c, d)$ to be uniformly sampled from $\G^5$; we set this to be the common random string. Note that $\crs$ can be interpreted to be a degenerate Cramer-Shoup public key with an unknown secret key.
 
@@ -156,7 +162,7 @@ We provide a high-level description of the protocol along with a sketch of the s
 \end{itemize}
 
 \paragraph{Security.}
-To perform authentication, $\user$ and $\server$ need to (implicitly) prove to each other that they know $\pw$. This is achieved as follows. Note that $X_1 = E^{r_1} = A^{x_2}B^{y_2}(C/\pw)^{z_2}D^{w_2}$ has the following property: given $E$ (but not $x_2,y_2,z_2,w_2$), if $A|B|C|D$ is a valid encryption of $\pw$, then knowing the randomness $r_1$ is sufficient for computing $X_1$; otherwise $X_1$ is a uniformly random group element.\footnote{Using the terminology of SPHF: $(x_2,y_2,z_2,w_2)$ is the hash key and $E$ is the corresponding projection key; the function is defined as $\mathsf{Hash}_{(x_2,y_2,z_2,w_2)}(m) = A^{x_2}B^{y_2}(C/m)^{z_2}D^{w_2}$.} Therefore, an adversarial user that does not know $\pw$, is not able to come up with a valid $A|B|C|D$, so $X_1$ is uniformly random in the adversary's view (and so is $\sk = X_1X_2$); a symmetric argument can be made for an adversarial server. In the man-in-the-middle setting, an adversary can attempt to generate a valid ciphertext after seeing another valid ciphertext from the honest user/server, so we need the encryption scheme to be non-malleable.\\
+To perform authentication, $\user$ and $\server$ need to (implicitly) prove to each other that they know $\pw$. This is achieved as follows. Note that $X_1 = E^{r_1} = A^{x_2}B^{y_2}(C/\pw)^{z_2}D^{w_2}$ has the following property: given $E$ (but not $x_2,y_2,z_2,w_2$), if $A|B|C|D$ is a valid encryption of $\pw$, then knowing the randomness $r_1$ is sufficient for computing $X_1$; otherwise $X_1$ is a uniformly random group element.\footnote{Using the terminology of SPHF: $(x_2,y_2,z_2,w_2)$ is the hash key and $E$ is the corresponding projection key; the function is defined as $\mathsf{Hash}_{(x_2,y_2,z_2,w_2)}(m) = A^{x_2}B^{y_2}(C/m)^{z_2}D^{w_2}$.} Therefore, an adversarial user that does not know $\pw$, is not able to come up with a valid $A|B|C|D$, so $X_1$ is uniformly random in the adversary's view (and so is $\sk = X_1X_2$); a symmetric argument can be made for an adversarial server. In the man-in-the-middle setting, an adversary can attempt to generate a valid ciphertext after seeing another valid ciphertext from the honest user/server, so we need the encryption scheme to be non-malleable.
 
 The one-time signature scheme effectively forces the adversary to pass $\msg{2}$ and $\msg{3}$ without modification as long as it passes $\msg{1}$. This is to prevent a man-in-the-middle adversary from gaining information by passing all ciphertexts but modifying the rest of the messages. Specifically, (if the signature scheme is removed) consider an adversary that passes $\msg{1} = A|B|C|D$, changes $\msg{2} = E|F|G|I|J$ to $E^{\frac{1}{2}}|F|G|I|J$, and changes $\msg{3} = K$ to $K^2$; this would cause $\sk_S = \sk_U^2$. In other words, the adversary (that does not know the password) causes the two parties' session keys to be unequal but correlated, which is not allowed by the security of PAKE. Furthermore, to prevent the adversary from plugging in its own verification key (and thus knowing the corresponding secret key), $\VK$ is included in the hash that produces $\alpha$. In this way if the adversary changes $\VK$ while keeping the ciphertext $A|B|C|D$, the ciphertext would become invalid.
 	
@@ -165,9 +171,9 @@ The one-time signature scheme effectively forces the adversary to pass $\msg{2}$
 In this section, we provide a high-level explanation of why the KOY protocol is insecure in the UC framework, and how the AGM circumvents the difficulty for the UC simulator.
 
 	\paragraph{UC-insecurity of KOY.}
-	Our attack relies on an adversary $\adv$ that completely disregards the presence of $\server$ and instead interacts with $\user$ while executing $\server$'s algorithm on its own. In particular, once the protocol is initiated by $\user$, $\adv$ assumes the role of the server (discarding the actual server in the process, which plays no part in the protocol) and receives $\msg{1} = \mathsf{VK}|A|B|C|D$. After this, $\adv$ runs the server's algorithm on $\user$'s password $\pw$ (i.e., we assume that $\adv$ makes a correct password guess) and computes $\msg{2} = E|F|G|I|J$. $\user$ then runs its session-key generating algorithm and outputs its session key $\sk = E^{r_1}F^{x_1}G^{y_1}(I/\pw)^{z_1}J^{w_1}$. At this point, $\adv$ (and $\env$) have all the information they need to run the server's session-key generating algorithm locally, which computes a session key equal to $\sk$ generated by $\user$.\\
+	Our attack relies on an adversary $\adv$ that completely disregards the presence of $\server$ and instead interacts with $\user$ while executing $\server$'s algorithm on its own. In particular, once the protocol is initiated by $\user$, $\adv$ assumes the role of the server (discarding the actual server in the process, which plays no part in the protocol) and receives $\msg{1} = \mathsf{VK}|A|B|C|D$. After this, $\adv$ runs the server's algorithm on $\user$'s password $\pw$ (i.e., we assume that $\adv$ makes a correct password guess) and computes $\msg{2} = E|F|G|I|J$. $\user$ then runs its session-key generating algorithm and outputs its session key $\sk = E^{r_1}F^{x_1}G^{y_1}(I/\pw)^{z_1}J^{w_1}$. At this point, $\adv$ (and $\env$) have all the information they need to run the server's session-key generating algorithm locally, which computes a session key equal to $\sk$ generated by $\user$.
 	
-	To see why a simulator $\simulator$ cannot simulate this adversary, we attempt an ideal-world execution and pinpoint where it fails. Since $\simulator$ is allowed to choose $\crs=(g_1, g_2, h, c, d)$, it can sample $g_1$ at random and set $h$ such that $h=g_1^{\ell}$ --- in other words, $\simulator$ chooses the ``CRS trapdoor'' $\ell = \log_{g_1} h$. After receiving the $\newsession$ command from $\pake$, $\simulator$ must simulate $\user$'s first message $\msg{1}$. Since $\simulator$ does not know the password, at this point it must (effectively) guess some $\pw'$ at random; that is, in $\msg{1}$, $C=h^{r_1}\cdot\pw'$ where $\pw'$ can be no better than a random password sampled from the dictionary. ($C$ is indistinguishable from the correct value due to the security of Cramer--Shoup encryption.) After $\env$ responds with $\msg{2} = E|F|G|I|J$, since $F = g_1^{r_2}$ and $I = h^{r_2} \cdot \pw$, $\simulator$ can extract $\pw$ as $I/F^\ell$. Once this has been done, $\simulator$ can send a $\testpwd$ command to $\pake$ on the correct $\pw$; $\pake$ would mark the $\user$ session $\compromised$ and thus allow $\simulator$ to choose $\user$'s session key $\sk$ (which has to be consistent with the session key $\user$ computes in the real world).\footnote{A $\testpwd$ \textit{must} be run, since we require that $\msg{1}$ and $\msg{2}$ together with the randomness of the $\user$ and $\adv$ together determine $\sk$; allowing the simulation to proceed without a $\testpwd$ would result in $\pake$ outputting a uniformly random key.} This is where the game-based security and UC-security of PAKE diverge: in game-based security, all security guarantees are considered lost (and the simulation of the game can stop) once the adversary guesses the correct password; whereas in UC-security the simulation has to continue. The problem here is that \emph{even knowing the correct password $\pw$, $\simulator$ still cannot determine what $\sk$ should be}.\\
+	To see why a simulator $\simulator$ cannot simulate this adversary, we attempt an ideal-world execution and pinpoint where it fails. Since $\simulator$ is allowed to choose $\crs=(g_1, g_2, h, c, d)$, it can sample $g_1$ at random and set $h$ such that $h=g_1^{\ell}$ --- in other words, $\simulator$ chooses the ``CRS trapdoor'' $\ell = \log_{g_1} h$. After receiving the $\newsession$ command from $\pake$, $\simulator$ must simulate $\user$'s first message $\msg{1}$. Since $\simulator$ does not know the password, at this point it must (effectively) guess some $\pw'$ at random; that is, in $\msg{1}$, $C=h^{r_1}\cdot\pw'$ where $\pw'$ can be no better than a random password sampled from the dictionary. ($C$ is indistinguishable from the correct value due to the security of Cramer--Shoup encryption.) After $\env$ responds with $\msg{2} = E|F|G|I|J$, since $F = g_1^{r_2}$ and $I = h^{r_2} \cdot \pw$, $\simulator$ can extract $\pw$ as $I/F^\ell$. Once this has been done, $\simulator$ can send a $\testpwd$ command to $\pake$ on the correct $\pw$; $\pake$ would mark the $\user$ session $\compromised$ and thus allow $\simulator$ to choose $\user$'s session key $\sk$ (which has to be consistent with the session key $\user$ computes in the real world).\footnote{A $\testpwd$ \textit{must} be run, since we require that $\msg{1}$ and $\msg{2}$ together with the randomness of the $\user$ and $\adv$ together determine $\sk$; allowing the simulation to proceed without a $\testpwd$ would result in $\pake$ outputting a uniformly random key.} This is where the game-based security and UC-security of PAKE diverge: in game-based security, all security guarantees are considered lost (and the simulation of the game can stop) once the adversary guesses the correct password; whereas in UC-security the simulation has to continue. The problem here is that \emph{even knowing the correct password $\pw$, $\simulator$ still cannot determine what $\sk$ should be}.
 
 Recall that $\sk$ is the product of
 \[
@@ -186,7 +192,7 @@ Our next critical observation is that the session key in the above attack can be
 \[
 E = g_1^{x_2}g_2^{y_2}h^{z_2}(cd^\alpha)^{w_2}
 \]
-In the real world $\user$ would compute $X_1 = E^{r_1}$, which is equal to $A^{x_2}B^{y_2}(C/\pw)^{z_2}D^{w_2}$. In the ideal world, as explained above, $\simulator$ cannot compute $X_1$ as $E^{r_1}$ since it chose the wrong $\pw'$ with high probability while generating $A,B,C,D$; however, after extracting the correct $\pw$ from $\msg{2}$, $\simulator$ can still compute $X_1$ as $A^{x_2}B^{y_2}(C/\pw)^{z_2}D^{w_2}$, since now it sees the algebraic coefficients $x_2,y_2,z_2,w_2$ from $\env$. In this way $\simulator$ generates $X_1$ that is indistinguishable from the real world.\\
+In the real world $\user$ would compute $X_1 = E^{r_1}$, which is equal to $A^{x_2}B^{y_2}(C/\pw)^{z_2}D^{w_2}$. In the ideal world, as explained above, $\simulator$ cannot compute $X_1$ as $E^{r_1}$ since it chose the wrong $\pw'$ with high probability while generating $A,B,C,D$; however, after extracting the correct $\pw$ from $\msg{2}$, $\simulator$ can still compute $X_1$ as $A^{x_2}B^{y_2}(C/\pw)^{z_2}D^{w_2}$, since now it sees the algebraic coefficients $x_2,y_2,z_2,w_2$ from $\env$. In this way $\simulator$ generates $X_1$ that is indistinguishable from the real world.
 
 In the general case, suppose $\env$ computes
 \[
@@ -201,9 +207,9 @@ X_1 &= E^{r_1} \\
 Again, in the ideal world $\simulator$ can compute $X_1$ according to the last equation; the key point is that given $A|B|C|D$, the only place where the ``wrong'' password $\pw'$ is used lies in $h$, so we only need to ``correct'' $h^{r_1}$ from $C/\pw'$ to $C/\pw$. A difference is that now the expression of $X_1$ involves the Cramer--Shoup randomness $r_1$, which is not a problem for $\simulator$ as $\simulator$ chose $r_1$ itself while sending $\msg{1}$. (Of course, we have $A = g_1^{r_1}$, so the $g_1^{r_1x_2} A^{r_1x_2'}$ part can be rewritten as $A^{x_2+r_1x_2'}$, and so on. But this simplification is not necessary.)
 
 \paragraph{Further subtleties in UC.}
-As we have just seen, one critical difference between game-based security and UC-security is that in UC indistinguishability between the real view and the simulated view must remain \emph{even when the environment sees the key of a successfully attacked session}, whereas in the game-based setting the adversary simply wins (and the simulator can ``give up'' on simulating the session key) once the attack on a session is successful. While the session key itself can be simulated in the AGM, this poses another potential issue that is more subtle: after seeing the session key, the environment might go back and check the validity of previous protocol messages using this information.\\
+As we have just seen, one critical difference between game-based security and UC-security is that in UC indistinguishability between the real view and the simulated view must remain \emph{even when the environment sees the key of a successfully attacked session}, whereas in the game-based setting the adversary simply wins (and the simulator can ``give up'' on simulating the session key) once the attack on a session is successful. While the session key itself can be simulated in the AGM, this poses another potential issue that is more subtle: after seeing the session key, the environment might go back and check the validity of previous protocol messages using this information.
 
-In more detail, assume again that the adversary interacts with $\user$ by running $\server$'s algorithm on $\user$'s password $\pw$. When $\user$'s session completes, the environment $\env$ sees $\user$'s session key $\sk_U = X_1X_2$ and the last message $\msg{3} = K|\sigma$. Since $\env$ can compute $X_2$ as $K^{r_2}$ (since $r_2$ is chosen by $\env$ itself), it can recover $X_1 = E^{r_1}$ (where $r_1$ is the randomness used in $\msg{1}$). Recall that in the ideal world the Cramer--Shoup ciphertext $A|B|C|D$ generated by the simulator $\simulator$ is an encryption of some $\pw'$ that is unlikely to be the ``correct'' $\pw$, so $\env$ must not be able to detect this fact even after seeing $E^{r_1}$. In other words, (very roughly) \emph{Cramer--Shoup must be secure even if the adversary sees $E^{r_1}$ for some $E$ of its choice}.\\
+In more detail, assume again that the adversary interacts with $\user$ by running $\server$'s algorithm on $\user$'s password $\pw$. When $\user$'s session completes, the environment $\env$ sees $\user$'s session key $\sk_U = X_1X_2$ and the last message $\msg{3} = K|\sigma$. Since $\env$ can compute $X_2$ as $K^{r_2}$ (since $r_2$ is chosen by $\env$ itself), it can recover $X_1 = E^{r_1}$ (where $r_1$ is the randomness used in $\msg{1}$). Recall that in the ideal world the Cramer--Shoup ciphertext $A|B|C|D$ generated by the simulator $\simulator$ is an encryption of some $\pw'$ that is unlikely to be the ``correct'' $\pw$, so $\env$ must not be able to detect this fact even after seeing $E^{r_1}$. In other words, (very roughly) \emph{Cramer--Shoup must be secure even if the adversary sees $E^{r_1}$ for some $E$ of its choice}.
 
 Below we analyze two simple attacks using this strategy:
 \begin{enumerate}
@@ -226,7 +232,7 @@ By inspecting the game-based security proof of the KOY protocol, one can see tha
 
 	\begin{proof}
 	
-	Consider the environment $\env$ in \Cref{fig:adv} and the dummy adversary. It follows from the correctness of the protocol that in the real-world protocol execution $\env$ always outputs $1$, since the algorithm of $\env$ and $\adv$ is the same as that of an honest server. At a high level, we will show that any simulator that successfully simulates the protocol against $\env$ in the ideal world can be used to solve arbitrary instances of fixed-CDH.\\
+	Consider the environment $\env$ in \Cref{fig:adv} and the dummy adversary. It follows from the correctness of the protocol that in the real-world protocol execution $\env$ always outputs $1$, since the algorithm of $\env$ and $\adv$ is the same as that of an honest server. At a high level, we will show that any simulator that successfully simulates the protocol against $\env$ in the ideal world can be used to solve arbitrary instances of fixed-CDH.
 	
 	\begin{figure}[h]
 		\begin{framed}
@@ -262,7 +268,7 @@ By inspecting the game-based security proof of the KOY protocol, one can see tha
 		\label{fig:adv}
 	\end{figure}
 
-	Assume that there exists a negligible function $\varepsilon:=\varepsilon(\lambda)$ such that there exists a ``successful'' simulator $\simulator$ for which $\env$ outputs $1$ with probability $1-\varepsilon$ in the ideal world. First, assume that CDH is hard over $(\mathbb{G}, p, h)$. Consider reduction $\mathcal{R}$ that runs the simulator $\simulator$ as follows (note that $\mathcal{R}$ plays the role of the environment $\env$, the PAKE functionality $\pake$, and the dummy parties $\user$ and $\server$ combined):\\
+	Assume that there exists a negligible function $\varepsilon:=\varepsilon(\lambda)$ such that there exists a ``successful'' simulator $\simulator$ for which $\env$ outputs $1$ with probability $1-\varepsilon$ in the ideal world. First, assume that CDH is hard over $(\mathbb{G}, p, h)$. Consider reduction $\mathcal{R}$ that runs the simulator $\simulator$ as follows (note that $\mathcal{R}$ plays the role of the environment $\env$, the PAKE functionality $\pake$, and the dummy parties $\user$ and $\server$ combined):
 	
 	% \nam{I'm not completely convinced if this is the best way to write this; the proof is correct in the essentials, but I think this needs to be rewritten since I'm not sure what formal part $\mathcal{R}$ is playing here...}
 	
@@ -292,26 +298,72 @@ By inspecting the game-based security proof of the KOY protocol, one can see tha
 		$$\sk_S = A^{x_2}B^{y_2}(C')^{z_2}D^{w_2}K^{r_2}=A^{x_2}B^{y_2}(h^b)^{a}D^{w_2}K^{r_2}$$
 		as what $\env$ would compute in its step 4; $\env$ outputs 1 if and only if $\sk_S = \sk$, so by our assumption on $\simulator$, in $\mathcal{R}$'s interaction with $\simulator$, $\sk_S = \sk$ with probability $1-\varepsilon$. But this gives $h' = h^{ab}$ with probability $1-\varepsilon$, i.e., $\mathcal{R}$ wins with probability $1-\varepsilon$, contradicting the hardness of fixed-CDH.
 \end{proof}
-	
-	
-	\textcolor{gray}{// everything below is deprecated comments.}\\
 
 	
-	First, we will assume the hardness of CDH over the group $(\mathbb{G},g,p)$. Let Let $g^a,g^b$ be two elements where $a,b\xleftarrow{\$}\mathbb{Z}_p$. 
 	
-	Formally, assume that there exists a simulator $\simulator$ such that $\env$ always outputs $1$ in the ideal world. \xjy{Formally we cannot really assume this; need to say ``such that $\env$ outputs $1$ with all but negligible probability in the ideal world''. I am not entirely sure for now, but we probably need to be more specific and say ``there is a negligible function $\epsilon$ such that $\env$ outputs $1$ with probability $1-\epsilon$ in the ideal world.''} We will use this simulator to compute $g^{ab}$. \xjy{We will construct a reduction $\mathcal{R}$ that uses $\simulator$ to solve the CDH problem in $(\mathbb{G},g,p)$. (I think it's better to explicitly mention a reduction.)} Our technique works as follows: first, we send \xjy{everywhere you say ``we do something'', change it to ``$\mathcal{R}$ does something''} $(\newsession,\mathsf{sid},\user,\server,\pw)$ to $\pake$ \xjy{conceptually I think $\mathcal{R}$ should play the role of $\pake$ (if you are not sure what I am talking about, chat with me in our meeting or on Slack)} and recieve $\msg{1} = \mathsf{sid}|\mathsf{VK}|A|B|C|D$ in response from $\simulator$. We set $\pw = C/g^b$ and sample $x_2,y_2,z_2,w_2,r_2\xleftarrow{\$}\mathbb{Z}_q$. 
-	\begin{align*}
-		\alpha'&:=H(PIDs|A|B|C|D)\\
-		E &:= g_1^{x_2}g_2^{y_2}h^{z_2}(cd^{\alpha'})^{w_2}\\
-		F &:= g_1^{r_2}\\
-		G &:= g_2^{r_2}\\
-		I &:= h^{r_2}\cdot\pw\\
-		\beta &:= H(\msg{1}|Server|E|F|G|I)\\
-		J &:= (cd^{\beta})^{w_2}
-	\end{align*}
-	i.e., the same computation as that of the honest server with a special choice of $\pw$. Forwarding this to $\pake$, we recieve $\msg{3}=K|\mathsf{Sig}$ and $(\mathsf{sid}, \sk)$ in return.
+	\section{Preliminaries}
+	
+	\subsection{Cramer-Shoup Encryption Scheme}
+	
+	\begin{figure}[h]
+		\begin{framed}
+			% [
+			%			linecolor=black,
+			%			linewidth=1pt,
+			%			roundcorner=5pt,
+			%			backgroundcolor=white,
+			%			userdefinedwidth=\textwidth,
+			%			]
+			
+			\vspace{2mm}
+			\textbf{Key Generation:} On input $1^\lambda$ from $\lambda\in\mathbb{Z}_{\geq 0}$, compute
+			\begin{align*}
+				&\Gamma[\hat{\mathbb{G}}, \mathbb{G}, g, q]\rgets\mathcal{G}(1^\lambda); \hk\rgets\mathsf{HF.Keyspace}_{\lambda,\Gamma}\\
+				&w\rgets\mathbb{Z}_q^{*}; x_1,x_2,y_1,y_2,z_1,z_2\rgets\mathbb{Z}_q\\
+				&g_1\gets g; g_2\gets g^{w}; c = g_1^{x_1}g_2^{x_2}; d\gets g_1^{y_1}g_2^{y_2}; h\gets g_1^{z_1}g_2^{z_2}
+			\end{align*}
+			and output the public key $$\PK = (\Gamma,\hk,g_1,g_2,c,d,h)$$ and the secret key $$\SK = (\Gamma, \hk, x_1,x_2,y_1,y_2,z_1,z_2).$$
+			
+			\vspace{4mm}
+			
+			\textbf{Encryption:} Given $1^\lambda$ for $\lambda\in\mathbb{Z}_{\geq 0}$, a public key $$\PK=(\Gamma,\hk,g_1,g_2,c,d,h)\in[\mathcal{G}_\lambda]\times[\mathsf{HF.Keyspace}_{\lambda,\Gamma}]\times\G^4,$$ a message $m\in G$ and a label $\lab$, compute\\
+			
+			\begin{itemize}
+				\item[]\textbf{$\estep{1}$}: $r\rgets\mathbb{Z}_q$;
+				\item[]\textbf{$\estep{2}$}: $u_1\rgets g_1^r$;
+				\item[]\textbf{$\estep{3}$}: $u_2\rgets g_2^r$;
+				\item[]\textbf{$\estep{4}$}: $e'\gets h^r$;
+				\item[]\textbf{$\estep{5}$}: $e\gets e'\cdot m$;
+				\item[]\textbf{$\estep{6}$}: $\alpha\gets\mathsf{HF}^{\lambda,\Gamma}_{\hk}(\lab, u_1, u_2, e)$;
+				\item[]\textbf{$\estep{7}$}: $v\gets (cd^\alpha)^r$;\\
+			\end{itemize}
+		
+			and output the ciphertext $\psi = (u_1, u_2, e, v)$.
+			
+			\vspace{4mm}
+			
+			\textbf{Decryption:} Given $1^\lambda$ for $\lambda\in\mathbb{Z}_{\geq 0}$, a secret key $$\SK=(\Gamma, \hk, x_1,x_2,y_1,y_2,z_1,z_2)\in[\mathcal{G}_\lambda]\times[\mathsf{HF.Keyspace}_{\lambda,\Gamma}]\times\mathbb{Z}_q^{6},$$
+			along with a ciphertext $\psi$ and a label $\lab$, do the following.\\
+			
+			\begin{itemize}
+				\item[]\textbf{$\dstep{1}$}: Parse $\psi$ as a $4$-tuple $(u_1,u_2,e,v)\in\G^4$, output $\reject$ and halt if $\psi$ is not of this form.
+				\item[]\textbf{$\dstep{2}$}: Test if $u_1, u_2$ and $e$ belong to $\G$; output $\reject$ and halt if this is not the case.
+				\item[]\textbf{$\dstep{3}$}: Compute $v'\gets\mathsf{HF}^{\lambda,\Gamma}_{\hk}(\lab,u_1,u_2,e)$.
+				\item[]\textbf{$\dstep{4}$}: Test if $v = u_1^{x_1+y_1\alpha}u_2^{x_2+y_2\alpha};$ output $\reject$ and halt if this is not the case.
+				\item[]\textbf{$\dstep{5}$}: Compute $e' = u_1^{z_1}u_2^{z_2}$.
+				\item[]\textbf{$\dstep{6}$}: Compute $m\gets e\cdot {e'}^{-1}$ and output $m$.
+			\end{itemize}
+			
+			
+		\end{framed}
+		\caption{The Cramer-Shoup Encryption Scheme with Labels.}
+		\label{fig:cs03}
+	\end{figure}
+	
+	
 
-	
+	\bibliographystyle{alpha}
+	\bibliography{references}
 	
 	
 	\pagebreak
@@ -321,7 +373,7 @@ By inspecting the game-based security proof of the KOY protocol, one can see tha
 	
 	In this section we prove the delayed-reveal-CCA security of the Cramer-Shoup Cryptosystem. We first start by defining the delayed-reveal-CCA game.
 	
-		\begin{figure}[h]
+	\begin{figure}[h]
 		\begin{framed}
 			% [
 			%			linecolor=black,
@@ -381,9 +433,46 @@ By inspecting the game-based security proof of the KOY protocol, one can see tha
 
 	This should complete the proof. \nam{Complete the whole proof.}
 	
-%	\bibliographystyle{alpha}
-%	\bibliography{references}
+	\nam{Full proof begins here. First explain notation, then we proceed as follows.}
 	
+	The overall strategy of our proof is borrowed from that in Cramer and Shoup's paper \cite{cs01}. We will borrow the same notation (\nam{explain this}) and proceed through a sequence of games. Apart from certain changes, the nature of our games will be similar to those in the original paper. 
+	
+	We recall the following lemma from \cite{cs01}.
+	
+	\begin{lemma}
+		Let $U_1$, $U_2$ and $F$ be events defined on some probability space. Suppose that the event $U_1\wedge\neg F$ occurs iff $U_2\wedge\neg F$ occurs. Then $|\Pr[U_1]-\Pr[U_2]|\leq\Pr[F]$.
+	\end{lemma}
+
+	We now proceed to describe the games in detail. Game $\game_0$ is the original attack game.
+	
+	\textbf{Game $\game_1$.} This game is the same as $\game_1$ of \cite{cs01}. 
+	
+	We modify game $\game_0$ to obtain the new game, which is identical except for a small modification to the encryption oracle. Instead of using the encryption algorithm as given to compute the target ciphertext $\psi^{*}$, we use a modified encryption algorithm, in which the steps $\estep{4}$ and $\estep{7}$ are replaced by 
+	\begin{itemize}
+		\item[] $\estep{4}': e'\gets u_1^{z_1}u_2^{z_1}$;
+		\item[] $\estep{7}': v\gets u_1^{x_1+y_1\alpha}u_2^{x_2+y_2\alpha}$.
+	\end{itemize}
+	These changes are purely conceptual and the values of $e'^{*}$ and $v^{*}$ are exactly the same in both games. It follows that $$\Pr[T_0]=\Pr[T_1].$$
+	
+	\textbf{Game $\game_2$.} This is our first new game. This game is identical to $\game_1$ with the following modification.
+	
+	We modify the \textit{encryption} oracle in Stage $3$ such that along with a ciphertext $\sigma^{*}$, it also outputs the \textit{auxiliary information} $\aux_1 = (g_1^{r^2}, g_2^{r^2}) = (u_1^{*r}, u_2^{*r})$. Furthermore, we also modify the \textit{auxiliary} oracle such that it no longer outputs the previous string, instead outputting only $\aux_2 = (x_1,x_2,y_1,y_2)$. 
+	
+	Our analysis of this game is simple. Note that by providing the adversary the values $(g_1^{r^2}, g_2^{r^2})$ \textit{before} it can no longer make decryption oracle queries, we can only increase the power (and hence the advantage) of the adversary. It follows that $\drcca_1(\lambda)\leq\drcca_2(\lambda)$. Rephrasing, we can see that $$|\Pr[T_1]-1/2|\leq|\Pr[T_2]-1/2|$$ and hence it is enough to show that $|\Pr[T_2]-1/2|\leq\negl(\lambda)$. The assertion will follow immediately.\\
+	
+	\textbf{Game $\game_3$.} In this game we again modify the encryption oracle. Instead of outputting the ciphertext $(\psi^{*}, \aux_1) = ((u_1^{*}, u_2^{*}, e^{*}, v^{*}), (g_1^{r^2}, g_2^{r^2}))$, the oracle samples a uniform $s$ from $\mathbb{Z}_{q}$ and outputs $(\psi^{*}, \aux_1) = ((u_1^{*}, u_2^{*}, e^{*}, v^{*}), (g_1^{s}, g_2^{r^2}))$. 
+	
+	Note that the only difference between the games $\game_2$ and $\game_3$ is that the tuple $(g_1, u_1, \aux_1[0])$ is a uniformly distributed SDH tuple in $\game_2$ while it is a uniformly distributed tuple in $\game_3$. It is thus immediately clear that the indistinguishability of the two games follows from the hardness of SDH. More specifically, we claim the following.
+	
+	\begin{lemma}
+		There exists some polynomial-time probabilistic algorithm $\adv_\mathsf{SDH}$ such that $$|\Pr[T_3]-\Pr[T_2]|\leq\mathsf{AdvSDH}_{\adv_\mathsf{SDH}, \mathcal{G}}(\lambda, \Gamma).$$
+	\end{lemma}
+
+	\nam{Write the SDH assumption in the preliminaries, then rephrase this part of the argument depending on how it is defined there. Complete the proof as well.}
+	
+	\textbf{Game $\game_4$.} We modify the encryption algorithm again. Instead of outputting the ciphertext $(\psi^{*}, \aux_1) = ((u_1^{*}, u_2^{*}, e^{*}, v^{*}), (g_1^{s}, g_2^{r^2}))$, the oracle samples a uniform $s'$ from $\mathbb{Z}_{q}$ and outputs $(\psi^{*}, \aux_1) = ((u_1^{*}, u_2^{*}, e^{*}, v^{*}), (g_1^{s}, g_2^{s'}))$. 
+	
+	The proof essentially follows the same as that of the previous game, and can be omitted.
 \end{document}
 
 

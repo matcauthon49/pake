@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (MiKTeX 22.10) (preloaded format=xelatex 2022.11.14)  30 OCT 2024 19:05
+This is XeTeX, Version 3.141592653-2.6-0.999994 (MiKTeX 22.10) (preloaded format=xelatex 2022.11.14)  6 NOV 2024 22:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -728,7 +728,14 @@ Package cleveref Info: `algorithmicx' support loaded on input line 3120.
 z/libraries\tikzlibrarypositioning.code.tex
 File: tikzlibrarypositioning.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 )
-(C:\Users\naman\AppData\Local\Programs\MiKTeX\tex/latex/fancyhdr\fancyhdr.sty
+(C:\Users\naman\AppData\Local\Programs\MiKTeX\tex/latex/parskip\parskip.sty
+Package: parskip 2021-03-14 v2.0h non-zero parskip adjustments
+
+(C:\Users\naman\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.sty
+Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count314
+)) (C:\Users\naman\AppData\Local\Programs\MiKTeX\tex/latex/fancyhdr\fancyhdr.st
+y
 Package: fancyhdr 2022/05/18 v4.0.3 Extensive control of page headers and foote
 rs
 \f@nch@headwidth=\skip62
@@ -742,21 +749,20 @@ rs
 \f@nch@O@orf=\skip70
 )
 Package hyperref Info: Option `colorlinks' set `true' on input line 41.
-\c@theorem=\count314
-\c@lemma=\count315
-\c@inequality=\count316
-\c@definition=\count317
-
+\c@theorem=\count315
+\c@lemma=\count316
+\c@inequality=\count317
+\c@definition=\count318
 (C:\Users\naman\AppData\Local\Programs\MiKTeX\tex/generic/babel\babel.sty
 Package: babel 2022/07/20 3.78 The Babel package
-\babel@savecnt=\count318
+\babel@savecnt=\count319
 \U@D=\dimen273
 \l@unhyphenated=\language79
 
 (C:\Users\naman\AppData\Local\Programs\MiKTeX\tex/generic/babel\xebabel.def
 (C:\Users\naman\AppData\Local\Programs\MiKTeX\tex/generic/babel\txtbabel.def))
 \bbl@readstream=\read3
-\bbl@dirlevel=\count319
+\bbl@dirlevel=\count320
 
 *************************************
 * Local config file bblopts.cfg used
@@ -783,40 +789,40 @@ Package babel Info: Importing font and identification data for english
 (C:\Users\naman\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-xet
 ex.def
 File: l3backend-xetex.def 2022-08-23 L3 backend support: XeTeX
-\g__graphics_track_int=\count320
+\g__graphics_track_int=\count321
 \l__pdf_internal_box=\box65
-\g__pdf_backend_object_int=\count321
-\g__pdf_backend_annotation_int=\count322
-\g__pdf_backend_link_int=\count323
+\g__pdf_backend_object_int=\count322
+\g__pdf_backend_annotation_int=\count323
+\g__pdf_backend_link_int=\count324
 ) (notes.aux)
 \openout1 = `notes.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 129.
-LaTeX Font Info:    ... okay on input line 129.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 129.
-LaTeX Font Info:    ... okay on input line 129.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 129.
-LaTeX Font Info:    ... okay on input line 129.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 129.
-LaTeX Font Info:    ... okay on input line 129.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 129.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 135.
+LaTeX Font Info:    ... okay on input line 135.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 135.
+LaTeX Font Info:    ... okay on input line 135.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 135.
+LaTeX Font Info:    ... okay on input line 135.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 135.
+LaTeX Font Info:    ... okay on input line 135.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 135.
 LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 1
-29.
+35.
 
 (C:\Users\naman\AppData\Local\Programs\MiKTeX\tex/latex/base\ts1cmr.fd
 File: ts1cmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 129.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 129.
-LaTeX Font Info:    ... okay on input line 129.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 129.
-LaTeX Font Info:    ... okay on input line 129.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 129.
-LaTeX Font Info:    ... okay on input line 129.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 129.
-LaTeX Font Info:    ... okay on input line 129.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 129.
-LaTeX Font Info:    ... okay on input line 129.
+LaTeX Font Info:    ... okay on input line 135.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 135.
+LaTeX Font Info:    ... okay on input line 135.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 135.
+LaTeX Font Info:    ... okay on input line 135.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 135.
+LaTeX Font Info:    ... okay on input line 135.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 135.
+LaTeX Font Info:    ... okay on input line 135.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 135.
+LaTeX Font Info:    ... okay on input line 135.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
@@ -852,101 +858,92 @@ LaTeX Font Info:    ... okay on input line 129.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring ON on input line 129.
+Package hyperref Info: Link coloring ON on input line 135.
 (notes.out) (notes.out)
 \@outlinefile=\write4
 \openout4 = `notes.out'.
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 131
+LaTeX Font Info:    Trying to load font information for U+msa on input line 137
 .
 
 (C:\Users\naman\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 131
+LaTeX Font Info:    Trying to load font information for U+msb on input line 137
 .
 
 (C:\Users\naman\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Underfull \hbox (badness 10000) in paragraph at lines 136--137
-
- []
-
-
-Overfull \hbox (8.63803pt too wide) in paragraph at lines 145--146
+Overfull \hbox (8.63803pt too wide) in paragraph at lines 151--152
 []\TU/lmr/m/n/10 Symmetrically, $[]$ upon receiving $\OT1/cmr/m/n/10 (\OML/cmm/
 m/it/10 E; [][]\OT1/cmr/m/n/10 )$ \TU/lmr/m/n/10 samples its own ‘Diffie–Hellma
 n exponents’ $\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 x[]; y[]; z[]; w[]\OT1/cmr/m/n/
 10 )$
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 159--160
-
- []
-
 [1
 
-]
-Underfull \hbox (badness 10000) in paragraph at lines 168--169
+] [2] [3]
 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 170--171
-
- []
-
-[2]
-Underfull \hbox (badness 10000) in paragraph at lines 188--190
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 204--205
-
- []
-
-[3]
-Underfull \hbox (badness 10000) in paragraph at lines 206--207
-
- []
-
-
-LaTeX Warning: Citation `C:BauFucLos20' on page 4 undefined on input line 210.
+LaTeX Warning: Citation `C:BauFucLos20' on page 4 undefined on input line 216.
 
 Package hyperref Info: bookmark level for unknown theorem defaults to 0 on inpu
-t line 224.
-[4]
-Underfull \hbox (badness 10000) in paragraph at lines 229--230
+t line 230.
+[4] [5]
+Underfull \hbox (badness 10000) in paragraph at lines 329--330
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 265--266
+Underfull \hbox (badness 10000) in paragraph at lines 338--339
 
  []
 
-[5]
-Underfull \hbox (badness 10000) in paragraph at lines 297--298
+
+Underfull \hbox (badness 10000) in paragraph at lines 345--347
 
  []
 
-[6] [7] [8] [9] (notes.aux)
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+(notes.bbl) [6]
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+Package hyperref Info: bookmark level for unknown lemma defaults to 0 on input 
+line 443.
+[7]
+Underfull \hbox (badness 10000) in paragraph at lines 461--462
+
+ []
+
+
+Overfull \hbox (49.28949pt too wide) in paragraph at lines 473--474
+\OT1/cmr/m/n/10 ((\OML/cmm/m/it/10 u[]; u[]; e[]; v[]\OT1/cmr/m/n/10 )\OML/cmm/
+m/it/10 ; \OT1/cmr/m/n/10 (\OML/cmm/m/it/10 g[]; g[]\OT1/cmr/m/n/10 ))$\TU/lmr/
+m/n/10 , the oracle samples a uniform $\OML/cmm/m/it/10 s[]$ \TU/lmr/m/n/10 fro
+m $\U/msb/m/n/10 Z[]$ \TU/lmr/m/n/10 and outputs $\OT1/cmr/m/n/10 (\OML/cmm/m/i
+t/10  []; [][]\OT1/cmr/m/n/10 ) = ((\OML/cmm/m/it/10 u[]; u[]; e[]; v[]\OT1/cmr
+/m/n/10 )\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 (\OML/cmm/m/it/10 g[]; g[]\OT1/cmr/
+m/n/10 ))$\TU/lmr/m/n/10 . 
+ []
+
+[8] [9] [10] (notes.aux)
 
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `notes.out' has not changed.
-(rerunfilecheck)             Checksum: 974DF64E0D1A77058864230961849C10;871.
+(rerunfilecheck)             Checksum: 5B7E12DE3AFF2233CD4539E87B0E5DFA;1192.
  ) 
 Here is how much of TeX's memory you used:
- 24376 strings out of 410636
- 454779 string characters out of 2815793
- 775863 words of memory out of 3000000
- 45053 multiletter control sequences out of 15000+600000
- 477580 words of font info for 74 fonts, out of 8000000 for 9000
+ 24756 strings out of 410636
+ 459834 string characters out of 2815793
+ 787793 words of memory out of 3000000
+ 45422 multiletter control sequences out of 15000+600000
+ 478507 words of font info for 77 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 84i,15n,80p,2009b,510s stack positions out of 10000i,1000n,20000p,200000b,80000s
+ 84i,21n,80p,2007b,504s stack positions out of 10000i,1000n,20000p,200000b,80000s
 
-Output written on notes.pdf (9 pages).
+Output written on notes.pdf (10 pages).
