@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (MiKTeX 22.10) (preloaded format=xelatex 2022.11.14)  6 NOV 2024 22:58
+This is XeTeX, Version 3.141592653-2.6-0.999994 (MiKTeX 22.10) (preloaded format=xelatex 2022.11.14)  9 NOV 2024 12:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -723,6 +723,10 @@ LaTeX Info: Redefining \labelcref on input line 2370.
 LaTeX Info: Redefining \labelcpageref on input line 2370.
 Package cleveref Info: `amsthm' support loaded on input line 3026.
 Package cleveref Info: `algorithmicx' support loaded on input line 3120.
+Package cleveref Info: always capitalise cross-reference names on input line 78
+25.
+Package cleveref Info: always capitalise cross-reference names on input line 78
+52.
 )
 (C:\Users\naman\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tik
 z/libraries\tikzlibrarypositioning.code.tex
@@ -797,32 +801,32 @@ File: l3backend-xetex.def 2022-08-23 L3 backend support: XeTeX
 ) (notes.aux)
 \openout1 = `notes.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 135.
-LaTeX Font Info:    ... okay on input line 135.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 135.
-LaTeX Font Info:    ... okay on input line 135.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 135.
-LaTeX Font Info:    ... okay on input line 135.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 135.
-LaTeX Font Info:    ... okay on input line 135.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 135.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 144.
+LaTeX Font Info:    ... okay on input line 144.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 144.
+LaTeX Font Info:    ... okay on input line 144.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 144.
+LaTeX Font Info:    ... okay on input line 144.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 144.
+LaTeX Font Info:    ... okay on input line 144.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 144.
 LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 1
-35.
+44.
 
 (C:\Users\naman\AppData\Local\Programs\MiKTeX\tex/latex/base\ts1cmr.fd
 File: ts1cmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 135.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 135.
-LaTeX Font Info:    ... okay on input line 135.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 135.
-LaTeX Font Info:    ... okay on input line 135.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 135.
-LaTeX Font Info:    ... okay on input line 135.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 135.
-LaTeX Font Info:    ... okay on input line 135.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 135.
-LaTeX Font Info:    ... okay on input line 135.
+LaTeX Font Info:    ... okay on input line 144.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 144.
+LaTeX Font Info:    ... okay on input line 144.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 144.
+LaTeX Font Info:    ... okay on input line 144.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 144.
+LaTeX Font Info:    ... okay on input line 144.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 144.
+LaTeX Font Info:    ... okay on input line 144.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 144.
+LaTeX Font Info:    ... okay on input line 144.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
@@ -858,24 +862,24 @@ LaTeX Font Info:    ... okay on input line 135.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring ON on input line 135.
+Package hyperref Info: Link coloring ON on input line 144.
 (notes.out) (notes.out)
 \@outlinefile=\write4
 \openout4 = `notes.out'.
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 137
+LaTeX Font Info:    Trying to load font information for U+msa on input line 146
 .
 
 (C:\Users\naman\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 137
+LaTeX Font Info:    Trying to load font information for U+msb on input line 146
 .
 
 (C:\Users\naman\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Overfull \hbox (8.63803pt too wide) in paragraph at lines 151--152
+Overfull \hbox (8.63803pt too wide) in paragraph at lines 160--161
 []\TU/lmr/m/n/10 Symmetrically, $[]$ upon receiving $\OT1/cmr/m/n/10 (\OML/cmm/
 m/it/10 E; [][]\OT1/cmr/m/n/10 )$ \TU/lmr/m/n/10 samples its own ‘Diffie–Hellma
 n exponents’ $\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 x[]; y[]; z[]; w[]\OT1/cmr/m/n/
@@ -886,64 +890,69 @@ n exponents’ $\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 x[]; y[]; z[]; w[]\OT1/cmr/m/n
 
 ] [2] [3]
 
-LaTeX Warning: Citation `C:BauFucLos20' on page 4 undefined on input line 216.
+LaTeX Warning: Citation `C:BauFucLos20' on page 4 undefined on input line 225.
 
 Package hyperref Info: bookmark level for unknown theorem defaults to 0 on inpu
-t line 230.
-[4] [5]
-Underfull \hbox (badness 10000) in paragraph at lines 329--330
+t line 239.
+[4] [5] [6]
+Underfull \hbox (badness 10000) in paragraph at lines 378--379
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 338--339
+Underfull \hbox (badness 10000) in paragraph at lines 387--388
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 345--347
+Underfull \hbox (badness 10000) in paragraph at lines 394--396
 
  []
 
+(notes.bbl) [7] [8]
+Package hyperref Info: bookmark level for unknown definition defaults to 0 on i
+nput line 468.
+ [9]
 
-LaTeX Warning: `h' float specifier changed to `ht'.
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\new@ifnextchar' on input line 517.
 
-(notes.bbl) [6]
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
+[10]
 Package hyperref Info: bookmark level for unknown lemma defaults to 0 on input 
-line 443.
-[7]
-Underfull \hbox (badness 10000) in paragraph at lines 461--462
+line 522.
+
+Underfull \hbox (badness 10000) in paragraph at lines 540--541
 
  []
 
 
-Overfull \hbox (49.28949pt too wide) in paragraph at lines 473--474
-\OT1/cmr/m/n/10 ((\OML/cmm/m/it/10 u[]; u[]; e[]; v[]\OT1/cmr/m/n/10 )\OML/cmm/
-m/it/10 ; \OT1/cmr/m/n/10 (\OML/cmm/m/it/10 g[]; g[]\OT1/cmr/m/n/10 ))$\TU/lmr/
-m/n/10 , the oracle samples a uniform $\OML/cmm/m/it/10 s[]$ \TU/lmr/m/n/10 fro
-m $\U/msb/m/n/10 Z[]$ \TU/lmr/m/n/10 and outputs $\OT1/cmr/m/n/10 (\OML/cmm/m/i
-t/10  []; [][]\OT1/cmr/m/n/10 ) = ((\OML/cmm/m/it/10 u[]; u[]; e[]; v[]\OT1/cmr
-/m/n/10 )\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 (\OML/cmm/m/it/10 g[]; g[]\OT1/cmr/
-m/n/10 ))$\TU/lmr/m/n/10 . 
+Overfull \hbox (47.87645pt too wide) in paragraph at lines 551--553
+\TU/lmr/m/n/10 Using the above, it generates a public key $[] \OT1/cmr/m/n/10 =
+ (^^@\OML/cmm/m/it/10 ; []; g; g[]; c; d; h\OT1/cmr/m/n/10 )$ \TU/lmr/m/n/10 an
+d a secret key $[] \OT1/cmr/m/n/10 = (^^@\OML/cmm/m/it/10 ; []; x[]; x[]; y[]; 
+y[]; z[]; z[]\OT1/cmr/m/n/10 )$\TU/lmr/m/n/10 ,
  []
 
-[8] [9] [10] (notes.aux)
+[11] [12] (notes.aux)
 
 LaTeX Warning: There were undefined references.
 
-Package rerunfilecheck Info: File `notes.out' has not changed.
-(rerunfilecheck)             Checksum: 5B7E12DE3AFF2233CD4539E87B0E5DFA;1192.
+
+Package rerunfilecheck Warning: File `notes.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `notes.out':
+(rerunfilecheck)             Before: CF3932A1F6833FFFBDEB576FCA7232CD;3131
+(rerunfilecheck)             After:  9F452CD4ACB150D4391C7C4B1175259F;3136.
  ) 
 Here is how much of TeX's memory you used:
- 24756 strings out of 410636
- 459834 string characters out of 2815793
- 787793 words of memory out of 3000000
- 45422 multiletter control sequences out of 15000+600000
+ 24771 strings out of 410636
+ 460070 string characters out of 2815793
+ 783829 words of memory out of 3000000
+ 45437 multiletter control sequences out of 15000+600000
  478507 words of font info for 77 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  84i,21n,80p,2007b,504s stack positions out of 10000i,1000n,20000p,200000b,80000s
 
-Output written on notes.pdf (10 pages).
+Output written on notes.pdf (12 pages).

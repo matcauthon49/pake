@@ -13,7 +13,7 @@
 \usepackage{algpseudocode}
 \usepackage{multirow}
 \usepackage{framed}
-\usepackage{cleveref} % allow for \cref command
+\usepackage[capitalise]{cleveref} % allow for \cref command
 
 
 \usetikzlibrary{positioning}
@@ -124,10 +124,19 @@
 \newcommand{\lab}{\mathsf{label}}
 
 \newcommand{\drcca}{\mathsf{AdvDRCCA}}
+\newcommand{\advsdh}{\mathsf{AdvSDH}}
+\newcommand{\advddh}{\mathsf{AdvDDH}}
 \newcommand{\game}{\mathbf{G}}
 \newcommand{\estep}[1]{\mathbf{E#1}}
 \newcommand{\dstep}[1]{\mathbf{D#1}}
 \newcommand{\reject}{\mathsf{reject}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newcommand{\randdh}{\mathsf{RandDH}}
+\newcommand{\ddh}{\mathsf{DH}}
+
+\newcommand{\randsdh}{\mathsf{RandSDH}}
+\newcommand{\sdh}{\mathsf{SDH}}
 
 \def\xjy#1{\textcolor{blue}{Jiayu: #1}}
 \def\nam#1{\textcolor{red}{Naman: #1}}
@@ -303,9 +312,49 @@ By inspecting the game-based security proof of the KOY protocol, one can see tha
 	
 	\section{Preliminaries}
 	
+	\subsection{Assumptions}
+	
+	Let $\mathcal{G}$ be an algorithm that on input $1^\lambda$ uniformly samples from a sequence of group distributions $(S_\lambda)_{\lambda\in\Z\geq 0}$ of group distributions of the form $\Gamma[\hat{\mathbb{G}}, \mathbb{G}, g, q]\in[S_\lambda]$, where $\hat{\mathbb{G}}$ is a finite multiplicative abelian group, $\G$ is a prime-order subgroup, $g$ is a generator of $\G$ and $q$ is the order of $\G$. We assume that group operations in $\G$ can be done in (expected) polynomial time in $\G$, including exponentiation, selecting a random group element, and membership. 
+	
+	Note that a random group element can be chosen by selecting $x\rgets\Z_q$ and computing $g^x$. We define $\bar\G$ to be $\G\setminus\{1\}$; since $q$ is prime, $\bar\G$ is the set of generators of $\G$. If $x\rgets\bar\G$, then we obtain a random generator.
+	
+	\subsubsection{The DDH Assumption}
+	
+	Let $\mathcal{G}$ be as above. We define for each $\lambda\in\Z_{\geq 0}$ and for all $\Gamma[\hat\G, \G, g, q]\in[S_\lambda]$ the sets 
+	\begin{equation*}
+		\randdh_{\lambda,\Gamma} := \{(g, g^x, g^y, g^{z}) : x,y\rgets\Z_q^{*}, z\rgets\Z_q\}
+	\end{equation*}
+	and
+	\begin{equation*}
+		\ddh_{\lambda,\Gamma} := \{(g, g^x, g^y, g^{xy}) : x,y\rgets\Z_q^{*}\}.
+	\end{equation*}
+	Where $\ddh_{\lambda,\Gamma}$ is the set of Diffie-Hellman Triples. For any probabilistic polynomial-time distinguishing algorithm $\adv$ and for all $\lambda\in\Z_{\geq 0}$, we define the DDH advantage of $\adv$ against $\mathcal{G}$ at $\lambda$ given $\Gamma$ as
+	\begin{equation*}
+		\advddh_{\mathcal{G},\adv}(\lambda | \Gamma) = \left|\Pr[\adv(1^\lambda,\Gamma,\rho) = 1 : \rho\rgets\randdh_{\lambda,\Gamma}] - \Pr[\adv(1^\lambda,\Gamma,\rho) = 1 : \rho\rgets\ddh_{\lambda,\Gamma}]\right|
+	\end{equation*}
+	The Decisional Diffie-Hellman (DDH) assumption for $\mathcal{G}$ states that for every probabilistic, polynomial-time algorithm $\adv$, there exists some negligible function $\negl$ such that for all $\lambda\in\Z_{\geq 0}$, $$\advddh_{\mathcal{G},\adv}(\lambda | \Gamma)\leq\negl(\lambda)$$ where $\Gamma\rgets[S_\lambda]$.
+	
+	\subsubsection{The SDH Assumption}
+	
+	Let $\mathcal{G}$ be as above. We define for each $\lambda\in\Z_{\geq 0}$ and for all $\Gamma[\hat\G, \G, g, q]\in[S_\lambda]$ the sets 
+	\begin{equation*}
+		\randsdh_{\lambda,\Gamma} := \{(g, g^x, g^{y}) : x,y\rgets\Z_q^{*}\}
+	\end{equation*}
+	and
+	\begin{equation*}
+		\sdh_{\lambda,\Gamma} := \{(g, g^x, g^{x^2}) : x\rgets\Z_q^{*}\}.
+	\end{equation*}
+	Where $\sdh_{\lambda,\Gamma}$ is the set of Square Diffie-Hellman Triples. For any probabilistic polynomial-time distinguishing algorithm $\adv$ and for all $\lambda\in\Z_{\geq 0}$, we define the SDH advantage of $\adv$ against $\mathcal{G}$ at $\lambda$ given $\Gamma$ as
+	\begin{equation*}
+		\advsdh_{\mathcal{G},\adv}(\lambda | \Gamma) = \left|\Pr[\adv(1^\lambda,\Gamma,\rho) = 1 : \rho\rgets\randsdh_{\lambda,\Gamma}] - \Pr[\adv(1^\lambda,\Gamma,\rho) = 1 : \rho\rgets\sdh_{\lambda,\Gamma}]\right|
+	\end{equation*}
+	The Square Diffie-Hellman (DDH) assumption for $\mathcal{G}$ states that for every probabilistic, polynomial-time algorithm $\adv$, there exists some negligible function $\negl$ such that for all $\lambda\in\Z_{\geq 0}$, $$\advsdh_{\mathcal{G},\adv}(\lambda | \Gamma)\leq\negl(\lambda)$$ where $\Gamma\rgets[S_\lambda]$.
+	
+	
+	
 	\subsection{Cramer-Shoup Encryption Scheme}
 	
-	\begin{figure}[h]
+	\begin{figure}[ht!]
 		\begin{framed}
 			% [
 			%			linecolor=black,
@@ -365,15 +414,16 @@ By inspecting the game-based security proof of the KOY protocol, one can see tha
 	\bibliographystyle{alpha}
 	\bibliography{references}
 	
-	
-	\pagebreak
+	\newpage
 	\appendix
 	
-	\section{Cramer-Shoup Security}
+	\section{Security of the Cramer-Shoup Encryption Scheme with Delayed Reveal of the Secret Key}
 	
-	In this section we prove the delayed-reveal-CCA security of the Cramer-Shoup Cryptosystem. We first start by defining the delayed-reveal-CCA game.
+	In this section we prove the delayed-reveal-CCA security of the Cramer-Shoup Cryptosystem. We first start by formally defining the delayed-reveal-CCA game.
 	
-	\begin{figure}[h]
+	\subsection{Security Against Delayed-Reveal Chosen Ciphertext Attack}
+	
+	\begin{figure}[ht!]
 		\begin{framed}
 			% [
 			%			linecolor=black,
@@ -413,29 +463,58 @@ By inspecting the game-based security proof of the KOY protocol, one can see tha
 		\label{fig:dcca}
 	\end{figure}
 
-	We define the delayed-reveal-CCA advantage with auxiliary information $\aux$ of the adversary $\adv$ against $\PKE$ at $\lambda$, denoted as $\drcca(\lambda)$ to be $|\Pr[\sigma = \hat{\sigma}] - 1/2|$ in the above attack game with corresponding value of $\aux$. We say that $\PKE$ is delayed-reveal-CCA secure with auxiliary information $\aux$ if there exists some negligible function $\negl$ such that for all $\lambda$, $$\drcca(\lambda)\leq\negl(\lambda).$$
+	We define the delayed-reveal-CCA advantage with auxiliary information $\aux$ of the adversary $\adv$ against $\PKE$ at $\lambda$, denoted as $\drcca(\lambda)$ to be $|\Pr[\sigma = \hat{\sigma}] - 1/2|$ in the above attack game in \cref{fig:dcca} with corresponding value of $\aux$. Informally, we say that a public-key cryptosystem is delayed-reveal-CCA secure with auxiliary information $\aux$ if the probability that $\sigma = \hat{\sigma}$ is negligible, ie. the adversary is able to correctly guess which message was encrypted with no more than negligible probability. This leads to the formal definition as below.
 	
+	\begin{definition}[Security Against Delayed-Reveal-Chosen Ciphertext Attack (DR-CCA)]
+		Let $\PKE$ be any public-key encryption scheme. We say that $\PKE$ is delayed-reveal-CCA secure with auxiliary information $\aux$ if there exists some negligible function such that for all $\lambda\in\Z_{\geq 0}$, $$\drcca(\lambda)\leq\negl(\lambda).$$
+	\end{definition}
+
+	With this in hand, we can now formally state the theorem.
+
 	\begin{theorem}
-		If the DDH and the SDH assumptions hold for $\mathbb{G}$ and the hash function $H$ is Target Collision-Resistant, then the Cramer-Shoup Encryption Scheme (\nam{to define}) is delayed-reveal-CCA secure with auxiliary information $\aux = (x_1,x_2,y_1,y_2,g_1^{r^2},g_2^{r^2})$.
+		\label{thm:drcca-cs}
+		If the DDH and the SDH assumptions hold for $\mathbb{G}$ and the hash function $H$ is Target Collision-Resistant, then the Cramer-Shoup Encryption Scheme with Labels (\cref{fig:cs03}) is delayed-reveal-CCA secure with auxiliary information $\aux = (x_1,x_2,y_1,y_2,g_1^{r^2},g_2^{r^2})$.
 	\end{theorem}
 
-	\nam{Brief Sketch of the Argument}
+	\subsection{Analysis of DR-CCA Security of the Cramer-Shoup Encryption Scheme}
+
+	\subsubsection{Overview}
+
+	Our argument proceeds very closely to the proof of the CCA-security of the Cramer-Shoup encryption scheme outlined in Section 6.2 of \cite{cs01}. The argument follows a series of games starting at game $\game_0$, which corresponds to the actual attack, and ending at $\game_8$, which is a game in which the ciphertext returned to the adversary is completely independent of the hidden bit $\sigma$. In each game, $\sigma$ takes on identical values. We now define a few helpful variables to quantify the adversary's advantage in each game. Let $T_i$ be the event in game $\game_i$ that $\hat{\sigma}=\sigma$. We will show for each game that $|\Pr[T_{i-1} - \Pr[T_i]]$ is negligible. Game $\game_8$, which is completely independent of $\sigma$, naturally has probability $\Pr[T_8]=1/2$, because in this game the adversary can do no better than a coin toss. We also introduce the variable $\drcca_i(\lambda)$ to represent the \textit{advantage} of the adversary in game $\game_i$, which is defined as $|\Pr[T_i]-1/2|$. Ultimately our goal is to show that $\drcca_0(\lambda)\leq\negl(\lambda)$.
+	
+	The probability is taken over the following mutually independent random variables:	\begin{enumerate}
+		\item The internal coin tosses of $\adv$.
+		\item The values $\hk,w,x_1,x_2,y_1,y_2,z_1,z_2$ generated independently by the key generation algorithm.
+		\item The values $\sigma\in\{0,1\}$ and $r\in\Z_q$ which are generated by the encryption oracle.
+	\end{enumerate}
+	
+	Before continuing formally, we outline a brief sketch of each of the games.
 	
 	\begin{itemize}
-		\item Game 1 is the same.
+		\item In game $\game_1$ we make some technical changes to the encryption algorithm which have no effect on the adversary's view.
 		\item Game 2 sets the $(g_1^{r^2}, g_2^{r^2})$ as an output of the encryption oracle. Note that this can only increase the power of the adversary, as the adversary is also allowed to make decryption queries that involve $(g_1^{r^2}, g_2^{r^2})$. It follows that $|\Pr[T_1]-1/2]|\leq|\Pr[T_2]-1/2|.$
-		\item Game 3 replaces $g_i^{r^2}$ with random values, which follows from SDH.\nam{Think about this more, do the DDH and SDH have to be `compatible'??.}
+		\item Game 3 replaces $g_i^{r^2}$ with random values, which follows from SDH.
 		\item Game 4 is Game 2.
 		\item Game 5 is Game 3.
 		\item Game 6 is Game 4. The argument in lemma $6$ holds even if $X$ is completely public, ie. it only requires $z_1$ and $z_2$ to be uniformly and randomly distributed (and hence `unknown'). This is implicit in lemma $6$ --  we just need to point it out.
 		\item Game 7 is Game 5. The arguments in lemmas $7$ and $8$ hold if certain values of $X$ are unknown, but these values only need to be unknown at the time of the decryption oracle query, which is true. Hence, the probability that a `bad' decryption oracle query is still negligible, and both the lemmas follow (relatively) unchanged.
 	\end{itemize}
 
-	This should complete the proof. \nam{Complete the whole proof.}
+	This completes a description of the games. 
 	
-	\nam{Full proof begins here. First explain notation, then we proceed as follows.}
+	\subsubsection{Notation} Before we proceed to the full proof, we describe some helpful notation. Most of this notation is borrowed from \cite{cs01}. Let $\adv$ be the DR-CCA adversary. We set the security parameter to be $\lambda\in\Z_{\geq 0}$ and the group description $\Gamma[\hat{\G},\G,g,q]\in[S_\lambda]$.
 	
-	The overall strategy of our proof is borrowed from that in Cramer and Shoup's paper \cite{cs01}. We will borrow the same notation (\nam{explain this}) and proceed through a sequence of games. Apart from certain changes, the nature of our games will be similar to those in the original paper. 
+	Suppose that the public key is $(\Gamma,\hk,g_1, g_2, c,d,h)$ and that the secret key is $(\Gamma,\hk,x_1,x_2,y_1,y_2,z_1,z_2)$. Let $w:=\log_{g}g_2$ and define $x,y$ and $z$ as follows: $$x:=x_1+x_2w, y:= y_1+y_2w, z:= z_1+z_2w.$$ In particular, $x=\log_{g}c$, $y=\log_gd$ and $z=\log_g h$.
+	
+	When we deal with ciphertext $\psi$, we also define the following values:
+	\begin{itemize}
+		\item $u_1,u_2,e',e,v\in\G$, where $\psi = (u_1,u_2,e,v)$, with $h = u_1^{z_1}u_2^{z_2}$.
+		\item $r,\hat{r}, \alpha, r_e = \log_ge, r_v = \log_g d$, and $t = x_1r + y_1r\alpha + x_2\hat{r}w + y_2\hat{r}\alpha w$.
+	\end{itemize}
+
+	We will also deal with the target ciphertext $\psi^{*}$. When dealing with this particular ciphertext, we denote each of the variables with a $*$, to obtain $u_1^{*}, u_2^{*}, {e'}^{*}, e^{*}, v^{*}, r^{*},\hat{r}^{*}, \alpha^{*}, r_e^{*}, r_v^{*}, t^{*}.$
+
+	\subsubsection{Proof of \cref{thm:drcca-cs}}
 	
 	We recall the following lemma from \cite{cs01}.
 	
@@ -462,17 +541,35 @@ By inspecting the game-based security proof of the KOY protocol, one can see tha
 	
 	\textbf{Game $\game_3$.} In this game we again modify the encryption oracle. Instead of outputting the ciphertext $(\psi^{*}, \aux_1) = ((u_1^{*}, u_2^{*}, e^{*}, v^{*}), (g_1^{r^2}, g_2^{r^2}))$, the oracle samples a uniform $s$ from $\mathbb{Z}_{q}$ and outputs $(\psi^{*}, \aux_1) = ((u_1^{*}, u_2^{*}, e^{*}, v^{*}), (g_1^{s}, g_2^{r^2}))$. 
 	
-	Note that the only difference between the games $\game_2$ and $\game_3$ is that the tuple $(g_1, u_1, \aux_1[0])$ is a uniformly distributed SDH tuple in $\game_2$ while it is a uniformly distributed tuple in $\game_3$. It is thus immediately clear that the indistinguishability of the two games follows from the hardness of SDH. More specifically, we claim the following.
+	Note that the only difference between the games $\game_2$ and $\game_3$ is that the tuple $(g_1, u_1, \aux_1[0])$ is a uniformly distributed tuple from $\sdh_{\lambda,\Gamma}$ in $\game_2$ while it is a uniformly distributed tuple from $\randsdh_{\lambda,\Gamma}$ in $\game_3$. It is thus immediately clear that the indistinguishability of the two games follows from the hardness of SDH. More specifically, we show the following.
 	
 	\begin{lemma}
-		There exists some polynomial-time probabilistic algorithm $\adv_\mathsf{SDH}$ such that $$|\Pr[T_3]-\Pr[T_2]|\leq\mathsf{AdvSDH}_{\adv_\mathsf{SDH}, \mathcal{G}}(\lambda, \Gamma).$$
+		There exists some polynomial-time probabilistic algorithm $\adv_\mathsf{SDH}$ such that $$|\Pr[T_3]-\Pr[T_2]|\leq\mathsf{AdvSDH}_{\adv_\mathsf{SDH}, \mathcal{G}}(\lambda|\Gamma).$$
 	\end{lemma}
-
-	\nam{Write the SDH assumption in the preliminaries, then rephrase this part of the argument depending on how it is defined there. Complete the proof as well.}
+	\begin{proof}
+		We will describe $\adv_\mathsf{SDH}$ in detail. The algorithm takes in as input $1^\lambda$, a group description $\Gamma[\hat{\G},\G,g,q]\in[S_\lambda]$ and some tuple $(g^a, g^{b})$. The algorithm interacts with the DR-CCA adversary $\adv$. First, it begins by computing
+		$$\hk\rgets\mathsf{HF.Keyspace}_{\lambda, \Gamma}; w\rgets\Z^{*}_q; x_1,x_2,y_1,y_2,z_1,z_2\rgets\Z_q; c\gets g^{x_1+wx_2}; d\gets g^{y_1+wy_2}; h\gets g^{z_1+wz_2}.$$
+		Using the above, it generates a public key $\PK = (\Gamma, \hk, g,g^w, c, d, h)$ and a secret key $\SK = (\Gamma,\hk,x_1,x_2,y_1,y_2,z_1,z_2)$, and passes $\PK$ to $\adv$. We now show the behaviour of $\adv_\mathsf{SDH}$ on encryption and decryption queries. Whenever it receives a ciphertext of the form $\psi = (u_1,u_2,e,v)$ to the decryption oracle, it uses $\SK$ to decrypt and outputs either $\bot$ or some $m$. Whenever $\adv$ submits $(m_0,m_1)$ to the encryption oracle, $\adv_\mathsf{SDH}$ samples a uniform $\sigma\rgets\{0,1\}$ and computes
+		$$u_1^{*} = g^a; u_2^{*} = (g^a)^w; e^{*} = {u_1^{*}}^{z_1}{u_2^{*}}^{z_2}\cdot m_\sigma; v^{*} =\mathsf{HF}_{\hk}^{\lambda,\Gamma}(u_1^{*},u_2^{*},e^{*}); v^{*} = {u_1^{*}}^{x_1+v^{*}y_1}{u_2^{*}}^{x_2+v^{*}y_2}$$ and outputs the ciphertext--auxiliary information pair $(\psi^{*},\aux_1) = ((u_1^{*},u_2^{*},e^{*},v^{*}), (g^{b}, (g^{b})^w).$ On input $\mathsf{halt}$ to the auxiliary oracle, $\adv_\mathsf{SDH}$ outputs $(x_1,x_2,y_1,y_2)$.
+		
+		Once the DR-CCA game has been perfectly simulated, the adversary outputs $1$ if $\hat{\sigma} = \sigma$ and $0$ otherwise. It is clear from the above simulation that for any fixed $\lambda$ and $\Gamma$, 
+		\begin{align*}
+			\Pr[T_2] &= \Pr[\adv_\mathsf{SDH}(1^\lambda,\Gamma,\rho) = 1 : \rho\rgets\sdh_{\lambda,\Gamma}]\\
+			\Pr[T_3] &= \Pr[\adv_\mathsf{SDH}(1^\lambda,\Gamma,\rho) = 1 : \rho\rgets\randsdh_{\lambda,\Gamma}].
+		\end{align*}
+		It immediately follows that 
+		$$|\Pr[T_3]-\Pr[T_2]|\leq\mathsf{AdvSDH}_{\adv_\mathsf{SDH}, \mathcal{G}}(\lambda|\Gamma).$$
+	\end{proof}
 	
-	\textbf{Game $\game_4$.} We modify the encryption algorithm again. Instead of outputting the ciphertext $(\psi^{*}, \aux_1) = ((u_1^{*}, u_2^{*}, e^{*}, v^{*}), (g_1^{s}, g_2^{r^2}))$, the oracle samples a uniform $s'$ from $\mathbb{Z}_{q}$ and outputs $(\psi^{*}, \aux_1) = ((u_1^{*}, u_2^{*}, e^{*}, v^{*}), (g_1^{s}, g_2^{s'}))$. 
+	\textbf{Game $\game_4$.} We modify the encryption algorithm again. Instead of outputting the ciphertext $(\psi^{*}, \aux_1) = ((u_1^{*}, u_2^{*}, e^{*}, v^{*}), (g_1^{s}, g_2^{r^2}))$ as before, the oracle samples a uniform $s'$ from $\mathbb{Z}_{q}$ and outputs $(\psi^{*}, \aux_1) = ((u_1^{*}, u_2^{*}, e^{*}, v^{*}), (g_1^{s}, g_2^{s'}))$. 
 	
 	The proof essentially follows the same as that of the previous game, and can be omitted.
+	
+	\textbf{Game $\game_5$.} This is game $\game_2$ of the proof of \cite{cs01}. We modify the encryption oracle, replacing step $\estep{3}$ of the encryption algorithm with
+	\begin{itemize}
+		\item[] $\estep{3}':$ $\hat{r}\rgets\Z_q\setminus\{r\}; u_2\gets g_2^{\hat{r}}$.
+	\end{itemize}
+	In the games up to $\game_4$ we had 
 \end{document}
 
 
