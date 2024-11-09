@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (MiKTeX 22.10) (preloaded format=xelatex 2022.11.14)  9 NOV 2024 12:27
+This is XeTeX, Version 3.141592653-2.6-0.999994 (MiKTeX 22.10) (preloaded format=xelatex 2022.11.14)  9 NOV 2024 12:54
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -926,33 +926,27 @@ Underfull \hbox (badness 10000) in paragraph at lines 540--541
  []
 
 
-Overfull \hbox (47.87645pt too wide) in paragraph at lines 551--553
+Overfull \hbox (47.87645pt too wide) in paragraph at lines 552--554
 \TU/lmr/m/n/10 Using the above, it generates a public key $[] \OT1/cmr/m/n/10 =
  (^^@\OML/cmm/m/it/10 ; []; g; g[]; c; d; h\OT1/cmr/m/n/10 )$ \TU/lmr/m/n/10 an
 d a secret key $[] \OT1/cmr/m/n/10 = (^^@\OML/cmm/m/it/10 ; []; x[]; x[]; y[]; 
 y[]; z[]; z[]\OT1/cmr/m/n/10 )$\TU/lmr/m/n/10 ,
  []
 
-[11] [12] (notes.aux)
+[11] [12] [13] (notes.aux)
 
 LaTeX Warning: There were undefined references.
 
-
-Package rerunfilecheck Warning: File `notes.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `notes.out':
-(rerunfilecheck)             Before: CF3932A1F6833FFFBDEB576FCA7232CD;3131
-(rerunfilecheck)             After:  9F452CD4ACB150D4391C7C4B1175259F;3136.
+Package rerunfilecheck Info: File `notes.out' has not changed.
+(rerunfilecheck)             Checksum: 9F452CD4ACB150D4391C7C4B1175259F;3136.
  ) 
 Here is how much of TeX's memory you used:
- 24771 strings out of 410636
- 460070 string characters out of 2815793
- 783829 words of memory out of 3000000
- 45437 multiletter control sequences out of 15000+600000
+ 24773 strings out of 410636
+ 460103 string characters out of 2815793
+ 783904 words of memory out of 3000000
+ 45439 multiletter control sequences out of 15000+600000
  478507 words of font info for 77 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  84i,21n,80p,2007b,504s stack positions out of 10000i,1000n,20000p,200000b,80000s
 
-Output written on notes.pdf (12 pages).
+Output written on notes.pdf (13 pages).

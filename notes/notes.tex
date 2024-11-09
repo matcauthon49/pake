@@ -544,6 +544,7 @@ By inspecting the game-based security proof of the KOY protocol, one can see tha
 	Note that the only difference between the games $\game_2$ and $\game_3$ is that the tuple $(g_1, u_1, \aux_1[0])$ is a uniformly distributed tuple from $\sdh_{\lambda,\Gamma}$ in $\game_2$ while it is a uniformly distributed tuple from $\randsdh_{\lambda,\Gamma}$ in $\game_3$. It is thus immediately clear that the indistinguishability of the two games follows from the hardness of SDH. More specifically, we show the following.
 	
 	\begin{lemma}
+		\label{lem:sdh-game}
 		There exists some polynomial-time probabilistic algorithm $\adv_\mathsf{SDH}$ such that $$|\Pr[T_3]-\Pr[T_2]|\leq\mathsf{AdvSDH}_{\adv_\mathsf{SDH}, \mathcal{G}}(\lambda|\Gamma).$$
 	\end{lemma}
 	\begin{proof}
@@ -552,7 +553,7 @@ By inspecting the game-based security proof of the KOY protocol, one can see tha
 		Using the above, it generates a public key $\PK = (\Gamma, \hk, g,g^w, c, d, h)$ and a secret key $\SK = (\Gamma,\hk,x_1,x_2,y_1,y_2,z_1,z_2)$, and passes $\PK$ to $\adv$. We now show the behaviour of $\adv_\mathsf{SDH}$ on encryption and decryption queries. Whenever it receives a ciphertext of the form $\psi = (u_1,u_2,e,v)$ to the decryption oracle, it uses $\SK$ to decrypt and outputs either $\bot$ or some $m$. Whenever $\adv$ submits $(m_0,m_1)$ to the encryption oracle, $\adv_\mathsf{SDH}$ samples a uniform $\sigma\rgets\{0,1\}$ and computes
 		$$u_1^{*} = g^a; u_2^{*} = (g^a)^w; e^{*} = {u_1^{*}}^{z_1}{u_2^{*}}^{z_2}\cdot m_\sigma; v^{*} =\mathsf{HF}_{\hk}^{\lambda,\Gamma}(u_1^{*},u_2^{*},e^{*}); v^{*} = {u_1^{*}}^{x_1+v^{*}y_1}{u_2^{*}}^{x_2+v^{*}y_2}$$ and outputs the ciphertext--auxiliary information pair $(\psi^{*},\aux_1) = ((u_1^{*},u_2^{*},e^{*},v^{*}), (g^{b}, (g^{b})^w).$ On input $\mathsf{halt}$ to the auxiliary oracle, $\adv_\mathsf{SDH}$ outputs $(x_1,x_2,y_1,y_2)$.
 		
-		Once the DR-CCA game has been perfectly simulated, the adversary outputs $1$ if $\hat{\sigma} = \sigma$ and $0$ otherwise. It is clear from the above simulation that for any fixed $\lambda$ and $\Gamma$, 
+		Once the game in $\game_2$ has been perfectly simulated, the adversary outputs $1$ if $\hat{\sigma} = \sigma$ and $0$ otherwise. It is clear from the above simulation that for any fixed $\lambda$ and $\Gamma$, 
 		\begin{align*}
 			\Pr[T_2] &= \Pr[\adv_\mathsf{SDH}(1^\lambda,\Gamma,\rho) = 1 : \rho\rgets\sdh_{\lambda,\Gamma}]\\
 			\Pr[T_3] &= \Pr[\adv_\mathsf{SDH}(1^\lambda,\Gamma,\rho) = 1 : \rho\rgets\randsdh_{\lambda,\Gamma}].
@@ -569,14 +570,44 @@ By inspecting the game-based security proof of the KOY protocol, one can see tha
 	\begin{itemize}
 		\item[] $\estep{3}':$ $\hat{r}\rgets\Z_q\setminus\{r\}; u_2\gets g_2^{\hat{r}}$.
 	\end{itemize}
-	In the games up to $\game_4$ we had 
+	In the games up to $\game_4$ we had $r^{*} = \hat{r}^{*}$, however in game $\game_5$ $r^{*}$ and $\hat{r}^{*}$ are completely independent except that they cannot be equal. Note, however, that like in the previous game, we have a tuple $(g_1, g_2, u_1^{*}, u_2^{*})$ which in game $\game_4$ is uniformly sampled from $\ddh_{\lambda,\Gamma}$ while in game $\game_5$ is uniformly sampled from $\randdh_{\lambda,\Gamma}$. This leads to the following lemma, which says that any distinguisher for the two games immediately gives a statistical distinguisher for the DDH instance.
+	
+	\begin{lemma}
+		There exists some probabilistic-polynomial time algorithm $\adv_\mathsf{DDH}$ such that $$|\Pr[T_5]-\Pr[T_4]|\leq\advddh_{\adv_\mathsf{DDH},\mathcal{G}}(\lambda | \Gamma).$$
+	\end{lemma}
+	\begin{proof}
+		The proof of this lemma is borrowed from \cite{cs01} and follows the same broad argument as that of \cref{lem:sdh-game}. The adversary $\adv_\mathsf{DDH}$ is initiated with $1^\lambda$, a group description $\Gamma$, and a tuple $(g_2, u_1, u_2)\in\G^3$.
+		
+		The adversary $\adv$ is used in the same way, with the decryption and auxiliary oracles having the same description. The only difference is how the encryption oracle responds with the target ciphertext. In this case, when $\adv_\mathsf{DDH}$ receives $(m_0,m_1)$, it computes $\sigma\rgets\{0,1\}$ and the following values:
+		$$e^{*} = {u_1^{*}}^{z_1}{u_2^{*}}^{z_2}\cdot m_\sigma; v^{*} =\mathsf{HF}_{\hk}^{\lambda,\Gamma}(u_1^{*},u_2^{*},e^{*}); v^{*} = {u_1^{*}}^{x_1+v^{*}y_1}{u_2^{*}}^{x_2+v^{*}y_2}.$$
+		The auxiliary information $\aux_1$ is sampled in the same manner, with $g^s$ and $g^{s'}$ uniformly random elements of $\G$.
+		
+		Once the game in $\game_4$ has been perfectly simulated, the adversary outputs $1$ if $\hat{\sigma} = \sigma$ and $0$ otherwise. It is clear from the above simulation that for any fixed $\lambda$ and $\Gamma$, 
+		\begin{align*}
+			\Pr[T_4] &= \Pr[\adv_\mathsf{DDH}(1^\lambda,\Gamma,\rho) = 1 : \rho\rgets\ddh_{\lambda,\Gamma}]\\
+			\Pr[T_5] &= \Pr[\adv_\mathsf{DDH}(1^\lambda,\Gamma,\rho) = 1 : \rho\rgets\randdh_{\lambda,\Gamma}].
+		\end{align*}
+		It immediately follows that 
+		$$|\Pr[T_5]-\Pr[T_4]|\leq\mathsf{AdvDDH}_{\adv_\mathsf{DDH}, \mathcal{G}}(\lambda|\Gamma).$$
+	\end{proof}
+
+	\textbf{Game $\game_6$.} This is game $\game_3$ of the proof of \cite{cs01}. In this game, we modify the decryption oracle. Instead of using the original decryption oracle, we modify the oracle, replacing the steps $\dstep{4}$ and $\dstep{5}$ with:
+	\begin{itemize}
+		\item[]
+	\end{itemize}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 \end{document}
-
-
-
-
-
-
-
-
-
