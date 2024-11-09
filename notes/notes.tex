@@ -491,13 +491,14 @@ By inspecting the game-based security proof of the KOY protocol, one can see tha
 	Before continuing formally, we outline a brief sketch of each of the games.
 	
 	\begin{itemize}
-		\item In game $\game_1$ we make some technical changes to the encryption algorithm which have no effect on the adversary's view.
-		\item Game 2 sets the $(g_1^{r^2}, g_2^{r^2})$ as an output of the encryption oracle. Note that this can only increase the power of the adversary, as the adversary is also allowed to make decryption queries that involve $(g_1^{r^2}, g_2^{r^2})$. It follows that $|\Pr[T_1]-1/2]|\leq|\Pr[T_2]-1/2|.$
-		\item Game 3 replaces $g_i^{r^2}$ with random values, which follows from SDH.
-		\item Game 4 is Game 2.
-		\item Game 5 is Game 3.
-		\item Game 6 is Game 4. The argument in lemma $6$ holds even if $X$ is completely public, ie. it only requires $z_1$ and $z_2$ to be uniformly and randomly distributed (and hence `unknown'). This is implicit in lemma $6$ --  we just need to point it out.
-		\item Game 7 is Game 5. The arguments in lemmas $7$ and $8$ hold if certain values of $X$ are unknown, but these values only need to be unknown at the time of the decryption oracle query, which is true. Hence, the probability that a `bad' decryption oracle query is still negligible, and both the lemmas follow (relatively) unchanged.
+		\item In game $\game_1$ we make some technical changes to the encryption algorithm which have no effect on the adversary's view. After game $\game_5$, the randomness $r$ will be largely meaningless and thus cannot be used for correct encryption. This game ensures that encryption can occur without using $r$.
+		\item Game $\game_2$ moves part of the auxiliary information, $\aux_1 =(g_1^{r^2}, g_2^{r^2})$ as an output of the decryption oracle. This can only increase the power of the adversary, since it is also allowed to make decryption oracle queries that involve the auxiliary information.
+		\item Game $\game_3$ replaces $g_i^{r^2}$ with random values, which follows from SDH. It shows that the auxiliary information $\aux_1$ has no effect on the adversary's advantage.
+		\item Game $\game_4$ is a technical game that completes the argument of $\game_3$.
+		\item Game $\game_5$ replaces $u_2$ with a random value, which follows from DDH. This breaks the correlation between $u_1, u_2$ and $h^r\cdot m_\sigma$, allowing $m_\sigma$ to be replaced by a completely random value in future games.
+		\item Game $\game_6$ is really the core of the proof. In this game the decryption oracle is modified so that it additionally checks whether $u_2$ is indeed $g_2^r$ for some $r$. The indistinguishability of this game from the previous one follows from the fact that the adversary cannot with any nontrivial probability submit a valid ciphertext which does not carry the correlation $(g_1, g_2, h)$ that is given by the public key. In particular, note that $\game_5$ ensures that the target ciphertext $\psi^{*}$ does \textit{not} have that particular correlation. The immediate implication is that the adversary cannot with any nontrivial probability modify the target ciphertext $\psi^{*}$ in such a way that obtains even a different, valid ciphertext, let alone one that provides information about $m_\sigma$. However, the argument of indistinguishability is nontrivial and spreads across more games.
+		\item In game $\game_7$, $m_\sigma$ is replaced by a uniformly random value. We will show that both the advantage of this game, as well as the probability that the adversary is able to come up with some `bad' ciphertext which could have potentially provided information about $m_\sigma$, is negligible.
+		\item Finally, game $\game_8$ bounds the probability of a `bad' ciphertext by modifying the decryption oracle, which now rejects if the adversary is able to reuse the MAC part $v$ of the ciphertext. The indistinguishability argument shows that if the adversary could make this query, then it either (a) broke the hash function, or (b) made an extremely unlikely guess, which it simply does not have enough information to with any nontrivial probability.
 	\end{itemize}
 
 	This completes a description of the games. 
@@ -509,18 +510,12 @@ By inspecting the game-based security proof of the KOY protocol, one can see tha
 	When we deal with ciphertext $\psi$, we also define the following values:
 	\begin{itemize}
 		\item $u_1,u_2,e',e,v\in\G$, where $\psi = (u_1,u_2,e,v)$, with $h = u_1^{z_1}u_2^{z_2}$.
-		\item $r,\hat{r}, \alpha, r_e = \log_ge, r_v = \log_g d$, and $t = x_1r + y_1r\alpha + x_2\hat{r}w + y_2\hat{r}\alpha w$.
+		\item $r,\hat{r} = \log_gu_2, \alpha, r_e = \log_ge, r_v = \log_g d$, and $t = x_1r + y_1r\alpha + x_2\hat{r}w + y_2\hat{r}\alpha w$.
 	\end{itemize}
 
 	We will also deal with the target ciphertext $\psi^{*}$. When dealing with this particular ciphertext, we denote each of the variables with a $*$, to obtain $u_1^{*}, u_2^{*}, {e'}^{*}, e^{*}, v^{*}, r^{*},\hat{r}^{*}, \alpha^{*}, r_e^{*}, r_v^{*}, t^{*}.$
 
 	\subsubsection{Proof of \cref{thm:drcca-cs}}
-	
-	We recall the following lemma from \cite{cs01}.
-	
-	\begin{lemma}
-		Let $U_1$, $U_2$ and $F$ be events defined on some probability space. Suppose that the event $U_1\wedge\neg F$ occurs iff $U_2\wedge\neg F$ occurs. Then $|\Pr[U_1]-\Pr[U_2]|\leq\Pr[F]$.
-	\end{lemma}
 
 	We now proceed to describe the games in detail. Game $\game_0$ is the original attack game.
 	
@@ -593,8 +588,107 @@ By inspecting the game-based security proof of the KOY protocol, one can see tha
 
 	\textbf{Game $\game_6$.} This is game $\game_3$ of the proof of \cite{cs01}. In this game, we modify the decryption oracle. Instead of using the original decryption oracle, we modify the oracle, replacing the steps $\dstep{4}$ and $\dstep{5}$ with:
 	\begin{itemize}
-		\item[]
+		\item[]$\dstep{4}'$: Test if $u_2 = u_1^w$ and $v = u_1^{x+y\alpha}$. Output $\mathsf{reject}$ and halt if this is not the case.
+		\item[]$\dstep{5}'$: $h\gets u_1^z$.
 	\end{itemize}
+	We first notice that the decryption oracle does not make any use of $x_i, y_i, z_i$ except indirectly. It is easy to see that the decryption oracle of game $\game_5$ correctly answers all queries that $\game_6$ does. However, it is possible that $\game_6$ may refuse to answer certain queries. Let $R_6$ be the event that there is some query which is asked to $\game_6$ which would have been answered correctly by $\game_5$, but is rejected by $\game_6$.
+	
+	We recall the following, which is Lemma 4 in \cite{cs01}.
+	
+	\begin{lemma}
+		\label{lem:neg-wedge}
+		Let $U_1$, $U_2$ and $F$ be events defined on some probability space. Suppose that the event $U_1\wedge\neg F$ occurs iff $U_2\wedge\neg F$ occurs. Then $|\Pr[U_1]-\Pr[U_2]|\leq\Pr[F]$.
+	\end{lemma}
+
+	We will apply this lemma in our analysis. Note that the event $T_5\wedge\neg R_6$ and $T_6\wedge\neg R_6$ are identical. By the lemma, we get $$|\Pr[T_3]-\Pr[T_2]|\leq\Pr[R_3]$$ and it suffices to bound $\Pr[R_3]$. This will be done in games $\game_7$ and $\game_8$.
+	
+	\textbf{Game $\game_7$.} This game is identical to $\game_6$, however in this game the message is randomly selected instead of being $m_\sigma$. In particular, we modify the encryption oracle and replace $\estep{5}$ with
+	\begin{itemize}
+		\item[]$\estep{5}'$: $r\rgets\Z_q$; $e\gets g^r$.
+	\end{itemize}
+	It follows that $\Pr[T_7] = 1/2$, because now $\psi^{*}$ does not even involve $\sigma$, so the adversary's output is completely independent of it. We define the event $R_7$ which is the same as $R_6$, ie. some ciphertext $\psi$ is submitted to the decryption oracle which is rejected by $\dstep{4}'$ but would have passed $\dstep{4}$.
+	
+	\begin{lemma} We have
+		\label{lem:t6t7}
+		\begin{align*}
+			\Pr[T_6] &= \Pr[T_7]\\
+			\Pr[R_6] &= \Pr[R_7]
+		\end{align*}
+	\end{lemma}
+
+	Before we show the proof, we recall Lemma 9 from \cite{cs01}.
+	
+	\begin{lemma}
+		\label{lem:independence}
+		Let $k,n$ be integers with $1\leq k\leq n$ and let $K$ be a finite field. Consider a probability space with random variables $\vec{\alpha}\in K^{n\times 1}, \vec{\beta}=(\beta_1,\dots,\beta_k)^\top\in K^{k\times 1},\vec{\gamma}\in K^{k\times 1}$, and $M\in K^{k\times n}$, such that $\vec{\alpha}$ is uniformly distributed over $K^{n\times 1}$, $\vec{\beta}=M\vec{\alpha}+\vec{\gamma}$, and for $1\leq i\leq k$, the $i$th rows of $M$ and $\gamma$ are determined by $\beta_1,\dots,\beta_{i-1}$. 
+		
+		Then conditioning on any fixed values of $\beta_1,\dots,\beta_{k-1}$ such that the resulting matrix $M$ has rank $k$, the value of $\beta_k$ is uniformly distributed over $K$ in the resulting probability space.
+	\end{lemma}
+
+	We will require a less general version of this lemma, but it suffices for the proof below.
+
+	\begin{proof}[Proof (of \cref{lem:t6t7})]
+		Our proof is essentially the same as that of \cite{cs01}, however the presence of the auxiliary information requires a more subtle analysis.
+		
+		Consider the variable $X=(\mathsf{coins},\hk,w,x_1,x_2,y_1,y_2,\sigma,r^{*},\hat{r}^{*})$, where $\mathsf{coins}$ is the internal randomness of the PPT adversary $\adv$, and the quantity $z$. Note that $X$ has the same values in $\game_6$ and $\game_7$.
+		
+		Consider also the quantity $r^{*}$, which takes different values in $\game_6$ and $\game_7$. We can call these values $r_6^{*}$ and $r^{*}_7$ respectively. It is clear that both $R_6$ and $T_6$ are functions of $X,z$ and $r^{*}_6$. Also, the events $R_7$ and $T_7$ have the same functional dependence on $X,z$ and $r^{*}_7$. Thus, showing that the distributions
+		$$(X, z, r^{*}_6)\cong(X, z, r^{*}_7)$$ is enough to show the lemma. Now observe that if $X$ and $z$ are fixed, $r^{*}_7$ is uniform over $\Z_q$. Furthermore, note that the uniformity of $r^{*}_7$ is \textit{completely} independent of $\aux = (x_1,x_2,y_1,y_2)$, since $e$ is completely independent of $\aux$ as well. Hence, knowledge of $\aux$ has no bearing on the independence of $r^{*}_7$, and it remains so even if $\aux$ is public.
+		
+		We show that the same is true for $r^{*}_3$. Consider
+		\begin{equation*}
+			\begin{pmatrix}
+				z\\
+				r^{*}_3
+			\end{pmatrix}=
+		\begin{pmatrix}
+			1 & w\\
+			r^{*} & w\hat{r}^{*}
+		\end{pmatrix}\cdot
+		\begin{pmatrix}
+			z_1\\
+			z_2
+		\end{pmatrix}+
+		\begin{pmatrix}
+			0\\
+			\log_gm_{\sigma}
+		\end{pmatrix}.
+		\end{equation*}
+		Let the $2\times 2$ matrix be referred to as $M$. Then $M$ is fixed conditioned on $X$, but $z_1$ and $z_2$ are independently distributed over $\Z_q$ (even in the knowledge of $\aux$). Furthermore, $\det(M) = w(\hat{r}^{*} - r^{*})\neq 0$. The proposition then follows from \cref{lem:independence}.
+	\end{proof}
+
+	\textbf{Game $\game_8$.} This game is the same as $\game_7$, with a small modification to the decryption oracle. We modify it so that it applies a special rejection rule: if the adversary submits a ciphertext $\psi$ for decryption at a point \textit{after} the encryption oracle has been invoked, such that $(u_1, u_2, e)\neq (u_1^{*}, u_2^{*}, e^{*})$, but $v = v^{*}$, then the decryption oracle outputs $\mathsf{reject}$ and halts even before executing $\dstep{4}'$.
+	
+	We define two events:
+	\begin{enumerate}
+		\item $C_8$, which is the event that the adversary submits a ciphertext which is rejected by the special rule.
+		\item $R_8$, which is the even that some ciphertext $\psi$ is submitted which is is passed by the special rule, however it is rejected by $\dstep{4}'$, and would have been accepted by $\dstep{4}$.
+	\end{enumerate}
+
+	Note that the games proceed identically till $C_8$ occurs. Particularly, $R_7\wedge\neg C_8$ and $R_8\wedge\neg C_8$ are identical. We have, using lemma \cref{lem:neg-wedge} that
+	$$|\Pr[R_5]-\Pr[R_4]|\leq\Pr[C_5].$$
+	
+	We will show two lemmas that complete the proof. The first lemma shows that the special rejection rule can be broken if the underlying hash is broken, while the second shows that breaking the rule without breaking the hash requires an information-theoretically unlikely guess.
+	
+	\begin{lemma}
+		\label{lem:hash}
+		There is some probabilistic polynomial-time algorithm $\adv_\mathsf{HASH}$ such that $$\Pr[C_8]\leq\mathsf{AdvTCR}_{\mathsf{HF},\adv_\mathsf{HASH}}(\lambda|\Gamma).$$
+	\end{lemma}
+
+	\begin{lemma}
+		\label{lem:bounding-r8}
+		We have $$\Pr[R_8]\leq Q_\adv(\lambda)/q.$$
+	\end{lemma}
+
+	The proof of \cref{lem:hash} is identical to the proof of Lemma 7 presented in \cite{cs01}, hence we will not present it. The proof of \cref{lem:bounding-r8} is also similar, however must be adapted to our setting. 
+	
+	Together, we show that $|\Pr[R_8]-\Pr[R_6]|\leq\negl\implies|\Pr[T_6]-1/2|\leq\negl$, which proves the assertion that $|\Pr[T_0]-1/2|\leq\negl$. We complete the proof with of \cref{lem:bounding-r8} below.
+	
+	\begin{proof}[Proof (of \cref{lem:bounding-r8}).]
+		Consider the proof of Lemma $8$ presented in \cite{cs01}. Both sub-parts of the proof rely on the fact that the vector $\aux = (x_1,x_2,y_1,y_2)$ is independent and uniformly distributed in the eyes of the adversary. Clearly this is not the case if $\aux$ is provided as auxiliary information. However, the proof only relies on the fact that $\aux$ be uniform and independent \textit{at the time the decryption query is made}. Indeed, by the definition of the DR-CCA game, it is clear that once the auxiliary oracle is queried, no more decryption queries are allowed to be made. Hence, at the time any decryption query is made, $\aux$ is uniform and independent, and the proof of Lemma $8$ follows without any additional concerns.
+	\end{proof}
+	
+	With this, we have shown that the Cramer-Shoup encryption scheme as defined in \cref{fig:cs03} is DR-CCA secure with auxiliary information $\aux = (x_1,x_2,y_1,y_2, g_1^{r^2}, g_2^{r^2})$.
 	
 	
 	
