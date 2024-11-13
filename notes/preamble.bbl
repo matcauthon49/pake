@@ -1,0 +1,9 @@
+\begin{thebibliography}{CS03}
+
+\bibitem[CS03]{cs01}
+Ronald Cramer and Victor Shoup.
+\newblock Design and analysis of practical public-key encryption schemes secure
+  against adaptive chosen ciphertext attack.
+\newblock {\em SIAM Journal on Computing}, 33(1):167--226, 2003.
+
+\end{thebibliography}

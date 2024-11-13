@@ -1,0 +1,98 @@
+\section{Preliminaries}
+
+\subsection{Assumptions}
+
+Let $\mathcal{G}$ be an algorithm that on input $1^\lambda$ uniformly samples from a sequence of group distributions $(S_\lambda)_{\lambda\in\Z\geq 0}$ of group distributions of the form $\Gamma[\hat{\mathbb{G}}, \mathbb{G}, g, q]\in[S_\lambda]$, where $\hat{\mathbb{G}}$ is a finite multiplicative abelian group, $\G$ is a prime-order subgroup, $g$ is a generator of $\G$ and $q$ is the order of $\G$. We assume that group operations in $\G$ can be done in (expected) polynomial time in $\G$, including exponentiation, selecting a random group element, and membership. 
+
+Note that a random group element can be chosen by selecting $x\rgets\Z_q$ and computing $g^x$. We define $\bar\G$ to be $\G\setminus\{1\}$; since $q$ is prime, $\bar\G$ is the set of generators of $\G$. If $x\rgets\bar\G$, then we obtain a random generator.
+
+\subsubsection{The DDH Assumption}
+
+Let $\mathcal{G}$ be as above. We define for each $\lambda\in\Z_{\geq 0}$ and for all $\Gamma[\hat\G, \G, g, q]\in[S_\lambda]$ the sets 
+\begin{equation*}
+	\randdh_{\lambda,\Gamma} := \{(g, g^x, g^y, g^{z}) : x,y\rgets\Z_q^{*}, z\rgets\Z_q\}
+\end{equation*}
+and
+\begin{equation*}
+	\ddh_{\lambda,\Gamma} := \{(g, g^x, g^y, g^{xy}) : x,y\rgets\Z_q^{*}\}.
+\end{equation*}
+Where $\ddh_{\lambda,\Gamma}$ is the set of Diffie-Hellman Triples. For any probabilistic polynomial-time distinguishing algorithm $\adv$ and for all $\lambda\in\Z_{\geq 0}$, we define the DDH advantage of $\adv$ against $\mathcal{G}$ at $\lambda$ given $\Gamma$ as
+\begin{equation*}
+	\advddh_{\mathcal{G},\adv}(\lambda | \Gamma) = \left|\Pr[\adv(1^\lambda,\Gamma,\rho) = 1 : \rho\rgets\randdh_{\lambda,\Gamma}] - \Pr[\adv(1^\lambda,\Gamma,\rho) = 1 : \rho\rgets\ddh_{\lambda,\Gamma}]\right|
+\end{equation*}
+The Decisional Diffie-Hellman (DDH) assumption for $\mathcal{G}$ states that for every probabilistic, polynomial-time algorithm $\adv$, there exists some negligible function $\negl$ such that for all $\lambda\in\Z_{\geq 0}$, $$\advddh_{\mathcal{G},\adv}(\lambda | \Gamma)\leq\negl(\lambda)$$ where $\Gamma\rgets[S_\lambda]$.
+
+\subsubsection{The SDH Assumption}
+
+Let $\mathcal{G}$ be as above. We define for each $\lambda\in\Z_{\geq 0}$ and for all $\Gamma[\hat\G, \G, g, q]\in[S_\lambda]$ the sets 
+\begin{equation*}
+	\randsdh_{\lambda,\Gamma} := \{(g, g^x, g^{y}) : x,y\rgets\Z_q^{*}\}
+\end{equation*}
+and
+\begin{equation*}
+	\sdh_{\lambda,\Gamma} := \{(g, g^x, g^{x^2}) : x\rgets\Z_q^{*}\}.
+\end{equation*}
+Where $\sdh_{\lambda,\Gamma}$ is the set of Square Diffie-Hellman Triples. For any probabilistic polynomial-time distinguishing algorithm $\adv$ and for all $\lambda\in\Z_{\geq 0}$, we define the SDH advantage of $\adv$ against $\mathcal{G}$ at $\lambda$ given $\Gamma$ as
+\begin{equation*}
+	\advsdh_{\mathcal{G},\adv}(\lambda | \Gamma) = \left|\Pr[\adv(1^\lambda,\Gamma,\rho) = 1 : \rho\rgets\randsdh_{\lambda,\Gamma}] - \Pr[\adv(1^\lambda,\Gamma,\rho) = 1 : \rho\rgets\sdh_{\lambda,\Gamma}]\right|
+\end{equation*}
+The Square Diffie-Hellman (DDH) assumption for $\mathcal{G}$ states that for every probabilistic, polynomial-time algorithm $\adv$, there exists some negligible function $\negl$ such that for all $\lambda\in\Z_{\geq 0}$, $$\advsdh_{\mathcal{G},\adv}(\lambda | \Gamma)\leq\negl(\lambda)$$ where $\Gamma\rgets[S_\lambda]$.
+
+
+
+\subsection{Cramer-Shoup Encryption Scheme}
+
+	\begin{figure}[ht!]
+	\begin{framed}
+		% [
+		%			linecolor=black,
+		%			linewidth=1pt,
+		%			roundcorner=5pt,
+		%			backgroundcolor=white,
+		%			userdefinedwidth=\textwidth,
+		%			]
+		
+		\vspace{2mm}
+		\textbf{Key Generation:} On input $1^\lambda$ from $\lambda\in\mathbb{Z}_{\geq 0}$, compute
+		\begin{align*}
+			&\Gamma[\hat{\mathbb{G}}, \mathbb{G}, g, q]\rgets\mathcal{G}(1^\lambda); \hk\rgets\mathsf{HF.Keyspace}_{\lambda,\Gamma}\\
+			&w\rgets\mathbb{Z}_q^{*}; x_1,x_2,y_1,y_2,z_1,z_2\rgets\mathbb{Z}_q\\
+			&g_1\gets g; g_2\gets g^{w}; c = g_1^{x_1}g_2^{x_2}; d\gets g_1^{y_1}g_2^{y_2}; h\gets g_1^{z_1}g_2^{z_2}
+		\end{align*}
+		and output the public key $$\PK = (\Gamma,\hk,g_1,g_2,c,d,h)$$ and the secret key $$\SK = (\Gamma, \hk, x_1,x_2,y_1,y_2,z_1,z_2).$$
+		
+		\vspace{4mm}
+		
+		\textbf{Encryption:} Given $1^\lambda$ for $\lambda\in\mathbb{Z}_{\geq 0}$, a public key $$\PK=(\Gamma,\hk,g_1,g_2,c,d,h)\in[\mathcal{G}_\lambda]\times[\mathsf{HF.Keyspace}_{\lambda,\Gamma}]\times\G^4,$$ a message $m\in G$ and a label $\lab$, compute
+		
+		\begin{itemize}
+			\item[]\textbf{$\estep{1}$}: $r\rgets\mathbb{Z}_q$;
+			\item[]\textbf{$\estep{2}$}: $u_1\rgets g_1^r$;
+			\item[]\textbf{$\estep{3}$}: $u_2\rgets g_2^r$;
+			\item[]\textbf{$\estep{4}$}: $e'\gets h^r$;
+			\item[]\textbf{$\estep{5}$}: $e\gets e'\cdot m$;
+			\item[]\textbf{$\estep{6}$}: $\alpha\gets\mathsf{HF}^{\lambda,\Gamma}_{\hk}(\lab, u_1, u_2, e)$;
+			\item[]\textbf{$\estep{7}$}: $v\gets (cd^\alpha)^r$;\\
+		\end{itemize}
+		
+		and output the ciphertext $\psi = (u_1, u_2, e, v)$.
+		
+		\vspace{4mm}
+		
+		\textbf{Decryption:} Given $1^\lambda$ for $\lambda\in\mathbb{Z}_{\geq 0}$, a secret key $$\SK=(\Gamma, \hk, x_1,x_2,y_1,y_2,z_1,z_2)\in[\mathcal{G}_\lambda]\times[\mathsf{HF.Keyspace}_{\lambda,\Gamma}]\times\mathbb{Z}_q^{6},$$
+		along with a ciphertext $\psi$ and a label $\lab$, do the following.
+		
+		\begin{itemize}
+			\item[]\textbf{$\dstep{1}$}: Parse $\psi$ as a $4$-tuple $(u_1,u_2,e,v)\in\G^4$, output $\reject$ and halt if $\psi$ is not of this form.
+			\item[]\textbf{$\dstep{2}$}: Test if $u_1, u_2$ and $e$ belong to $\G$; output $\reject$ and halt if this is not the case.
+			\item[]\textbf{$\dstep{3}$}: Compute $v'\gets\mathsf{HF}^{\lambda,\Gamma}_{\hk}(\lab,u_1,u_2,e)$.
+			\item[]\textbf{$\dstep{4}$}: Test if $v = u_1^{x_1+y_1\alpha}u_2^{x_2+y_2\alpha};$ output $\reject$ and halt if this is not the case.
+			\item[]\textbf{$\dstep{5}$}: Compute $e' = u_1^{z_1}u_2^{z_2}$.
+			\item[]\textbf{$\dstep{6}$}: Compute $m\gets e\cdot {e'}^{-1}$ and output $m$.
+		\end{itemize}
+		
+		
+	\end{framed}
+	\caption{The Cramer-Shoup Encryption Scheme with Labels.}
+	\label{fig:cs03}
+	\end{figure}

@@ -1,0 +1,77 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[margin=1.1in]{geometry}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+
+
+\usepackage[dvipsnames]{xcolor}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[most]{tcolorbox}
+\usepackage{thmtools}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usepackage{algpseudocode}
+\usepackage{multirow}
+\usepackage{framed}
+\usepackage{cleveref} % allow for \cref command
+
+
+\usetikzlibrary{positioning}
+
+\usepackage{thmtools}
+
+\setlength\parindent{0pt}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=red,
+	filecolor=red,  
+	citecolor=red,    
+	urlcolor=blue,
+	pdftitle={On the UC-Insecurity},
+	pdfpagemode=FullScreen,
+}
+
+% \usepackage[framemethod=tikz]{mdframed}
+
+\declaretheorem[name=Theorem, numberwithin=section]{theorem}
+\declaretheorem[name=Lemma, numberwithin=section]{lemma}
+\declaretheorem[name=Inequality, numberwithin=section]{inequality}
+\declaretheorem[name=Definition, numberwithin=section]{definition}
+
+\input{macros}
+
+\usepackage[english]{babel}
+\title{\LARGE{\textbf{On the UC-(In)Security of PAKE Protocols in the Plain Model}}}
+\author{\Large{Naman Kumar}\footnote{Email: \texttt{kumarnam@oregonstate.edu}} \\Oregon State University\\ \and \Large{Jiayu Xu}\footnote{Email: \texttt{kumarnam@oregonstate.edu}}\\ Oregon State University}
+
+
+\begin{document}
+	\maketitle
+	
+	\begin{abstract}
+		We show that the PAKE protocol of Katz, Ostrovsky and Yung (2001) is not UC-secure in the plain model. We provide the first proof of UC-security of KOY in the AGM under the hardness of the Square Diffie-Hellman (SDH) assumption.
+	\end{abstract}
+	
+	\input{sections/introduction}
+	\input{sections/prelims}
+	\input{sections/insecurity-proof}
+	\input{sections/agm-proof}
+	
+	
+	\newpage
+	\bibliographystyle{alpha}
+	\bibliography{references}
+	
+	\newpage
+	\appendix
+	\input{sections/cramer-shoup-proof}
+	
+	
+	
+\end{document}
