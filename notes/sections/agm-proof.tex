@@ -1,1 +1,24 @@
 \section{UC-Security of KOY in the Algebraic Group Model}
+
+We will show the following theorem.
+
+\begin{theorem}
+	The protocol of [KOY] UC-realizes the $\pake$ functionality in the Algebraic Group Model.
+\end{theorem}
+
+The broad strokes of our proof are as below.
+
+\begin{enumerate}
+	\item In game $\game_0'$, the experiment is aborted if any of the following events happen.
+	\begin{enumerate}
+		\item The client accidentally generates the same $\VK$ twice for different $\sid$s. In this case, the challenger detects this in the message that is output, sends an $\abort$ and ends the protocol.
+		\item The server generates $\msg{2}$ twice for different $\sid$s. The challenger detects this in the message that is output, sends an $\abort$ and ends the protocol.
+		\item The challenger detects at some point that the adversary has been able to produce a new signed message for some honestly-generated $\VK$ without knowing the corresponding signing key (which it can't, because the $\VK$ is honestly generated -- if it was the one who generated that $\VK$, the adversary is allowed to do whatever it wants with it).
+		\item At any given point, the challenger detects that a collision has occured in the hash function. In this case the challenger again sends an $\abort$ and terminates the protocol.
+	\end{enumerate}
+	The difference in advantage of the adversary is negligible because the probability of any of these events happening is unlikely due to the security of the hash functions and the one-time signature scheme.
+	
+	\item In game $\game_1$, the challenger changes the way that the $\crs$ is generated. In this case, the $\crs$ is now generated according to the techniques laid out in the Cramer-Shoup $\keygen$ procedure. The distribution of generated values is information-theoretically identical; the only difference is that now the challenger has planted backdoors into the description, and it knows the discrete logs of $h, c$ and $d$. The simulator is going to (eventually) use this to extract a password guess.
+	
+	\item In game $\game_2$
+\end{enumerate} 

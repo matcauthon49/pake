@@ -6,14 +6,6 @@ In this section we prove the delayed-reveal-CCA security of the Cramer-Shoup Cry
 
 \begin{figure}[ht!]
 	\begin{framed}
-		% [
-		%			linecolor=black,
-		%			linewidth=1pt,
-		%			roundcorner=5pt,
-		%			backgroundcolor=white,
-		%			userdefinedwidth=\textwidth,
-		%			]
-		\vspace{2mm}
 		\textbf{Stage 1:} The adversary queries a \textit{key generation oracle}. The key generation oracle computes $(\PK,\SK)\leftarrow\enc.\keygen$ and responds with $\PK$.
 		
 		\vspace{2mm}
@@ -38,7 +30,6 @@ In this section we prove the delayed-reveal-CCA security of the Cramer-Shoup Cry
 		\vspace{2mm}
 		
 		\textbf{Stage 6:} The adversary outputs $\hat{\sigma}\in\{0,1\}$.
-		
 	\end{framed}
 	\caption{The Delayed-Reveal-CCA game.}
 	\label{fig:dcca}

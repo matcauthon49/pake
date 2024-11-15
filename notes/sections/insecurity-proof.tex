@@ -11,14 +11,6 @@
 	
 	\begin{figure}[ht!]
 		\begin{framed}
-			% [
-			%			linecolor=black,
-			%			linewidth=1pt,
-			%			roundcorner=5pt,
-			%			backgroundcolor=white,
-			%			userdefinedwidth=\textwidth,
-			%			]
-			\vspace{2mm}
 			\textbf{\underline{Environment $\env$:}}
 			\begin{enumerate}\setcounter{enumi}{-1}
 				\item $\env$ receives the CRS $(g_1, g_2, h, c, d)$.
@@ -37,7 +29,6 @@
 				\item $\env$ receives $\msg{3}=\mathsf{sid}|K|\sigma$ from $\adv$ and $(\mathsf{sid}, \sk)$ from $\user$.
 				\item $\env$ sets $C':=C/\pw$ and then checks if $\mathsf{Vrfy}_{\mathsf{VK}}(\msg{1}|\msg{2}|K,\sigma)=1$. If yes, it computes $\sk_S:=A^{x_2}B^{y_2}(C')^{z_2}D^{w_2}K^{r_2}$ and outputs $1$ if $\sk_S=\sk$. If either of the two checks fails, it outputs $0$.
 			\end{enumerate}
-			\vspace{2mm}
 		\end{framed}
 		\caption{Our Setup.}
 		\label{fig:adv}

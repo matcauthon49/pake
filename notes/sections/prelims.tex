@@ -42,39 +42,30 @@ The Square Diffie-Hellman (DDH) assumption for $\mathcal{G}$ states that for eve
 
 \subsection{Cramer-Shoup Encryption Scheme}
 
-	\begin{figure}[ht!]
+	\begin{figure}
 	\begin{framed}
-		% [
-		%			linecolor=black,
-		%			linewidth=1pt,
-		%			roundcorner=5pt,
-		%			backgroundcolor=white,
-		%			userdefinedwidth=\textwidth,
-		%			]
-		
-		\vspace{2mm}
 		\textbf{Key Generation:} On input $1^\lambda$ from $\lambda\in\mathbb{Z}_{\geq 0}$, compute
 		\begin{align*}
 			&\Gamma[\hat{\mathbb{G}}, \mathbb{G}, g, q]\rgets\mathcal{G}(1^\lambda); \hk\rgets\mathsf{HF.Keyspace}_{\lambda,\Gamma}\\
 			&w\rgets\mathbb{Z}_q^{*}; x_1,x_2,y_1,y_2,z_1,z_2\rgets\mathbb{Z}_q\\
 			&g_1\gets g; g_2\gets g^{w}; c = g_1^{x_1}g_2^{x_2}; d\gets g_1^{y_1}g_2^{y_2}; h\gets g_1^{z_1}g_2^{z_2}
 		\end{align*}
-		and output the public key $$\PK = (\Gamma,\hk,g_1,g_2,c,d,h)$$ and the secret key $$\SK = (\Gamma, \hk, x_1,x_2,y_1,y_2,z_1,z_2).$$
+		and output the public key $\PK = (\Gamma,\hk,g_1,g_2,c,d,h)$ and the secret key $\SK = (\Gamma, \hk, x_1,x_2,y_1,y_2,z_1,z_2).$
 		
 		\vspace{4mm}
 		
 		\textbf{Encryption:} Given $1^\lambda$ for $\lambda\in\mathbb{Z}_{\geq 0}$, a public key $$\PK=(\Gamma,\hk,g_1,g_2,c,d,h)\in[\mathcal{G}_\lambda]\times[\mathsf{HF.Keyspace}_{\lambda,\Gamma}]\times\G^4,$$ a message $m\in G$ and a label $\lab$, compute
 		
 		\begin{itemize}
+			\itemsep=0em
 			\item[]\textbf{$\estep{1}$}: $r\rgets\mathbb{Z}_q$;
 			\item[]\textbf{$\estep{2}$}: $u_1\rgets g_1^r$;
 			\item[]\textbf{$\estep{3}$}: $u_2\rgets g_2^r$;
 			\item[]\textbf{$\estep{4}$}: $e'\gets h^r$;
 			\item[]\textbf{$\estep{5}$}: $e\gets e'\cdot m$;
 			\item[]\textbf{$\estep{6}$}: $\alpha\gets\mathsf{HF}^{\lambda,\Gamma}_{\hk}(\lab, u_1, u_2, e)$;
-			\item[]\textbf{$\estep{7}$}: $v\gets (cd^\alpha)^r$;\\
+			\item[]\textbf{$\estep{7}$}: $v\gets (cd^\alpha)^r$;
 		\end{itemize}
-		
 		and output the ciphertext $\psi = (u_1, u_2, e, v)$.
 		
 		\vspace{4mm}
@@ -83,6 +74,7 @@ The Square Diffie-Hellman (DDH) assumption for $\mathcal{G}$ states that for eve
 		along with a ciphertext $\psi$ and a label $\lab$, do the following.
 		
 		\begin{itemize}
+			\itemsep=0em
 			\item[]\textbf{$\dstep{1}$}: Parse $\psi$ as a $4$-tuple $(u_1,u_2,e,v)\in\G^4$, output $\reject$ and halt if $\psi$ is not of this form.
 			\item[]\textbf{$\dstep{2}$}: Test if $u_1, u_2$ and $e$ belong to $\G$; output $\reject$ and halt if this is not the case.
 			\item[]\textbf{$\dstep{3}$}: Compute $v'\gets\mathsf{HF}^{\lambda,\Gamma}_{\hk}(\lab,u_1,u_2,e)$.
@@ -90,9 +82,17 @@ The Square Diffie-Hellman (DDH) assumption for $\mathcal{G}$ states that for eve
 			\item[]\textbf{$\dstep{5}$}: Compute $e' = u_1^{z_1}u_2^{z_2}$.
 			\item[]\textbf{$\dstep{6}$}: Compute $m\gets e\cdot {e'}^{-1}$ and output $m$.
 		\end{itemize}
-		
-		
 	\end{framed}
 	\caption{The Cramer-Shoup Encryption Scheme with Labels.}
 	\label{fig:cs03}
 	\end{figure}
+
+	\subsection{UC-PAKE}
+	
+	We define the UC-PAKE functionality below.
+	
+%	\begin{figure}
+%		\begin{framed}
+%			
+%		\end{framed}
+%	\end{figure}
