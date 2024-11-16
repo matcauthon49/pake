@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (MiKTeX 22.10) (preloaded format=xelatex 2022.11.14)  13 NOV 2024 17:17
+This is XeTeX, Version 3.141592653-2.6-0.999994 (MiKTeX 22.10) (preloaded format=xelatex 2022.11.14)  15 NOV 2024 17:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1063,20 +1063,28 @@ al-
  []
 
 
-Underfull \hbox (badness 1424) in paragraph at lines 52--54
-\T1/lmr/m/n/10.95 and out-put the pub-lic key $[] \OT1/cmr/m/n/10.95 = (^^@\OML
-/cmm/m/it/10.95 ; []; g[]; g[]; c; d; h\OT1/cmr/m/n/10.95 )$ \T1/lmr/m/n/10.95 
-and the se-cret key $[] \OT1/cmr/m/n/10.95 =
+Underfull \hbox (badness 6063) in paragraph at lines 52--54
+\T1/lmr/m/n/10 and out-put the pub-lic key $[] \OT1/cmr/m/n/10 = (^^@\OML/cmm/m
+/it/10 ; []; g[]; g[]; c; d; h\OT1/cmr/m/n/10 )$ \T1/lmr/m/n/10 and the se-cret
+ key $[] \OT1/cmr/m/n/10 =
  []
 
 ) (sections/insecurity-proof.tex
+Underfull \hbox (badness 10000) in paragraph at lines 11--12
+
+ []
+
 Package hyperref Info: bookmark level for unknown theorem defaults to 0 on inpu
-t line 5.
- [6] [7] [8]) (sections/agm-proof.tex [9])
-[10] (preamble.bbl) [11] (sections/cramer-shoup-proof.tex
+t line 52.
+[6] [7]
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[8] [9] [10]) (sections/agm-proof.tex) [11] (preamble.bbl) [12]
+(sections/cramer-shoup-proof.tex
 Package hyperref Info: bookmark level for unknown definition defaults to 0 on i
 nput line 40.
- [12] [13]
+ [13] [14]
 Overfull \hbox (42.15254pt too wide) in paragraph at lines 80--80
 []\T1/lmr/m/n/10.95 Suppose that the pub-lic key is $\OT1/cmr/m/n/10.95 (^^@\OM
 L/cmm/m/it/10.95 ; []; g[]; g[]; c; d; h\OT1/cmr/m/n/10.95 )$ \T1/lmr/m/n/10.95
@@ -1088,7 +1096,7 @@ x[]; x[]; y[]; y[]; z[]; z[]\OT1/cmr/m/n/10.95 )$\T1/lmr/m/n/10.95 .
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `\new@ifnextchar' on input line 90.
 
-[14]
+[15]
 Underfull \hbox (badness 10000) in paragraph at lines 107--108
 
  []
@@ -1105,20 +1113,20 @@ L/cmm/m/it/10.95 g[]\OT1/cmr/m/n/10.95 ; \OML/cmm/m/it/10.95 d \OMS/cmsy/m/n/10
 sy/m/n/10.95   \OML/cmm/m/it/10.95 g[]:
  []
 
-[15] [16] [17] [18]) [19] (preamble.aux)
+[16] [17] [18] [19]) [20] (preamble.aux)
 
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `preamble.out' has not changed.
-(rerunfilecheck)             Checksum: 39B1DE870F94408A0E7BCE627F4F9702;3382.
+(rerunfilecheck)             Checksum: D680C218AE40879A4EF8E4E742394F45;3776.
  ) 
 Here is how much of TeX's memory you used:
- 30977 strings out of 410636
- 616330 string characters out of 2815793
- 977796 words of memory out of 3000000
- 51541 multiletter control sequences out of 15000+600000
- 532351 words of font info for 91 fonts, out of 8000000 for 9000
+ 31009 strings out of 410636
+ 616664 string characters out of 2815793
+ 989490 words of memory out of 3000000
+ 51571 multiletter control sequences out of 15000+600000
+ 539565 words of font info for 103 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 99i,21n,104p,2040b,517s stack positions out of 10000i,1000n,20000p,200000b,80000s
+ 99i,21n,104p,2040b,520s stack positions out of 10000i,1000n,20000p,200000b,80000s
 
-Output written on preamble.pdf (19 pages).
+Output written on preamble.pdf (20 pages).

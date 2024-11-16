@@ -42,8 +42,8 @@ The Square Diffie-Hellman (DDH) assumption for $\mathcal{G}$ states that for eve
 
 \subsection{Cramer-Shoup Encryption Scheme}
 
-	\begin{figure}
-	\begin{framed}
+	\begin{figure}[tbp]
+	\begin{framed}\small
 		\textbf{Key Generation:} On input $1^\lambda$ from $\lambda\in\mathbb{Z}_{\geq 0}$, compute
 		\begin{align*}
 			&\Gamma[\hat{\mathbb{G}}, \mathbb{G}, g, q]\rgets\mathcal{G}(1^\lambda); \hk\rgets\mathsf{HF.Keyspace}_{\lambda,\Gamma}\\
@@ -90,6 +90,34 @@ The Square Diffie-Hellman (DDH) assumption for $\mathcal{G}$ states that for eve
 	\subsection{UC-PAKE}
 	
 	We define the UC-PAKE functionality below.
+	
+	\begin{figure}[tbp]
+		\begin{framed}\small
+			\begin{itemize}
+				\item On input $(\NewSession, sid, \party, \party', \pw, \role)$ from $\party$, send $(\NewSession,\allowbreak sid,\allowbreak \party,\allowbreak \party',\allowbreak \role)$ to $\SIM$. Furthermore, if this is the first $\NewSession$ message for $sid$, or this is the second $\NewSession$ message for $sid$ and there is a record $\left<\party', \party, \cdot\right>$, then record $\left<\party, \party', \pw\right>$ and mark it $\fresh$.
+				\item On $(\TestPwd, sid, \party, \pw^*)$ from $\SIM$, if there is a record $\left<\party, \party', \pw\right>$ marked $\fresh$, then do:
+				\begin{itemize}
+					\item If $\pw^* = \pw$, then mark the record $\compromised$ and send ``correct guess'' to $\SIM$.
+					\item If $\pw^* \neq \pw$, then mark the record $\interrupted$ and send ``wrong guess'' to $\SIM$.
+				\end{itemize}
+				\item On $(\NewKey, sid, \party, K^* \in \{0,1\}^\secpar)$ from $\SIM$, if there is a record $\left<\party, \party', \pw\right>$, and this is the first $\NewKey$ message for $sid$ and $\party$, then output $(sid, K)$ to $\party$, where $K$ is defined as follows:
+				\begin{itemize}
+					\item If the record is $\compromised$, or either $\party$ or $\party'$ is corrupted, then set $K := K^*$.
+					\item If the record is $\fresh$, a key $(sid, K')$ has been output to $\party'$, at which time there was a record $\left<\party', \party, \pw\right>$ marked $\fresh$, then set $K := K'$.
+					\item Otherwise sample $K \gets \{0,1\}^\secpar$.
+				\end{itemize}
+				Finally, mark the record $\completed$.
+			\end{itemize}
+		\end{framed}
+		\caption{UC PAKE functionality $\pake$}
+		\label{fig:pake-functionality}
+	\end{figure}
+	
+	
+	
+	
+	
+	
 	
 %	\begin{figure}
 %		\begin{framed}

@@ -1,6 +1,53 @@
 
 \section{Proof of UC-Insecurity}
 
+\subsection{Formal Description of the Protocol}
+
+We provide a formal description of the PAKE protocol of KOY in the figure below.
+
+	\begin{figure}[tbp]
+	\begin{framed}\small
+		
+		\textbf{Initialization}: Let $\Gamma[\hat{\G},\G,g,q]\rgets[S_\secpar]$. Set $g_1\gets g$ and set $g_2, c, d, h\rgets\overline{\G}$. Furthermore, $\hk\rgets\mathsf{HF.Keyspace}_{\lambda,\Gamma}$. Output $\crs = (\Gamma,g_1, g_2,h,c,d,\hk)$.\\
+		
+		\textbf{Protocol Execution}: We describe the execution of the protocol below.
+		
+		\begin{enumerate}
+			\item \textbf{Initiation.} Party $\party$ sends the message $(\newsession,\sid,\party,\party',\role)$. Party $\party'$ replies with $\newsession,\sid,\party',\party,\role)$.
+			\item \textbf{Round $\round_1$.} $\user$ gets $(\VK,\SK)\rgets\OTS.\gen(1^\secpar)$ and selects $r_1\rgets\Z_q$. It sets
+			\begin{align*}
+				A &:= g_1^{r_1} \\B &:= g_2^{r_1}\\ C &:= h^{r_1}\cdot\pw_\user  \\ \alpha &:= \mathsf{HF}_{\hk}^{\lambda,\Gamma}(\sid,\VK,A,B,C) \\ D &:= (cd^{\alpha})^{r_1}
+			\end{align*}
+			and sends $\msg{1} = (\sid,\VK,A,B,C,D)$.
+			\item \textbf{Round $\round_2$.} $\server$ selects $x_2,y_2,z_2,w_2,r_2\rgets\Z_q$ and sets
+			\begin{align*}
+				\alpha' &:= \mathsf{HF}_\hk^{\secpar,\Gamma}(\sid,\VK,A,B,C)\\
+				E &:= g_1^{x_2}g_2^{y_2}h^{z_2}(cd^{\alpha'})^{w_2}\\
+				F &:= g_1^{r_2}\\
+				G &:= g_2^{r_2}\\
+				I &:= h^{r_2}\cdot\pw_\user\\
+				\beta &:= \mathsf{HF}_\hk^{\secpar,\Gamma}(\msg{1},\sid,E,F,G,I)\\
+				J &:= (cd^{\beta})^{r_2}
+			\end{align*}
+			and sends $\msg{2}=(\sid,E,F,G,I,J)$.
+			\item \textbf{Round $\round_3$ (User).} $\user$ selects $x_1,y_1,z_1,w_1\rgets\Z_q$ and sets
+			\begin{align*}
+			 \beta\ &:= \mathsf{HF}_\hk^{\secpar,\Gamma}(\msg{1},\sid,E,F,G,I)\\
+			 K &:= g_1^{x_1}g_2^{x_2}h^{z_1}(cd^{\beta'})^{w_1}\\
+			 \mathsf{sig} &\gets\sign_\SK(\msg{1}\|\msg{2}\|K)
+			\end{align*}
+			and sends $\msg{3} = (K,\mathsf{sig})$. It finds $I' = I/\pw_\user$ and outputs $$\sk_\user := E^{r_1}F^{x_1}G^{y_1}(I')^{z_1}J^{w_1}.$$
+			\item \textbf{Round $\round_3$ (Server).} Server receives $\msg{3}$ and checks if $\mathsf{Vrfy}_\VK(\msg{1}\|\msg{2}\|K,\mathsf{sig})=1$. If not, it outputs $\sk_\server=\mathsf{NULL}$. Else, it finds $C'=C/\pw_\user$ and outputs 
+			$$\sk_\server := A^{x_2}B^{y_2}(C')^{z_2}D^{w_2}K^{r_1}.$$
+		\end{enumerate}
+		
+	\end{framed}
+	\caption{PAKE Protocol of KOY.}
+	\label{fig:koy}
+\end{figure}
+
+
+\subsection{KOY is UC-Insecure}
 \begin{theorem}
 	Assuming the hardness of fixed-CDH, the protocol of [KOY] does not UC-realize $\mathcal{F}_\mathsf{pake}$ in the $\mathcal{F}_{\mathsf{crs}}$-hybrid model.
 \end{theorem}
@@ -9,8 +56,8 @@
 	
 	Consider the environment $\env$ in \Cref{fig:adv} and the dummy adversary. It follows from the correctness of the protocol that in the real-world protocol execution $\env$ always outputs $1$, since the algorithm of $\env$ and $\adv$ is the same as that of an honest server. At a high level, we will show that any simulator that successfully simulates the protocol against $\env$ in the ideal world can be used to solve arbitrary instances of fixed-CDH.
 	
-	\begin{figure}[ht!]
-		\begin{framed}
+	\begin{figure}[h]
+		\begin{framed}\small
 			\textbf{\underline{Environment $\env$:}}
 			\begin{enumerate}\setcounter{enumi}{-1}
 				\item $\env$ receives the CRS $(g_1, g_2, h, c, d)$.
