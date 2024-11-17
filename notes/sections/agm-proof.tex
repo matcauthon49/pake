@@ -3,7 +3,7 @@
 We will show the following theorem.
 
 \begin{theorem}
-	The protocol of [KOY] UC-realizes the $\pake$ functionality in the Algebraic Group Model.
+	The protocol of [KOY] UC-realizes the $\pake$ functionality in the Algebraic Group Model under the SDH and DDH Assumptions.
 \end{theorem}
 
 The broad strokes of our proof are as below.
@@ -16,9 +16,45 @@ The broad strokes of our proof are as below.
 		\item The challenger detects at some point that the adversary has been able to produce a new signed message for some honestly-generated $\VK$ without knowing the corresponding signing key (which it can't, because the $\VK$ is honestly generated -- if it was the one who generated that $\VK$, the adversary is allowed to do whatever it wants with it).
 		\item At any given point, the challenger detects that a collision has occured in the hash function. In this case the challenger again sends an $\abort$ and terminates the protocol.
 	\end{enumerate}
-	The difference in advantage of the adversary is negligible because the probability of any of these events happening is unlikely due to the security of the hash functions and the one-time signature scheme.
+	This is indistinguishable from the attack $\game_0$ because the probability of any of these events happening is unlikely due to the security of the hash functions and the one-time signature scheme.
 	
-	\item In game $\game_1$, the challenger changes the way that the $\crs$ is generated. In this case, the $\crs$ is now generated according to the techniques laid out in the Cramer-Shoup $\keygen$ procedure. The distribution of generated values is information-theoretically identical; the only difference is that now the challenger has planted backdoors into the description, and it knows the discrete logs of $h, c$ and $d$. The simulator is going to (eventually) use this to extract a password guess.
+	\item In game $\game_1$, the challenger changes the way that the $\crs$ is generated. In this case, the $\crs$ is now generated according to the techniques laid out in the Cramer-Shoup $\keygen$ procedure. The distribution of generated values is information-theoretically identical; the only difference is that now the challenger has planted trapdoors into the description of the $\crs$, and it knows the discrete logs of $h, c$ and $d$. The simulator is going to (eventually) use this to extract a password guess.
 	
-	\item In game $\game_2$
+	\item In game $\game_2$, the challenger considers the messages $\msg{i}^{*}$ received from the adversary, and uses the parameters in $\game_1$ to extract a password guess. If the password guess is correct, it extracts the computed session key in the compromised protocol and sets it to be $\sk_i$. Note that the change is purely conceptual; the game is indistinguishable from the previous one.
+	
+	\item In game $\game_3$, the challenger deals with incoming $\msg{3}^{*}$ queries. It checks the $\sid$ of the message and in case that $\msg{1} = \msg{1}^{*}$, it sets $\sk_\server:=\sk_\user$ for the same $\sid$, which was already previously computed (at the time that $\msg{3}$ was output).  Note that in this case $\msg{3}$ \textit{has} to be output by the client -- the only situation in which this doesn't happen is if the environment was able to forge some $(K,\mathsf{sig})$, but $\game_0'$ necessitates abort in the case that this occurs. Thus, the game is valid, and furthermore is indistinguishable because this is, again, only a conceptual change.
+	
+	\item In game $\game_4$, the challenger again deals with incoming $\msg{3}^{*}$ queries. It again checks the $\sid$ of the message and in the case that $\msg{1}\neq\msg{1}^{*}$ and furthermore the message is an invalid Cramer-Shoup ciphertext of $\pw_\user$, the challenger outputs a session key $\sk_\server$ \textit{at random}. The proof of indistinguishability proceeds from an information-theoretic argument.
+	
+	\item In game $\game_5$, the challenger replaces the server's Cramer-Shoup encryption of $\pw_\user$ with an encryption of some $g^k\notin\mathcal{PW}$. The proof of indistinguishability follows from the fact that any environment which can differentiate between the two games can also be used as a subroutine to break the CCA-security of Cramer-Shoup.
+	
+	\item In game $\game_6$, the challenger considers $\msg{2}^{*}$. If $\msg{2}^{*}=\msg{2}$, then the challenger sets $\sk_\user$ to be random. The proof of this game is similar to that of $\game_3$.
+	
+	\item In game $\game_7$, the challenger considers $\msg{2}^{*}$ again, and the case in which $\msg{2}^{*}\neq\msg{2}$ but the message does not contain a valid password guess, it sets $\sk_\user$ to be random as well. The proof is again similar.
+	
+	\item In game $\game_8$, the challenger replaces the client's Cramer-Shoup encryption of $\pw_\user$ with an encryption of some $g^k\notin\mathcal{PW}$. The proof of indistinguishability follows from the DR-CCA security of Cramer-Shoup, which is discussed in \cref{appendix-a}.
+	
+	\item Game $\game_9$ is the ideal functionality. We argue that the structure of $\game_8$ can be interpreted as the ideal functionality with no security loss.
+
+	
 \end{enumerate} 
+
+
+\subsection{Notation}
+
+We describe the notation we have to use. Let $Z_i$ denote the event that $\mathcal{Z}$ outputs $1$ in game $G_i$. We need to show that $Z_0\cong Z_9$, which corresponds to the fact that the real world attack is indistinguishable from the ideal world attack.
+
+We refer to the system of $\party_0$ and $\party_1$
+
+Let $\msg{i}$ denote the $i$th message output by the
+
+\subsection{Proof of UC-Security}
+
+We now provide a formal description of the proof.
+
+\textbf{Game $\game_0$.} This game corresponds to the real-world attack.
+
+\textbf{Game $\game_0'$.} In this game, the challenger interacts with the adversary as before, except we introduce an additional abort clause. If this clause is activated, then the challenger sends a message $\abort$ and ends the protocol. The abort clause is activated in the case of the following situations:
+\begin{enumerate}
+	\item
+\end{enumerate}
