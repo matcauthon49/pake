@@ -1,9 +1,87 @@
-\begin{thebibliography}{CS03}
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{CHK{\etalchar{+}}05}
+
+\bibitem[ABB{\etalchar{+}}20]{C:ABBJKX20}
+Michel Abdalla, Manuel Barbosa, Tatiana Bradley, Stanislaw Jarecki, Jonathan
+  Katz, and Jiayu Xu.
+\newblock Universally composable relaxed password authenticated key exchange.
+\newblock pages 278--307, 2020.
+
+\bibitem[ABK{\etalchar{+}}21]{AC:ABKLX21}
+Michel Abdalla, Manuel Barbosa, Jonathan Katz, Julian Loss, and Jiayu Xu.
+\newblock Algebraic adversaries in the universal composability framework.
+\newblock pages 311--341, 2021.
+
+\bibitem[ABP15]{PKC:AbdBenPoi15}
+Michel Abdalla, Fabrice Benhamouda, and David Pointcheval.
+\newblock Public-key encryption indistinguishable under plaintext-checkable
+  attacks.
+\newblock pages 332--352, 2015.
+
+\bibitem[AFP05]{PKC:AbdFouPoi05}
+Michel Abdalla, Pierre-Alain Fouque, and David Pointcheval.
+\newblock Password-based authenticated key exchange in the three-party setting.
+\newblock pages 65--84, 2005.
+
+\bibitem[AP05]{RSA:AbdPoi05}
+Michel Abdalla and David Pointcheval.
+\newblock Simple password-based encrypted key exchange protocols.
+\newblock pages 191--208, 2005.
+
+\bibitem[BFL20]{C:BauFucLos20}
+Balthazar Bauer, Georg Fuchsbauer, and Julian Loss.
+\newblock A classification of computational assumptions in the algebraic group
+  model.
+\newblock pages 121--151, 2020.
+
+\bibitem[BM92]{SP:BelMer92}
+Steven~M. Bellovin and Michael Merritt.
+\newblock Encrypted key exchange: Password-based protocols secure against
+  dictionary attacks.
+\newblock pages 72--84, 1992.
+
+\bibitem[BPR00]{EC:BelPoiRog00}
+Mihir Bellare, David Pointcheval, and Phillip Rogaway.
+\newblock Authenticated key exchange secure against dictionary attacks.
+\newblock pages 139--155, 2000.
+
+\bibitem[CHK{\etalchar{+}}05]{EC:CHKLM05}
+Ran Canetti, Shai Halevi, Jonathan Katz, Yehuda Lindell, and Philip~D.
+  {MacKenzie}.
+\newblock Universally composable password-based key exchange.
+\newblock pages 404--421, 2005.
 
 \bibitem[CS03]{cs01}
 Ronald Cramer and Victor Shoup.
 \newblock Design and analysis of practical public-key encryption schemes secure
   against adaptive chosen ciphertext attack.
 \newblock {\em SIAM Journal on Computing}, 33(1):167--226, 2003.
+
+\bibitem[DL24]{CSF:DayLeh24}
+Dennis Dayanikli and Anja Lehmann.
+\newblock Provable security analysis of the secure remote password protocol.
+\newblock pages 620--635, 2024.
+
+\bibitem[FKL18]{C:FucKilLos18}
+Georg Fuchsbauer, Eike Kiltz, and Julian Loss.
+\newblock The algebraic group model and its applications.
+\newblock pages 33--62, 2018.
+
+\bibitem[GL03]{EC:GenLin03}
+Rosario Gennaro and Yehuda Lindell.
+\newblock A framework for password-based authenticated key exchange.
+\newblock pages 524--543, 2003.
+
+\bibitem[KOY01]{EC:KatOstYun01}
+Jonathan Katz, Rafail Ostrovsky, and Moti Yung.
+\newblock Efficient password-authenticated key exchange using human-memorable
+  passwords.
+\newblock pages 475--494, 2001.
+
+\bibitem[PS04]{STOC:PraSah04}
+Manoj Prabhakaran and Amit Sahai.
+\newblock New notions of security: Achieving universal composability without
+  trusted setup.
+\newblock pages 242--251, 2004.
 
 \end{thebibliography}
