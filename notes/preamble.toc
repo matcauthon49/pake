@@ -23,9 +23,9 @@
 \contentsline {subsection}{\numberline {4.1}Notation}{16}{subsection.4.1}%
 \contentsline {subsection}{\numberline {4.2}Overview}{16}{subsection.4.2}%
 \contentsline {subsection}{\numberline {4.3}Proof of UC-Security}{18}{subsection.4.3}%
-\contentsline {section}{\numberline {A}Security of the Cramer-Shoup Encryption Scheme with Delayed Reveal of the Secret Key}{22}{appendix.A}%
-\contentsline {subsection}{\numberline {A.1}Security Against Delayed-Reveal Chosen Ciphertext Attack}{22}{subsection.A.1}%
-\contentsline {subsection}{\numberline {A.2}Analysis of DR-CCA Security of the Cramer-Shoup Encryption Scheme}{23}{subsection.A.2}%
-\contentsline {subsubsection}{\numberline {A.2.1}Overview}{23}{subsubsection.A.2.1}%
-\contentsline {subsubsection}{\numberline {A.2.2}Notation}{24}{subsubsection.A.2.2}%
-\contentsline {subsubsection}{\numberline {A.2.3}Proof of \cref {thm:drcca-cs}}{24}{subsubsection.A.2.3}%
+\contentsline {section}{\numberline {A}Security of the Cramer-Shoup Encryption Scheme with Delayed Reveal of the Secret Key}{25}{appendix.A}%
+\contentsline {subsection}{\numberline {A.1}Security Against Delayed-Reveal Chosen Ciphertext Attack}{25}{subsection.A.1}%
+\contentsline {subsection}{\numberline {A.2}Analysis of DR-CCA Security of the Cramer-Shoup Encryption Scheme}{26}{subsection.A.2}%
+\contentsline {subsubsection}{\numberline {A.2.1}Overview}{26}{subsubsection.A.2.1}%
+\contentsline {subsubsection}{\numberline {A.2.2}Notation}{27}{subsubsection.A.2.2}%
+\contentsline {subsubsection}{\numberline {A.2.3}Proof of \cref {thm:drcca-cs}}{27}{subsubsection.A.2.3}%

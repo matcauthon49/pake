@@ -13,7 +13,7 @@ We provide a formal description of the PAKE protocol of KOY in the figure below.
 		\textbf{Protocol Execution}: We describe the execution of the protocol below.
 		
 		\begin{enumerate}
-			\item \textbf{Initiation.} Party $\party$ sends the message $(\newsession,\sid,\party,\party',\role)$. Party $\party'$ replies with $\newsession,\sid,\party',\party,\role)$.
+			\item \textbf{Initiation.} Party $\party$ sends the message $(\newsession,\sid,\party,\party',\role)$. Party $\party'$ replies with $(\newsession,\sid,\party',\party,\role)$.
 			\item \textbf{Round $\round_1$.} $\user$ gets $(\VK,\SK)\rgets\OTS.\gen(1^\secpar)$ and selects $r_1\rgets\Z_q$. It sets
 			\begin{align*}
 				A &:= g_1^{r_1} \\B &:= g_2^{r_1}\\ C &:= h^{r_1}\cdot\pw_\user  \\ \alpha &:= \mathsf{HF}_{\hk}^{\lambda,\Gamma}(\sid,\VK,A,B,C) \\ D &:= (cd^{\alpha})^{r_1}
@@ -38,7 +38,7 @@ We provide a formal description of the PAKE protocol of KOY in the figure below.
 			\end{align*}
 			and sends $\msg{3} = (K,\mathsf{sig})$. It finds $I' = I/\pw_\user$ and outputs $$\sk_\user := E^{r_1}F^{x_1}G^{y_1}(I')^{z_1}J^{w_1}.$$
 			\item \textbf{Round $\round_3$ (Server).} Server receives $\msg{3}$ and checks if $\mathsf{Vrfy}_\VK(\msg{1}\|\msg{2}\|K,\mathsf{sig})=1$. If not, it outputs $\sk_\server=\mathsf{NULL}$. Else, it finds $C'=C/\pw_\user$ and outputs 
-			$$\sk_\server := A^{x_2}B^{y_2}(C')^{z_2}D^{w_2}K^{r_1}.$$
+			$$\sk_\server := A^{x_2}B^{y_2}(C')^{z_2}D^{w_2}K^{r_2}.$$
 		\end{enumerate}
 		
 	\end{framed}

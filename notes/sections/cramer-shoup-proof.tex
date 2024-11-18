@@ -30,9 +30,13 @@ In this section we prove the delayed-reveal-CCA security of the Cramer-Shoup Cry
 		
 		\vspace{2mm}
 		
+		\textcolor{MidnightBlue}{\textbf{Stage $5'$:} The adversary submits a $\mathsf{halt}$ statement to the decryption oracle. From this point on the adversary no longer has access to the decryption oracle, and is not able to make any further queries.}
+		
+		\vspace{2mm}
+		
 		\textbf{Stage 6:} The adversary outputs $\hat{\sigma}\in\{0,1\}$.
 	\end{framed}
-	\caption{The Delayed-Reveal-CCA game.}
+	\caption{The Delayed-Reveal-CCA game. The difference in stage $5$ is highlighted in \textcolor{MidnightBlue}{blue}, which represents the regular CCA-security game.}
 	\label{fig:dcca}
 \end{figure}
 

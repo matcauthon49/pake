@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (MiKTeX 22.10) (preloaded format=xelatex 2022.11.14)  17 NOV 2024 19:42
+This is XeTeX, Version 3.141592653-2.6-0.999994 (MiKTeX 22.10) (preloaded format=xelatex 2022.11.14)  18 NOV 2024 11:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1139,12 +1139,17 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 [13] [14] [15]) (sections/agm-proof.tex [16] [17] [18]
 Package hyperref Info: bookmark level for unknown lemma defaults to 0 on input 
-line 106.
- [19]) [20] (preamble.bbl) [21] (sections/cramer-shoup-proof.tex
+line 107.
+ [19] [20]
+
+LaTeX Warning: Reference `eq:linear' on page 1 undefined on input line 180.
+
+[21]) [22] (preamble.bbl [23]) [24] (sections/cramer-shoup-proof.tex
 Package hyperref Info: bookmark level for unknown definition defaults to 0 on i
-nput line 41.
- [22] [23]
-Overfull \hbox (42.15254pt too wide) in paragraph at lines 81--81
+nput line 45.
+ [25]
+[26]
+Overfull \hbox (42.15254pt too wide) in paragraph at lines 85--85
 []\T1/lmr/m/n/10.95 Suppose that the pub-lic key is $\OT1/cmr/m/n/10.95 (^^@\OM
 L/cmm/m/it/10.95 ; []; g[]; g[]; c; d; h\OT1/cmr/m/n/10.95 )$ \T1/lmr/m/n/10.95
  and that the se-cret key is $\OT1/cmr/m/n/10.95 (^^@\OML/cmm/m/it/10.95 ; []; 
@@ -1153,15 +1158,15 @@ x[]; x[]; y[]; y[]; z[]; z[]\OT1/cmr/m/n/10.95 )$\T1/lmr/m/n/10.95 .
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\new@ifnextchar' on input line 91.
+(hyperref)                removing `\new@ifnextchar' on input line 95.
 
-[24]
-Underfull \hbox (badness 10000) in paragraph at lines 108--109
+[27]
+Underfull \hbox (badness 10000) in paragraph at lines 112--113
 
  []
 
 
-Overfull \hbox (0.9071pt too wide) detected at line 120
+Overfull \hbox (0.9071pt too wide) detected at line 124
 [] [] [][]\OT1/cmr/m/n/10.95 ; \OML/cmm/m/it/10.95 w [] \U/msb/m/n/10.95 Z[]\OT
 1/cmr/m/n/10.95 ; \OML/cmm/m/it/10.95 x[]; x[]; y[]; y[]; z[]; z[] [] \U/msb/m/
 n/10.95 Z[]\OT1/cmr/m/n/10.95 ; \OML/cmm/m/it/10.95 c \OMS/cmsy/m/n/10.95   \OM
@@ -1170,7 +1175,7 @@ L/cmm/m/it/10.95 g[]\OT1/cmr/m/n/10.95 ; \OML/cmm/m/it/10.95 d \OMS/cmsy/m/n/10
 sy/m/n/10.95   \OML/cmm/m/it/10.95 g[]:
  []
 
-[25] [26] [27] [28]) [29] (preamble.aux)
+[28] [29] [30] [31]) [32] (preamble.aux)
 
 LaTeX Warning: There were undefined references.
 
@@ -1178,12 +1183,12 @@ Package rerunfilecheck Info: File `preamble.out' has not changed.
 (rerunfilecheck)             Checksum: 4590C0B30F0933628F05E86181F494AC;4136.
  ) 
 Here is how much of TeX's memory you used:
- 31630 strings out of 410636
- 626966 string characters out of 2815793
- 1013216 words of memory out of 3000000
- 52183 multiletter control sequences out of 15000+600000
+ 31635 strings out of 410636
+ 627036 string characters out of 2815793
+ 1010478 words of memory out of 3000000
+ 52188 multiletter control sequences out of 15000+600000
  536569 words of font info for 102 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  99i,21n,104p,2040b,573s stack positions out of 10000i,1000n,20000p,200000b,80000s
 
-Output written on preamble.pdf (29 pages).
+Output written on preamble.pdf (32 pages).
