@@ -6,8 +6,9 @@
 We provide a formal description of the PAKE protocol of KOY in the figure below.
 
 	\begin{figure}[tbp]
+	\FrameSep5pt
 	\begin{framed}\small
-		
+
 		\textbf{Initialization}: Let $\Gamma[\hat{\G},\G,g,q]\rgets[S_\secpar]$. Set $g_1\gets g$ and set $g_2, c, d, h\rgets\overline{\G}$. Furthermore, $\hk\rgets\mathsf{HF.Keyspace}_{\lambda,\Gamma}$. Output $\crs = (\Gamma,g_1, g_2,h,c,d,\hk)$.\\
 		
 		\textbf{Protocol Execution}: We describe the execution of the protocol below.
@@ -57,8 +58,8 @@ We provide a formal description of the PAKE protocol of KOY in the figure below.
 	Consider the environment $\env$ in \Cref{fig:adv} and the dummy adversary. It follows from the correctness of the protocol that in the real-world protocol execution $\env$ always outputs $1$, since the algorithm of $\env$ and $\adv$ is the same as that of an honest server. At a high level, we will show that any simulator that successfully simulates the protocol against $\env$ in the ideal world can be used to solve arbitrary instances of fixed-CDH.
 	
 	\begin{figure}[h]
+		\FrameSep5pt
 		\begin{framed}\small
-			\textbf{\underline{Environment $\env$:}}
 			\begin{enumerate}\setcounter{enumi}{-1}
 				\item $\env$ receives the CRS $(g_1, g_2, h, c, d)$.
 				\item $\env$ selects $\pw\xleftarrow{\$}\mathcal{PW}$, where $\mathcal{PW}\subseteq\mathbb{G}$ is the password dictionary. It then sends $(\newsession,\mathsf{sid},\user,\server,\pw)$ to $\user$.
@@ -77,7 +78,7 @@ We provide a formal description of the PAKE protocol of KOY in the figure below.
 				\item $\env$ sets $C':=C/\pw$ and then checks if $\mathsf{Vrfy}_{\mathsf{VK}}(\msg{1}|\msg{2}|K,\sigma)=1$. If yes, it computes $\sk_S:=A^{x_2}B^{y_2}(C')^{z_2}D^{w_2}K^{r_2}$ and outputs $1$ if $\sk_S=\sk$. If either of the two checks fails, it outputs $0$.
 			\end{enumerate}
 		\end{framed}
-		\caption{Our Setup.}
+		\caption{The Un-simulatable Environment $\mathcal{Z}$.}
 		\label{fig:adv}
 	\end{figure}
 	

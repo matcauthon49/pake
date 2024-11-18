@@ -100,9 +100,9 @@ Before we continue, we introduce some additional, helpful terminology.
 
 \textbf{Game $\game_2$.} In this game, the challenger makes two changes. After this game, the password will no longer be used in computing the session key, except implicitly.
 
-When the challenger receives $\msg{2}^{*}$, it examines it. In the case that $\msg{2}^{*}$ is adversarially-generated and valid, it considers the adversary's algebraic exponents $(x_2,y_2,z_2,w_2,r_2)$, which were provided along with $\msg{2}^{*}$. It then computes $$C':= \frac{C}{I/h^{r_2}}$$ and sets the session key $\sk_\user = A^{x_2}B^{y_2}(C')^{z_2}D^{w_2}K^{r_2}$. The challenger then responds to the message with $\msg{3}^{*}$ exactly as it does in $\game_1$. 
+When the challenger receives $\msg{2}^{*}$, it examines it. In the case that $\msg{2}^{*}$ is adversarially-generated and valid, it considers the adversary's algebraic exponents $(x_2,y_2,z_2,w_2,r_2)$, which were provided along with $\msg{2}^{*}$. It then computes $$\pw'=\frac{I/I'}{C/C'}$$ and sets the session key $\sk_\user = E^{r_1}F^{x_1}G^{y_1}(I')^{z_1}J^{w_1}(\pw')^{z_2}$. The challenger then responds to the message with $\msg{3}^{*}$ exactly as it does in $\game_1$. 
 
-When the challenger receives $\msg{3}^{*}$, it examines $\msg{1}^{*}$ for the corresponding $\sid$. If $\msg{1}^{*}$ is adversarially generated and valid, it considers $\msg{2} = (\sid, E, F, G, H, I)$ and the adversary's algebraic exponents output with $\msg{3}^{*}$ and $\msg{1}^{*}$ as $(x_1,y_1,z_1,w_1,r_1)$. If $\mathsf{Vrfy}_\VK(\msg{1}\|\msg{2}\|K,\mathsf{sig})=1$, it computes $$I':= \frac{I}{C/h^{r_1}}$$ and sets the session key $\sk_\server = E^{r_1}F^{x_1}G^{y_1}(I')^{z_1}J^{w_1}$.
+When the challenger receives $\msg{3}^{*}$, it examines $\msg{1}^{*}$ for the corresponding $\sid$. If $\msg{1}^{*}$ is adversarially generated and valid, it considers and the adversary's algebraic exponents output with $\msg{3}^{*}$ and $\msg{1}^{'*}$ as $(x_1,y_1,z_1,w_1,r_1)$. If $\mathsf{Vrfy}_\VK(\msg{1}\|\msg{2}\|K,\mathsf{sig})=1$, it computes $$C':= \frac{C}{I/h^{r_1}}$$ and sets the session key $\sk_\server = A^{x_2}B^{y_2}C^{z_2}D^{w_2}K^{r_2}$.
 
 \begin{lemma} We have
 	$$\Pr[Z_1]=\Pr[Z_2].$$
@@ -111,11 +111,10 @@ When the challenger receives $\msg{3}^{*}$, it examines $\msg{1}^{*}$ for the co
 \begin{proof}
 	It is clear that the distribution on the adversary's (and environment's) view until an adversarially-generated and valid message is detected is identical. In the case such a message \textit{is} detected, note that by correctness of the protocol of \cref{fig:koy} we have
 	\begin{align*}
-	\label{eq:linear}
-		\frac{C}{I/h^{r_2}} = \frac{C}{\pw_\user}\\
-		\frac{I}{C/h^{r_1}} = \frac{I}{\pw_\user}
+		\pw'=\frac{I/I'}{C/C'}=1\\
+		\frac{C}{I/h^{r_1}} = \frac{C}{\pw_\user}
 	\end{align*}
-	and hence $$A^{x_2}B^{y_2}(C')^{z_2}D^{w_2}K^{r_2} = E^{r_1}F^{x_1}G^{y_1}(I')^{z_1}J^{w_1}.$$ Thus there is no difference in the distribution of $\sk_i$ between $\game_1$ and $\game_2$, and the proposition follows.
+	and hence $$E^{r_1}F^{x_1}G^{y_1}(I')^{z_1}J^{w_1} = E^{r_1}F^{x_1}G^{y_1}(I')^{z_1}J^{w_1}(\pw')^{z_2}.$$ Thus there is no difference in the distribution of $\sk_i$ between $\game_1$ and $\game_2$, and the proposition follows.
 \end{proof}
 
 \textbf{Game $\game_3$.} In this game the challenger modifies how it deals with an incoming $\msg{3}^{*}$. Upon receiving this message, it checks the corresponding $\msg{1}^{*}$ of $\sid.$ If $\msg{1}^{*}$ is not adversarially-generated, then it finds the unique $\sk_\user$ for $\sid$ and sets $\sk_\server := \sk_\user$. In any other case it proceeds as in $\game_2$.
@@ -132,6 +131,7 @@ Note that in $\game_2$ it is true that in the case of honestly generated $\msg{1
 \begin{proof}
 	We will proceed via an information-theoretic argument. Note that $\msg{1}^{*}$ is adversarially-generated and invalid. Hence, there are two possibilities: either $A^{\chi_1+\alpha\zeta_1}B^{\chi_2+\alpha\zeta_2}\neq D$, or $C/\pw_\user\neq A^\kappa$. Consider now the random variables $E$ and $\sk_\server$, which are determined completely by the choices of $(x,y,z,w)$ and $(A,B,C,D,K)$. We can rewrite these as the following linear system, in which the logarithms are taken over base $g$:
 	\begin{equation}
+		\label{eq:linear}
 		\begin{pmatrix}
 			\log E\\
 			\log\sk_\server-r\log K
@@ -151,6 +151,8 @@ Note that in $\game_2$ it is true that in the case of honestly generated $\msg{1
 	It is easy to see that these equations are linearly independent. If $A^{\chi_1+\alpha\zeta_1}B^{\chi_2+\alpha\zeta_2}\neq D$, then note that $(\chi_1+\alpha\zeta_1) + (\chi_2+\alpha\zeta_2)\log g_2 = \log cd^{\alpha}$, while if $C/\pw_\user\neq A^\kappa$, then the independence is trivial. Then for any fixed values of $\mu, \nu$, the probability that $\log E=\mu$ and $\log\sk_\server-r\log K=\nu$ is exactly $1/q^2$. Hence, the value of $\sk_\server$ is completely independent of the value of $E$, and it follows that the distribution of $\sk_\server$ appears uniform to the adversary in $\game_3$, which is the same as $\game_4$.
 \end{proof}
 
+
+\nam{review whether you need DR-CCA security for this}
 
 \textbf{Game $\game_5$.} In this game the challenger modifies how it determines $\msg{2}$. On receiving $\msg{1}^{*}$, instead of setting $I:=h^r\cdot g^{\pw_\user'}$, it sets $I:=h^rg^{N+1}$ which is not a valid $\pw$ as determined by the password dictionary. 
 
@@ -198,7 +200,7 @@ Note that it is true here as well that either $F^{\chi_1+\beta\zeta_1}G^{\chi_2+
 		\item On receiving a message $\newsession$, $\adv$ chooses $m_0:=(\pw_\user)$ (which was provided by $Z$) and $m_1:=g^{N+1}$ as messages for the encryption oracle. It receives in return a ciphertext $\psi^{*}$, and sets $(A,B,C,D):=\psi^{*}$.
 		\item On receiving an adversarially generated message $\msg{2}^{*}$, the challenger needs to determine whether this message is valid or invalid (recall that in this setting the initialization procedure has not been backdoored). To do this, it queries the decryption oracle with $(F,G,I,J)$, and sets the message to be valid if it is an encryption of $\pw_\user$ and invalid otherwise.
 		\item On receiving an adversarially generated message $\msg{3}^{*}$, the challenger again needs to determine whether $\msg{1}^{*}$ is valid or invalid. To do so, it again queries the decryption oracle with $(A,B,C,D)$ and sets the message to be valid if it is an encryption of $\pw_\user$ and invalid otherwise.
-		\item The simulator determines the algebraic exponents of the $E$ delivered by the adversary using $\msg{2}^{'*}$ and queries the auxiliary oracle to receive $\aux = (x_1,x_2,y_1,y_2,g_1^{r^2},g_2^{r^2})$. Using this, it determines $\sk_\user = E^{r_1}K^{r_2}$ and releases it to $\mathcal{Z}$.
+		\item The simulator determines the algebraic exponents of the $E$ delivered by the adversary using $\msg{2}^{'*}$ and queries the auxiliary oracle to receive $\aux = (x_1,x_2,y_1,y_2,g_1^{r^2},g_2^{r^2})$. Using this, it determines $\sk_\user = E^{r_1}F^{x_1}G^{y_1}(I')^{z_1}J^{w_1}(\pw')^{z_2}$, since $E$ is a function of $\aux$. It then releases $\sk_\user$ to $\mathcal{Z}$.
 	\end{itemize}
 	$\adv$ then outputs what $\mathcal{Z}$ outputs.
 	
@@ -210,7 +212,16 @@ Note that it is true here as well that either $F^{\chi_1+\beta\zeta_1}G^{\chi_2+
 \begin{figure}[tbp]
 	\FrameSep5pt
 	\begin{framed}\small
-		\textbf{Initialization}: Let $\Gamma[\hat{\G},\G,g,q]\rgets[S_\secpar]$. Set $g_1\gets g$, $g_2\rgets\overline{\G}$. Choose $$\kappa\rgets\Z_q^{*}; (\chi_1,\chi_2),(\zeta_1,\zeta_2)\rgets\{(x,y)\in\Z_p^2:g_1^xg_2^y\neq 1\}$$ and set $h:=g_1^\kappa$, $c:=g_1^{\chi_1}g_2^{\chi_2}$ and $d:=g_1^{\zeta_1}g_2^{\zeta_2}$. Furthermore, $\hk\rgets\mathsf{HF.Keyspace}_{\lambda,\Gamma}$. Output $\crs = (\Gamma,g_1, g_2,h,c,d,\hk)$.
+		\textbf{On receiving $(\newsession, \sid, \party, \party',\role)$ from $\pake$}:
+		\begin{itemize}
+			\item $\SIM$ notes down $\party$.
+		\end{itemize}
+	
+		\textbf{If $\party=\user$}:
+		
+		\begin{enumerate}
+			\item \textbf{}
+		\end{enumerate}
 	\end{framed}
 	\caption{The Simulator for \cref{thm:agm}.}
 	\label{fig:agm-sim}
