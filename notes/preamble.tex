@@ -5,6 +5,7 @@
 \usepackage[T1]{fontenc}
 
 
+
 \usepackage[dvipsnames]{xcolor}
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -19,6 +20,7 @@
 \usepackage{thmtools}
 \usepackage{graphicx}
 \usepackage{hyperref}
+
 \usepackage{tikz}
 \usepackage{algpseudocode}
 \usepackage{multirow}
@@ -33,11 +35,11 @@
 
 \hypersetup{
 	colorlinks=true,
-	linkcolor=red,
-	filecolor=red,  
-	citecolor=red,    
-	urlcolor=blue,
-	pdftitle={On the UC-(In)Security of PAKE Protocols in the Plain Model},
+	linkcolor=MidnightBlue,
+	filecolor=MidnightBlue,  
+	citecolor=MidnightBlue,    
+	urlcolor=MidnightBlue,
+	pdftitle={On the UC-(In)Security of PAKE Protocols in the Random Oracle Model},
 	pdfpagemode=FullScreen,
 }
 
@@ -51,7 +53,7 @@
 \input{macros}
 
 \usepackage[english]{babel}
-\title{\LARGE{\textbf{On the UC-(In)Security of\\PAKE Protocols in the Plain Model}}}
+\title{\LARGE{\textbf{On the UC-(In)Security of PAKE\\Protocols in the Random Oracle Model}}}
 \author{{Naman Kumar}\footnote{Email: \texttt{kumarnam@oregonstate.edu}} \\Oregon State University\\ \and {Jiayu Xu}\footnote{Email: \texttt{xujiay@oregonstate.edu}}\\ Oregon State University}
 
 
@@ -61,6 +63,10 @@
 	\begin{abstract}
 		We show that the PAKE protocol of Katz, Ostrovsky and Yung (2001) is not UC-secure in the plain model. We provide the first proof of UC-security of KOY in the AGM under the hardness of the Square Diffie-Hellman (SDH) assumption.
 	\end{abstract}
+
+	\newpage
+	\tableofcontents
+	\newpage
 	
 	\input{sections/introduction}
 	\input{sections/prelims}

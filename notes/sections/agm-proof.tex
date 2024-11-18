@@ -12,7 +12,7 @@ Before we proceed, we describe some notation and terminology. Our proof will pro
 
 Let $Z_i$ denote the event that $\mathcal{Z}$ outputs $1$ in game $G_i$. We need to show that $Z_0\cong Z_9$, which corresponds to the fact that the real world attack is indistinguishable from the ideal world attack.
 
-We refer to the system of $\party_0$ and $\party_1$ as the \textit{challenger}. The challenger plays the role of $\user$ and $\server$ and carries out all interactions with the adversary (and hence, the environment).
+We refer to the system of $\party_0$ and $\party_1$ as the \textit{challenger}. The challenger plays the role of $\user$ and $\server$ and carries out all interactions with the adversary (and hence, the environment). We denote each password as a group element $\pw = g^{\pw'}$ where $\pw$ is an element of the password dictionary $\{1,\dots,N\}$. We assume that the size of the password dictionary is small, ie. $N<q$.
 
 Let $\msg{i}$ denote the $i$th message output by the challenger. This message is relayed to the adversary, and the (algebraic) adversary responds with a message $\msg{i}^{*}$ along with a message $\msg{i}^{'*}$ which is an algebraic representation of the elements it has seen so far. 
 
@@ -101,7 +101,7 @@ Before we continue, we introduce some additional, helpful terminology.
 
 When the challenger receives $\msg{2}^{*}$, it examines it. In the case that $\msg{2}^{*}$ is adversarially-generated and valid, it considers the adversary's algebraic exponents $(x_2,y_2,z_2,w_2,r_2)$, which were provided along with $\msg{2}^{*}$. It then computes $$C':= \frac{C}{I/h^{r_2}}$$ and sets the session key $\sk_\user = A^{x_2}B^{y_2}(C')^{z_2}D^{w_2}K^{r_2}$. The challenger then responds to the message with $\msg{3}^{*}$ exactly as it does in $\game_1$. 
 
-When the challenger receives $\msg{3}^{*}$, it examines $\msg{1}^{*}$. If $\msg{1}^{*}$ is adversarially generated and valid, it considers $\msg{2} = (\sid, E, F, G, H, I)$ and the adversary's algebraic exponents output with $\msg{3}^{*}$ and $\msg{1}^{*}$ as $(x_1,y_1,z_1,w_1,r_1)$. If $\mathsf{Vrfy}_\VK(\msg{1}\|\msg{2}\|K,\mathsf{sig})=1$, it computes $$I':= \frac{I}{C/h^{r_1}}$$ and sets the session key $\sk_\user = E^{r_1}F^{x_1}G^{y_1}(I')^{z_1}J^{w_1}$.
+When the challenger receives $\msg{3}^{*}$, it examines $\msg{1}^{*}$ for the corresponding $\sid$. If $\msg{1}^{*}$ is adversarially generated and valid, it considers $\msg{2} = (\sid, E, F, G, H, I)$ and the adversary's algebraic exponents output with $\msg{3}^{*}$ and $\msg{1}^{*}$ as $(x_1,y_1,z_1,w_1,r_1)$. If $\mathsf{Vrfy}_\VK(\msg{1}\|\msg{2}\|K,\mathsf{sig})=1$, it computes $$I':= \frac{I}{C/h^{r_1}}$$ and sets the session key $\sk_\user = E^{r_1}F^{x_1}G^{y_1}(I')^{z_1}J^{w_1}$.
 
 \begin{lemma} We have
 	$$\Pr[Z_1]=\Pr[Z_2].$$
@@ -110,10 +110,51 @@ When the challenger receives $\msg{3}^{*}$, it examines $\msg{1}^{*}$. If $\msg{
 \begin{proof}
 	It is clear that the distribution on the adversary's (and environment's) view until an adversarially-generated and valid message is detected is identical. In the case such a message \textit{is} detected, note that by correctness of the protocol of \cref{fig:koy} we have
 	\begin{align*}
-		\frac{C}{I/h^{r^2}} = \frac{C}{\pw_\user}\\
-		\frac{I}{C/h^{r^2}} = \frac{I}{\pw_\user}
+		\frac{C}{I/h^{r_2}} = \frac{C}{\pw_\user}\\
+		\frac{I}{C/h^{r_1}} = \frac{I}{\pw_\user}
 	\end{align*}
 	and hence $$A^{x_2}B^{y_2}(C')^{z_2}D^{w_2}K^{r_2} = E^{r_1}F^{x_1}G^{y_1}(I')^{z_1}J^{w_1}.$$ Thus there is no difference in the distribution of $\sk_i$ between $\game_1$ and $\game_2$, and the proposition follows.
 \end{proof}
 
-\textbf{Game $\game_3$.}
+\textbf{Game $\game_3$.} In this game the challenger modifies how it deals with an incoming $\msg{3}^{*}$. Upon receiving this message, it checks the corresponding $\msg{1}^{*}$ of $\sid.$ If $\msg{1}^{*}$ is not adversarially-generated, then it finds the unique $\sk_\user$ for $\sid$ and sets $\sk_\server := \sk_\user$. In any other case it proceeds as in $\game_2$.
+
+At first it is not clear why such a corresponding $\sk_\user$ exists. However, this follows from the fact that the protocol did not $\abort$. Hence, there is some unique $\sid$ for which the $\VK$ corresponding to $\msg{3}^{*}$ was used, and furthermore this is the same $\sid$ corresponding to $\msg{3}^{*}$, because a case of successful verification if the two $\sid$s were not equal would mean a signature was forged. Both these situations are prohibited by the $\abort$ clause introduced in game $\game_0'$.
+
+Note that in $\game_2$ it is true that in the case of honestly generated $\msg{1}$, $\sk_\user = \sk_\server$. Hence, the following is unconditionally true: $$\Pr[Z_2]=\Pr[Z_3].$$
+
+\textbf{Game $\game_4$.} In this game the challenger deals with an incoming $\msg{3}^{*}$ with a corresponding $\msg{1}^{*}$ that is adversarially-generated but invalid. If this is indeed the case, it outputs $\sk_\server\rgets\G$. In any other case it proceeds as in $\game_3$.
+
+\begin{lemma}
+	We have $$\Pr[Z_3]=\Pr[Z_4].$$
+\end{lemma}
+\begin{proof}
+	We will proceed via an information-theoretic argument. Note that $\msg{1}^{*}$ is adversarially-generated and invalid. Hence, there are two possibilities: either $A^{\chi_1+\alpha\zeta_1}B^{\chi_2+\alpha\zeta_2}\neq D$, or $C/\pw_\user\neq A^\kappa$. Consider now the random variables $E$ and $\sk_\server$, which are determined completely by the choices of $(x,y,z,w)$ and $(A,B,C,D,K)$. We can rewrite these as the following linear system, in which the logarithms are taken over base $g$:
+	\begin{equation}
+		\begin{pmatrix}
+			\log E\\
+			\log\sk_\server-r\log K
+		\end{pmatrix} =
+		\begin{pmatrix}
+			1 & \log g_2 & \log h & \log cd^\alpha\\
+			\log A& \log B & \log \left(\frac{C}{\pw_\user}\right) & \log D
+		\end{pmatrix}
+		\begin{pmatrix}
+			x\\
+			y\\
+			z\\
+			w
+		\end{pmatrix}
+	\end{equation}
+
+	It is easy to see that these equations are linearly independent. If $A^{\chi_1+\alpha\zeta_1}B^{\chi_2+\alpha\zeta_2}\neq D$, then note that $(\chi_1+\alpha\zeta_1) + (\chi_2+\alpha\zeta_2)\log g_2 = \log cd^{\alpha}$, while if $C/\pw_\user\neq A^\kappa$, then the independence is trivial. Then for any fixed values of $\mu, \nu$, the probability that $\log E=\mu$ and $\log\sk_\server-r\log K=\nu$ is exactly $1/q^2$. Hence, the value of $\sk_\server$ is completely independent of the value of $E$, and it follows that the distribution of $\sk_\server$ appears uniform to the adversary in $\game_3$, which is the same as $\game_4$.
+\end{proof}
+
+
+\textbf{Game $\game_5$.} In this game the challenger modifies how it determines $\msg{2}$. On receiving $\msg{1}^{*}$, instead of setting $I:=h^r\cdot g^{\pw_\user'}$, it sets $I:=h^rg^{N+1}$ which is not a valid $\pw$ as determined by the password dictionary. 
+
+\begin{lemma}
+	Under the DDH assumption, we have $$\Pr[Z_5]=\Pr[Z_4] + \negl(\secpar).$$
+\end{lemma}
+\begin{proof}
+	We show that any environment $\env$ which can differentiate between $\game_4$ and $\game_5$ can be used as a subroutine to build an adversary $\adv$ which can break the CCA-security game by successfully distinguishing between target ciphertexts. 
+\end{proof}
