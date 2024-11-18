@@ -31,9 +31,9 @@ We provide a formal description of the PAKE protocol of KOY in the figure below.
 				J &:= (cd^{\beta})^{r_2}
 			\end{align*}
 			and sends $\msg{2}=(\sid,E,F,G,I,J)$.
-			\item \textbf{Round $\round_3$ (User).} $\user$ selects $x_1,y_1,z_1,w_1\rgets\Z_q$ and sets
+			\item \textbf{Round $\round_3$ (Client).} $\user$ selects $x_1,y_1,z_1,w_1\rgets\Z_q$ and sets
 			\begin{align*}
-			 \beta\ &:= \mathsf{HF}_\hk^{\secpar,\Gamma}(\msg{1},\sid,E,F,G,I)\\
+			 \beta' &:= \mathsf{HF}_\hk^{\secpar,\Gamma}(\msg{1},\sid,E,F,G,I)\\
 			 K &:= g_1^{x_1}g_2^{x_2}h^{z_1}(cd^{\beta'})^{w_1}\\
 			 \mathsf{sig} &\gets\sign_\SK(\msg{1}\|\msg{2}\|K)
 			\end{align*}

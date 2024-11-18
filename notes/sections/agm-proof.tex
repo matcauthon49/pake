@@ -102,7 +102,7 @@ Before we continue, we introduce some additional, helpful terminology.
 
 When the challenger receives $\msg{2}^{*}$, it examines it. In the case that $\msg{2}^{*}$ is adversarially-generated and valid, it considers the adversary's algebraic exponents $(x_2,y_2,z_2,w_2,r_2)$, which were provided along with $\msg{2}^{*}$. It then computes $$\pw'=\frac{I/I'}{C/C'}$$ and sets the session key $\sk_\user = E^{r_1}F^{x_1}G^{y_1}(I')^{z_1}J^{w_1}(\pw')^{z_2}$. The challenger then responds to the message with $\msg{3}^{*}$ exactly as it does in $\game_1$. 
 
-When the challenger receives $\msg{3}^{*}$, it examines $\msg{1}^{*}$ for the corresponding $\sid$. If $\msg{1}^{*}$ is adversarially generated and valid, it considers and the adversary's algebraic exponents output with $\msg{3}^{*}$ and $\msg{1}^{'*}$ as $(x_1,y_1,z_1,w_1,r_1)$. If $\mathsf{Vrfy}_\VK(\msg{1}\|\msg{2}\|K,\mathsf{sig})=1$, it computes $$C':= \frac{C}{I/h^{r_1}}$$ and sets the session key $\sk_\server = A^{x_2}B^{y_2}C^{z_2}D^{w_2}K^{r_2}$.
+When the challenger receives $\msg{3}^{*}$, it examines $\msg{1}^{*}$ for the corresponding $\sid$. If $\msg{1}^{*}$ is adversarially generated and valid, it considers and the adversary's algebraic exponents output with $\msg{3}^{*}$ and $\msg{1}^{'*}$ as $(x_1,y_1,z_1,w_1,r_1)$. If $\mathsf{Vrfy}_\VK(\msg{1}\|\msg{2}\|K,\mathsf{sig})=1$, it computes $$C':= \frac{C}{I/h^{r_1}}$$ and sets the session key $\sk_\server = A^{x_2}B^{y_2}(C')^{z_2}D^{w_2}K^{r_2}$.
 
 \begin{lemma} We have
 	$$\Pr[Z_1]=\Pr[Z_2].$$
@@ -166,7 +166,7 @@ Note that in $\game_2$ it is true that in the case of honestly generated $\msg{1
 		\item On receiving a message $\msg{1}^{*}$, $\adv$ chooses $m_0:=(\pw_\user)$ (which was provided by $Z$) and $m_1:=g^{N+1}$ as messages for the encryption oracle. It receives in return a ciphertext $\psi^{*}$, and sets $(F,G,I,J):=\psi^{*}$.
 		\item On receiving an adversarially generated message $\msg{2}^{*}$, the challenger needs to determine whether this message is valid or invalid (recall that in this setting the initialization procedure has not been backdoored). To do this, it queries the decryption oracle with $(F,G,I,J)$, and sets the message to be valid if it is an encryption of $\pw_\user$ and invalid otherwise.
 		\item On receiving an adversarially generated message $\msg{3}^{*}$, the challenger again needs to determine whether $\msg{1}^{*}$ is valid or invalid. To do so, it again queries the decryption oracle with $(A,B,C,D)$ and sets the message to be valid if it is an encryption of $\pw_\user$ and invalid otherwise.
-		\item The simulator determines the algebraic exponents of the $K$ delivered by the adversary using $\msg{3}^{'*}$ and queries the auxiliary oracle to receive $\aux = (g_1^{r_1^2}, g_2^{r_1^2}, c^{r_1}, d^{r_1},(h^{r_1}\cdot m_i)^{r_1},(cd^{\alpha})^{{r_1}^2})$. Using this, in the case that $\msg{1}^{*}$ is adversarially generated and valid, it determines $\sk_\server = A^{x_2}B^{y_2}C^{z_2}D^{w_2}K^{r_2}$, since $K$ is completely determined as some function of $\aux$. It then releases $\sk_\server$ to $\mathcal{Z}$.
+		\item The simulator determines the algebraic exponents of the $K$ delivered by the adversary using $\msg{3}^{'*}$ and queries the auxiliary oracle to receive $\aux = (g_1^{r_2^2}, g_2^{r_2^2}, c^{r_2}, d^{r_2},(h^{r_2}\cdot m_i)^{r_2},(cd^{\alpha})^{{r_2}^2})$. Using this, in the case that $\msg{1}^{*}$ is adversarially generated and valid, it determines $\sk_\server = A^{x_2}B^{y_2}C^{z_2}D^{w_2}K^{r_2}$, since $K$ is completely determined as some function of $\aux$. It then releases $\sk_\server$ to $\mathcal{Z}$.
 	\end{itemize}
 
 	$\adv$ then outputs what $\mathcal{Z}$ outputs.
@@ -174,7 +174,7 @@ Note that in $\game_2$ it is true that in the case of honestly generated $\msg{1
 	It is clear that the above simulation corresponds to a correct simulation of $\game_4$ if the returned ciphertext $\psi^{*}$ is an encryption of $m_0$ while it corresponds to a simulation of $\game_5$ if the returned ciphertext is a simulation of $m_1$. It follows that $$|\Pr[Z_4]-\Pr[Z_5]|\leq\drcca_{\adv}(\lambda)\leq \negl(\lambda).$$ 
 \end{proof}
 
-\textbf{Game $\game_6$.} In this game the challenger deals with incoming message $\msg{2}^{*}$. If $\msg{2}^{*}$ is either honest, then it assigns the client's session key $\sk_\user$ uniformly chosen in $\G$.
+\textbf{Game $\game_6$.} In this game the challenger deals with incoming message $\msg{2}^{*}$. If $\msg{2}^{*}$ is honest, then it assigns the client's session key $\sk_\user$ uniformly chosen in $\G$.
 
 The proof of indistinguishability of this game is closely related to that of game $\game_4$. It is true here that either $F^{\chi_1+\beta\zeta_1}G^{\chi_2+\beta\zeta_2}\neq J$ or $I/\pw_\user\neq F^\kappa$. A linear family similar to \cref{eq:linear} follows, and the proof of linear independence is also nearly identical. We can conclude that the session key is uniform in $\game_5$, and equivalence follows immediately: $$\Pr[Z_5]=\Pr[Z_6].$$
 
@@ -205,11 +205,11 @@ Note that it is true here as well that either $F^{\chi_1+\beta\zeta_1}G^{\chi_2+
 	It is clear that the above is a correct simulation of $\game_7$ when $m_0$ is encrypted and $\game_8$ when $m_1$ is encrypted. It follows immediately that $$|\Pr[Z_7]-\Pr[Z_8]|\leq\drcca_{\adv}(\secpar)\leq\negl(\secpar).$$
 \end{proof}
 
-\textbf{Game $\game_9$.} In this game we introduce the simulator shown in \cref{fig:agm-sim}.
+\textbf{Game $\game_9$.} In this game we introduce the simulator shown in \cref{fig:agm-sim}. It is easy to see that the simulator does exactly what is done by the challenger of $\game_8$, except for determining whether a message is invalid or valid, which is done by $\pake$. Once this has been determined, it continues the simulation and finds the session key $\sk_i$, which is delegated to $\pake$.
 
 \begin{figure}[tbp]
 	\FrameSep5pt
-	\begin{framed}\small
+	\begin{framed}\footnotesize
 		\textbf{On receiving $(\newsession, \sid, \party, \party',\role)$ from $\pake$}:
 		\begin{itemize}
 			\item $\SIM$ notes down $\party$.
@@ -217,9 +217,46 @@ Note that it is true here as well that either $F^{\chi_1+\beta\zeta_1}G^{\chi_2+
 	
 		\textbf{If $\party=\user$}:
 		
-		\begin{enumerate}
-			\item \textbf{}
-		\end{enumerate}
+		\begin{itemize}
+			\item \textbf{In Round $\mathbf{R}_1$:} $\SIM$ samples $(\VK,\SK)\rgets\OTS.\gen(1^\secpar)$ and $r_1\rgets\Z_q$. It sets
+			\begin{align*}
+				A &:= g_1^{r_1} \\B &:= g_2^{r_1}\\ C &:= h^{r_1}\cdot g^{N+1} \\ \alpha &:= \mathsf{HF}_{\hk}^{\lambda,\Gamma}(\sid,\VK,A,B,C) \\ D &:= (cd^{\alpha})^{r_1}
+			\end{align*}
+			and sends $\msg{1} = (\sid,\VK,A,B,C,D)$.
+			
+			\item \textbf{On receiving $\msg{2}^{*}$:} If $\msg{2}^{*}\neq\msg{2}$, $\SIM$ finds $I/F^\kappa$ and sends $(\testpwd,\sid,\user,I/F^\kappa)$ to $\pake$. Otherwise it skips this step and sends $(\NewKey,\sid, \user,0_\G)$.
+			\begin{itemize}
+				\item \textbf{If $\pake$ outputs `correct guess':} $\SIM$ continues the simulation as described in $\game_2$ and submits $(\NewKey,\sid, \user,\sk_\user)$ to $\pake$.
+				\item \textbf{If $\pake$ outputs `wrong guess':} $\SIM$ continues the simulation as described in $\game_7$ and submits $(\NewKey,\sid, \user,\sk_\user)$ to $\pake$.
+			\end{itemize}
+			\item\textbf{In Round $\mathbf{R}_3$ (Client):} $\SIM$ selects $x_1,y_1,z_1,w_1\rgets\Z_q$ and sets
+			\begin{align*}
+				\beta' &:= \mathsf{HF}_\hk^{\secpar,\Gamma}(\msg{1},\sid,E,F,G,I)\\
+				K &:= g_1^{x_1}g_2^{x_2}h^{z_1}(cd^{\beta'})^{w_1}\\
+				\mathsf{sig} &\gets\sign_\SK(\msg{1}\|\msg{2}\|K)
+			\end{align*}
+			and sends $\msg{3} = (K,\mathsf{sig})$.
+		\end{itemize}
+	
+	\textbf{If $\party=\server$:}
+		\begin{itemize}
+			\item \textbf{In Round $\mathbf{R}_2$:} $\SIM$ selects $x_2,y_2,z_2,w_2,r_2\rgets\Z_q$ and sets
+			\begin{align*}
+				\alpha' &:= \mathsf{HF}_\hk^{\secpar,\Gamma}(\sid,\VK,A,B,C)\\
+				E &:= g_1^{x_2}g_2^{y_2}h^{z_2}(cd^{\alpha'})^{w_2}\\
+				F &:= g_1^{r_2}\\
+				G &:= g_2^{r_2}\\
+				I &:= h^{r_2}\cdot g^{N+1}\\
+				\beta &:= \mathsf{HF}_\hk^{\secpar,\Gamma}(\msg{1},\sid,E,F,G,I)\\
+				J &:= (cd^{\beta})^{r_2}
+			\end{align*}
+		\item \textbf{On receiving $\msg{3}^{*}$:} If $\msg{1}^{*}\neq\msg{1}$, $\SIM$ finds $C/A^\kappa$ and sends $(\testpwd,\sid,\user,C/A^\kappa)$ to $\pake$. Otherwise it skips this step and sends $(\NewKey,\sid,\user,0_\G)$. 
+		\begin{itemize}
+			\item \textbf{If $\pake$ outputs `correct guess':} $\SIM$ continues the simulation as described in $\game_2$ and submits $(\NewKey,\sid, \user,\sk_\server)$ to $\pake$.
+			\item \textbf{If $\pake$ outputs `wrong guess':} $\SIM$ continues the simulation as described in $\game_4$ and submits $(\NewKey,\sid, \user,\sk_\server)$ to $\pake$.
+		\end{itemize}
+		\end{itemize}
+
 	\end{framed}
 	\caption{The Simulator for \cref{thm:agm}.}
 	\label{fig:agm-sim}
