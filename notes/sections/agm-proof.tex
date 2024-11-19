@@ -207,6 +207,8 @@ Note that it is true here as well that either $F^{\chi_1+\beta\zeta_1}G^{\chi_2+
 
 \textbf{Game $\game_9$.} In this game we introduce the simulator shown in \cref{fig:agm-sim}. It is easy to see that the simulator does exactly what is done by the challenger of $\game_8$, except for determining whether a message is invalid or valid, which is done by $\pake$. Once this has been determined, it continues the simulation and finds the session key $\sk_i$, which is delegated to $\pake$.
 
+We have found that $\Pr[Z_8]=\Pr[Z_9]$. From the preceding games we can conclude that under the SDSH and DDH assumptions, $$|\Pr[Z_0]-\Pr[Z_9]|\leq\negl(\secpar).$$
+
 \begin{figure}[tbp]
 	\FrameSep5pt
 	\begin{framed}\footnotesize
