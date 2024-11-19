@@ -6,6 +6,14 @@ Let $\mathcal{G}$ be an algorithm that on input $1^\lambda$ uniformly samples fr
 
 Note that a random group element can be chosen by selecting $x\rgets\Z_q$ and computing $g^x$. We define $\bar\G$ to be $\G\setminus\{1\}$; since $q$ is prime, $\bar\G$ is the set of generators of $\G$. If $x\rgets\bar\G$, then we obtain a random generator.
 
+\subsubsection{The CDH Assumption}
+
+Let $\mathcal{G}$ be as above. For all probabilistic polynomial-time $\adv$ and for each $\lambda\in\Z_{\geq 0}$, we define the CDH advantage of $\adv$ against $\mathcal{G}$ at $\lambda$ given $\Gamma$ as
+
+$$\advcdh_{\mathcal{G},\adv}(\lambda | \Gamma):\Pr[c=g^{xy}: x, y\rgets \Z_q, c\rgets\adv(1^\secpar,\Gamma,g^x,g^y)].$$
+
+The Computational Diffie-Hellman (CDH) assumption for $\mathcal{G}$ states that for every probabilistic, polynomial-time algorithm $\adv$, there exists some negligible function $\negl$ such that for all $\lambda\in\Z_{\geq 0}$, $$\advcdh_{\mathcal{G},\adv}(\lambda | \Gamma)\leq\negl(\lambda)$$ where $\Gamma\rgets[S_\lambda]$.
+
 \subsubsection{The DDH Assumption}
 
 Let $\mathcal{G}$ be as above. We define for each $\lambda\in\Z_{\geq 0}$ and for all $\Gamma[\hat\G, \G, g, q]\in[S_\lambda]$ the sets 
@@ -22,7 +30,7 @@ Where $\ddh_{\lambda,\Gamma}$ is the set of Diffie-Hellman Triples. For any prob
 \end{equation*}
 The Decisional Diffie-Hellman (DDH) assumption for $\mathcal{G}$ states that for every probabilistic, polynomial-time algorithm $\adv$, there exists some negligible function $\negl$ such that for all $\lambda\in\Z_{\geq 0}$, $$\advddh_{\mathcal{G},\adv}(\lambda | \Gamma)\leq\negl(\lambda)$$ where $\Gamma\rgets[S_\lambda]$.
 
-\subsubsection{The SDH Assumption}
+\subsubsection{The DSDH Assumption}
 
 Let $\mathcal{G}$ be as above. We define for each $\lambda\in\Z_{\geq 0}$ and for all $\Gamma[\hat\G, \G, g, q]\in[S_\lambda]$ the sets 
 \begin{equation*}
@@ -32,11 +40,11 @@ and
 \begin{equation*}
 	\sdh_{\lambda,\Gamma} := \{(g, g^x, g^{x^2}) : x\rgets\Z_q^{*}\}.
 \end{equation*}
-Where $\sdh_{\lambda,\Gamma}$ is the set of Square Diffie-Hellman Triples. For any probabilistic polynomial-time distinguishing algorithm $\adv$ and for all $\lambda\in\Z_{\geq 0}$, we define the SDH advantage of $\adv$ against $\mathcal{G}$ at $\lambda$ given $\Gamma$ as
+Where $\sdh_{\lambda,\Gamma}$ is the set of Square Diffie-Hellman Triples. For any probabilistic polynomial-time distinguishing algorithm $\adv$ and for all $\lambda\in\Z_{\geq 0}$, we define the DSDH advantage of $\adv$ against $\mathcal{G}$ at $\lambda$ given $\Gamma$ as
 \begin{equation*}
 	\advsdh_{\mathcal{G},\adv}(\lambda | \Gamma) = \left|\Pr[\adv(1^\lambda,\Gamma,\rho) = 1 : \rho\rgets\randsdh_{\lambda,\Gamma}] - \Pr[\adv(1^\lambda,\Gamma,\rho) = 1 : \rho\rgets\sdh_{\lambda,\Gamma}]\right|
 \end{equation*}
-The Square Diffie-Hellman (DDH) assumption for $\mathcal{G}$ states that for every probabilistic, polynomial-time algorithm $\adv$, there exists some negligible function $\negl$ such that for all $\lambda\in\Z_{\geq 0}$, $$\advsdh_{\mathcal{G},\adv}(\lambda | \Gamma)\leq\negl(\lambda)$$ where $\Gamma\rgets[S_\lambda]$.
+The Decisional Square Diffie-Hellman (DSDH) assumption for $\mathcal{G}$ states that for every probabilistic, polynomial-time algorithm $\adv$, there exists some negligible function $\negl$ such that for all $\lambda\in\Z_{\geq 0}$, $$\advsdh_{\mathcal{G},\adv}(\lambda | \Gamma)\leq\negl(\lambda)$$ where $\Gamma\rgets[S_\lambda]$.
 
 
 
