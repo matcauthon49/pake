@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (MiKTeX 22.10) (preloaded format=xelatex 2022.11.14)  19 NOV 2024 13:59
+This is XeTeX, Version 3.141592653-2.6-0.999994 (MiKTeX 22.10) (preloaded format=xelatex 2022.11.14)  19 NOV 2024 14:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1119,16 +1119,6 @@ n/10.95 ^^@) = []
  []
 
 [11]
-Package hyperref Info: bookmark level for unknown definition defaults to 0 on i
-nput line 52.
-
-Overfull \hbox (17.82124pt too wide) in paragraph at lines 52--53
-[]\T1/lmr/bx/n/10.95 Definition 2.1. []\T1/lmr/m/it/10.95 A one-time sig-na-tur
-e scheme $[]$ is a triple of PPT al-go-rithms $\OT1/cmr/m/n/10.95 ([]\OML/cmm/m
-/it/10.95 ; []; []\OT1/cmr/m/n/10.95 )$
- []
-
-
 Overfull \hbox (19.80824pt too wide) detected at line 69
 [][]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 ^^U\OMS/cmsy/m/n/10.95 j\OT1/cmr/m/
 n/10.95 ^^@) := [][\OML/cmm/m/it/10.95 x \OMS/cmsy/m/n/10.95 6\OT1/cmr/m/n/10.9
@@ -1186,6 +1176,9 @@ r/m/n/10.95 )[]\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 cd
  []
 
 ) [24] [25] (preamble.bbl) [26] (sections/cramer-shoup-proof.tex
+Package hyperref Info: bookmark level for unknown definition defaults to 0 on i
+nput line 45.
+
 Overfull \hbox (19.71599pt too wide) in paragraph at lines 53--54
 \T1/lmr/m/it/10.95 delayed-reveal-CCA se-cure with aux-il-iary in-for-ma-tion $
 [] \OT1/cmr/m/n/10.95 = (\OML/cmm/m/it/10.95 x[]; x[]; y[]; y[]; g[]; g[]; \OT1
@@ -1239,11 +1232,11 @@ Package rerunfilecheck Info: File `preamble.out' has not changed.
 (rerunfilecheck)             Checksum: CF671E6798D79325F20F919313FB1A6A;4753.
  ) 
 Here is how much of TeX's memory you used:
- 31651 strings out of 410636
- 627203 string characters out of 2815793
+ 31649 strings out of 410636
+ 627175 string characters out of 2815793
  1005408 words of memory out of 3000000
- 52200 multiletter control sequences out of 15000+600000
- 544514 words of font info for 106 fonts, out of 8000000 for 9000
+ 52199 multiletter control sequences out of 15000+600000
+ 540243 words of font info for 105 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  99i,21n,104p,2040b,573s stack positions out of 10000i,1000n,20000p,200000b,80000s
 

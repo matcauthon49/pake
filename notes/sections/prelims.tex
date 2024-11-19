@@ -48,7 +48,7 @@ The Decisional Square Diffie-Hellman (DSDH) assumption for $\mathcal{G}$ states 
 
 \subsubsection{One-Time Signature Schemes} We define the one-time signature scheme which we use in our protocol. 
 
-\begin{definition}
+
 	A one-time signature scheme $\OTS$ is a triple of PPT algorithms $(\keygen,\sign,\verify)$ such that:
 	\begin{itemize}
 		\item The key generation algorithm $\keygen$ takes in a security parameter $1^\secpar$ and outputs a key pair $(\VK,\SK)$.
@@ -60,7 +60,7 @@ The Decisional Square Diffie-Hellman (DSDH) assumption for $\mathcal{G}$ states 
 		\item \textbf{Correctness}: For all $\secpar\in\Z_{\geq 0}$, if $(\VK,\SK)\rgets\keygen(1^\secpar)$, then for all $m$ and all $\sigma\gets\sign_\SK(m)$, we have $\verify_\VK(m,\sigma)=1$.
 		\item \textbf{One-Time Security:} There exists a negligible function $\negl$ such that for every PPT algorithm $\adv$, $$\Pr[\verify_\VK(m,\sigma)=1: (\VK,\SK)\rgets\keygen(1^\secpar), (m,\sigma)\gets\adv^{\sign_\SK(\cdot)}(1^\secpar,\VK)]\leq\negl(\secpar)$$ where $\adv$ makes only a single query to $\sign_\SK(\cdot)$ and $\sigma$ was not an output of $\sign_\SK(m)$.
 	\end{itemize}
-\end{definition}
+
 
 \subsubsection{Collision-Resistant Hash Functions}
 
