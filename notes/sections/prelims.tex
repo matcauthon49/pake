@@ -46,9 +46,32 @@ Where $\sdh_{\lambda,\Gamma}$ is the set of Square Diffie-Hellman Triples. For a
 \end{equation*}
 The Decisional Square Diffie-Hellman (DSDH) assumption for $\mathcal{G}$ states that for every probabilistic, polynomial-time algorithm $\adv$, there exists some negligible function $\negl$ such that for all $\lambda\in\Z_{\geq 0}$, $$\advsdh_{\mathcal{G},\adv}(\lambda | \Gamma)\leq\negl(\lambda)$$ where $\Gamma\rgets[S_\lambda]$.
 
+\subsubsection{One-Time Signature Schemes} We define the one-time signature scheme which we use in our protocol. 
 
+\begin{definition}
+	A one-time signature scheme $\OTS$ is a triple of PPT algorithms $(\keygen,\sign,\verify)$ such that:
+	\begin{itemize}
+		\item The key generation algorithm $\keygen$ takes in a security parameter $1^\secpar$ and outputs a key pair $(\VK,\SK)$.
+		\item The signing algorithm $\sign$ takes as input $\SK$ and a message $m$ and returns a signature $\sigma$, denoted as $\sigma\gets\sign_\SK(m)$.
+		\item The verification algorithm $\verify$ takes as input a verification key $\VK$, a message $m$, and a signature $\sigma$ and returns a bit $b$, denoted as $b\gets\verify_\VK(m,\sigma)$.
+	\end{itemize}
+	We require the scheme to satisfy the following properties:
+	\begin{itemize}
+		\item \textbf{Correctness}: For all $\secpar\in\Z_{\geq 0}$, if $(\VK,\SK)\rgets\keygen(1^\secpar)$, then for all $m$ and all $\sigma\gets\sign_\SK(m)$, we have $\verify_\VK(m,\sigma)=1$.
+		\item \textbf{One-Time Security:} There exists a negligible function $\negl$ such that for every PPT algorithm $\adv$, $$\Pr[\verify_\VK(m,\sigma)=1: (\VK,\SK)\rgets\keygen(1^\secpar), (m,\sigma)\gets\adv^{\sign_\SK(\cdot)}(1^\secpar,\VK)]\leq\negl(\secpar)$$ where $\adv$ makes only a single query to $\sign_\SK(\cdot)$ and $\sigma$ was not an output of $\sign_\SK(m)$.
+	\end{itemize}
+\end{definition}
+
+\subsubsection{Collision-Resistant Hash Functions}
+
+Informally, a function $H$ is collision-resistant if no PPT algorithm can find $x\neq x'$ such $H(x)=H(x')$ with all but negligible probability. Formally, we define a hashing scheme $\mathsf{HF}$ associated with $\mathcal{G}$ to specify (a) a family of key spaces $\mathsf{HF.Keyspace}_{\secpar,\Gamma}$ indexed by $\lambda\in\Z_{\geq 0}$ and $\Gamma\in[S_\secpar]$, and (b) a family of hash functions indexed by $\lambda\in\Z_{\geq 0}$, $\Gamma\in[S_\secpar]$ and $\hk\in[\mathsf{HF.Keyspace}_{\secpar,\Gamma}]$ where each $\mathsf{HF}_\hk^{\lambda,\Gamma}$ maps a tuple $\rho$ of group elements to an element of $\Z_q$. Furthermore, the algorithm that outputs $\mathsf{HF}_\hk^{\lambda,\Gamma}(\rho)$ must be deterministic and polynomial time.
+
+Let $\adv$ be any PPT algorithm. For $\lambda\in\Z_{\geq 0}$, we define the CRH advantage of $\adv$ given $\Gamma$ as $$\advcrh_{\mathsf{HF},\adv}(\secpar | \Gamma):=\Pr[x\neq x'\wedge\mathsf{HF}_\hk^{\lambda,\Gamma}(x)=\mathsf{HF}_\hk^{\lambda,\Gamma}(x'): \hk\rgets\mathsf{HF.Keyspace}_{\lambda,\Gamma}, (x,x')\gets\adv(1^\secpar,\Gamma,\hk)]$$
+where $\Gamma\rgets[S_\lambda]$. We say that $\mathsf{HF}$ is collision-resistant if there exists some negligible function $\negl$ such that for all PPT $\adv$ and $\secpar\in\Z_{\geq 0}$, $$\advcrh_{\mathsf{HF},\adv}(\secpar|\Gamma)\leq\negl(\secpar)$$ where $\Gamma\rgets[S_\lambda]$.
 
 \subsection{Cramer-Shoup Encryption Scheme}
+
+Our protocol uses the security of the Cramer-Shoup public-key encryption scheme, which is a scheme proven CCA secure under standard cryptographic assumptions (the Decisional Diffie-Hellman Assumption). We will use a modification of the Cramer-Shoup Scheme that supports \textit{labels} \cite{EC:KatOstYun01, iso}.
 
 	\begin{figure}[tbp]
 	\begin{framed}\small
@@ -95,9 +118,11 @@ The Decisional Square Diffie-Hellman (DSDH) assumption for $\mathcal{G}$ states 
 	\label{fig:cs03}
 	\end{figure}
 
-	\subsection{UC-PAKE}
+We provide a formal description of the scheme in \cref{fig:cs03}. Apart from the CCA security of the scheme, we rely on a modified variant of security we term \textit{delayed-reveal-CCA} security, in which the adversary is revealed certain (potentially sensitive) information \textit{after} all decryption queries have been made. This modified security property is crucial to our security proof. We postpone discussion of DR-CCA security to \cref{appendix-a}.
+
+\subsection{UC-PAKE}
 	
-	We define the UC-PAKE functionality below.
+	We recall the standard UC-PAKE functionality \cite{EC:CHKLM05} in \cref{fig:pake-functionality}. A more detailed explanation can be found in \cite{PKC:RoyXu23}.
 	
 	\begin{figure}[tbp]
 		\begin{framed}\small
@@ -121,9 +146,17 @@ The Decisional Square Diffie-Hellman (DSDH) assumption for $\mathcal{G}$ states 
 		\label{fig:pake-functionality}
 	\end{figure}
 	
+	We briefly describe how adversarial attacks are modelled within the scope of the functionality, which is crucial to our security analysis.
 	
+	\begin{itemize}
+		\item In the case of an \textit{eavesdropping} attack, both sessions $\party$ and $\party'$ are marked as $\fresh$. In this case the protocol execution in the real world is correct, and $\testpwd$ command is sent to $\pake$. In this case, a session key $K$ is selected first \textit{uniformly}, and the other session key $K':=K$. This corresponds to a correct protocol execution without adversary interference.
+		\item In the case of an eavesdropping attack with \textit{incorrect password}, it is true that $\pw\neq\pw'$ and no $\testpwd$ is sent. In this case, however, independently random keys $K$ and $K'$ are sampled.
+		\item In case of a successful guessing attack, the simulator sends a $\testpwd$ query and receives `correct guess' while the session is marked as $\compromised$. The simulator then submits a key $K^{*}$ (which is output in the real protocol and can be determined from the actions of the adversary) to $\pake$ which sets the key of the party to $K^{*}$. \textit{Note that this is a significant departure from the game-based security definition of PAKE.} In the game-based security definition, all security guarantees are lost in the case of a correct password guess, and the simulation can be terminated (by outputting some target message such as $\bot$). In the UC-PAKE security definition, simulation must continue, and the output of the protocol must be the `detrmined' key $K^{*}$, which may need to be \textit{extracted} from the adversary's messages.
+		\item If the session is $\interrupted$, this corresponds to a failed guessing attack by the adversary. In this case, the session keys of $\party$ and $\party'$ are uniform and independent, and the adversary gains no knowledge of either of the session keys.
+		\item If a session is $\fresh$ but the corresponding session of $\party'$ is attacked, then the adversary should gain no information about the key of $\party$, and it must be output uniformly at random.
+	\end{itemize}
 	
-	
+	Our proof of security relies heavily on simulating each of the above cases.
 	
 	
 	

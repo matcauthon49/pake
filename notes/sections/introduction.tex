@@ -45,8 +45,7 @@ In addition, (as mentioned above) KOY is one of the most well-studied PAKE proto
 Our analysis of the UC-(in)security of KOY requires careful considerations of how the simulator can(not) be constructed. Below we first describe the KOY protocol, and then provide an informal but detailed overview of our technical argument.
 
 \subsection{Protocol Description}
-\xjy{Insert the description of KOY (revised to fit the UC formality) here.} \nam{I've made edits, clarified the scheme.}
-
+\label{description}
 We provide a high-level description of the protocol along with a sketch of the security proof below. Let $\G$ be an algebraic group in which DDH is believed to be hard and define $\crs := (g_1, g_2, h, c, d)$ to be uniformly sampled from $\G^5$; we set this to be the common random string. Note that $\crs$ can be interpreted to be a degenerate Cramer-Shoup public key with an unknown secret key.
 
 \begin{itemize}

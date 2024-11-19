@@ -84,4 +84,15 @@ Manoj Prabhakaran and Amit Sahai.
   trusted setup.
 \newblock pages 242--251, 2004.
 
+\bibitem[RX23]{PKC:RoyXu23}
+Lawrence Roy and Jiayu Xu.
+\newblock A universally composable {PAKE} with zero communication cost - (and
+  why it shouldn't be considered {UC}-secure).
+\newblock pages 714--743, 2023.
+
+\bibitem[Sho01]{iso}
+Victor Shoup.
+\newblock A proposal for an {ISO} standard for public key encryption.
+\newblock Cryptology {ePrint} Archive, Paper 2001/112, 2001.
+
 \end{thebibliography}

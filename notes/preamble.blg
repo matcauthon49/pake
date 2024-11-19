@@ -147,6 +147,20 @@ Warning--string name "ieeesp92month" is undefined
 --line 937209 of file crypto/crypto.bib
 Warning--string name "ieeesppub" is undefined
 --line 937211 of file crypto/crypto.bib
+Warning--string name "pkc23ed" is undefined
+--line 1128879 of file crypto/crypto.bib
+Warning--string name "pkc23name1" is undefined
+--line 1128881 of file crypto/crypto.bib
+Warning--string name "pkc23vol1" is undefined
+--line 1128883 of file crypto/crypto.bib
+Warning--string name "pkc23addr" is undefined
+--line 1128885 of file crypto/crypto.bib
+Warning--string name "pkc23month" is undefined
+--line 1128887 of file crypto/crypto.bib
+Warning--string name "pkc23pub" is undefined
+--line 1128889 of file crypto/crypto.bib
+Warning--string name "mylncs" is undefined
+--line 1128891 of file crypto/crypto.bib
 Warning--string name "pkc15ed" is undefined
 --line 1140383 of file crypto/crypto.bib
 Warning--string name "pkc15name" is undefined
@@ -205,45 +219,46 @@ Warning--empty booktitle in C:FucKilLos18
 Warning--empty booktitle in EC:GenLin03
 Warning--empty booktitle in EC:KatOstYun01
 Warning--empty booktitle in STOC:PraSah04
-You've used 15 entries,
+Warning--empty booktitle in PKC:RoyXu23
+You've used 17 entries,
             2543 wiz_defined-function locations,
-            16395 strings with 196903 characters,
-and the built_in function-call counts, 8234 in all, are:
-= -- 834
-> -- 374
-< -- 14
-+ -- 134
-- -- 131
-* -- 533
-:= -- 1213
-add.period$ -- 45
-call.type$ -- 15
-change.case$ -- 106
-chr.to.int$ -- 15
-cite$ -- 29
-duplicate$ -- 358
-empty$ -- 610
-format.name$ -- 143
-if$ -- 1793
+            16404 strings with 197177 characters,
+and the built_in function-call counts, 9029 in all, are:
+= -- 915
+> -- 401
+< -- 16
++ -- 144
+- -- 139
+* -- 574
+:= -- 1328
+add.period$ -- 51
+call.type$ -- 17
+change.case$ -- 117
+chr.to.int$ -- 17
+cite$ -- 32
+duplicate$ -- 394
+empty$ -- 677
+format.name$ -- 154
+if$ -- 1968
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 15
-newline$ -- 79
-num.names$ -- 45
-pop$ -- 145
+missing$ -- 16
+newline$ -- 89
+num.names$ -- 51
+pop$ -- 163
 preamble$ -- 1
-purify$ -- 121
+purify$ -- 134
 quote$ -- 0
-skip$ -- 354
+skip$ -- 391
 stack$ -- 0
-substring$ -- 553
-swap$ -- 135
-text.length$ -- 14
-text.prefix$ -- 0
+substring$ -- 601
+swap$ -- 146
+text.length$ -- 16
+text.prefix$ -- 1
 top$ -- 0
-type$ -- 120
-warning$ -- 14
-while$ -- 88
-width$ -- 18
-write$ -- 184
-(There were 104 warnings)
+type$ -- 136
+warning$ -- 15
+while$ -- 96
+width$ -- 20
+write$ -- 208
+(There were 112 warnings)

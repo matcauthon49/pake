@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (MiKTeX 22.10) (preloaded format=xelatex 2022.11.14)  19 NOV 2024 11:37
+This is XeTeX, Version 3.141592653-2.6-0.999994 (MiKTeX 22.10) (preloaded format=xelatex 2022.11.14)  19 NOV 2024 13:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1096,7 +1096,7 @@ o-duc-ing the ROM), [[]]
  []
 
 [4] [5]
-Overfull \hbox (28.0593pt too wide) in paragraph at lines 55--56
+Overfull \hbox (28.0593pt too wide) in paragraph at lines 54--55
 []\T1/lmr/m/n/10.95 Upon re-ceiv-ing $\OT1/cmr/m/n/10.95 ([]\OML/cmm/m/it/10.95
  ; A; B; C; D\OT1/cmr/m/n/10.95 )$\T1/lmr/m/n/10.95 , the $[]$ sam-ples its `Di
 ffie--Hellman ex-po-nents' $\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x[]; y[]; z
@@ -1104,7 +1104,7 @@ ffie--Hellman ex-po-nents' $\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x[]; y[]; z
  []
 
 
-Overfull \hbox (2.7562pt too wide) in paragraph at lines 55--56
+Overfull \hbox (2.7562pt too wide) in paragraph at lines 54--55
 \T1/lmr/m/n/10.95 and com-putes $\OML/cmm/m/it/10.95 E \OT1/cmr/m/n/10.95 = \OM
 L/cmm/m/it/10.95 g[]g[]h[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 cd[]\OT1/cmr/
 m/n/10.95 )[]$\T1/lmr/m/n/10.95 .[][][][][] Fur-ther-more, $[]$ en-crypts $[]$ 
@@ -1118,14 +1118,36 @@ Overfull \hbox (17.1204pt too wide) detected at line 46
 n/10.95 ^^@) = []
  []
 
+[11]
+Package hyperref Info: bookmark level for unknown definition defaults to 0 on i
+nput line 52.
 
-Underfull \hbox (badness 6063) in paragraph at lines 60--62
+Overfull \hbox (17.82124pt too wide) in paragraph at lines 52--53
+[]\T1/lmr/bx/n/10.95 Definition 2.1. []\T1/lmr/m/it/10.95 A one-time sig-na-tur
+e scheme $[]$ is a triple of PPT al-go-rithms $\OT1/cmr/m/n/10.95 ([]\OML/cmm/m
+/it/10.95 ; []; []\OT1/cmr/m/n/10.95 )$
+ []
+
+
+Overfull \hbox (19.80824pt too wide) detected at line 69
+[][]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 ^^U\OMS/cmsy/m/n/10.95 j\OT1/cmr/m/
+n/10.95 ^^@) := [][\OML/cmm/m/it/10.95 x \OMS/cmsy/m/n/10.95 6\OT1/cmr/m/n/10.9
+5 = \OML/cmm/m/it/10.95 x[] \OMS/cmsy/m/n/10.95 ^ [][]\OT1/cmr/m/n/10.95 (\OML/
+cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 ) = [][](\OML/cmm/m/it/10.95 x[]\OT1/cmr/m/n
+/10.95 ) : [] [] [][]\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10
+.95 x; x[]\OT1/cmr/m/n/10.95 ) \OMS/cmsy/m/n/10.95   A\OT1/cmr/m/n/10.95 (1[]\O
+ML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 ^^@\OML/cmm/m/it/10.95 ; []\OT1/cmr/m/n/
+10.95 )]
+ []
+
+
+Underfull \hbox (badness 6063) in paragraph at lines 83--85
 \T1/lmr/m/n/10 and out-put the pub-lic key $[] \OT1/cmr/m/n/10 = (^^@\OML/cmm/m
 /it/10 ; []; g[]; g[]; c; d; h\OT1/cmr/m/n/10 )$ \T1/lmr/m/n/10 and the se-cret
  key $[] \OT1/cmr/m/n/10 =
  []
 
-[11]) (sections/insecurity-proof.tex
+[12] [13] [14]) (sections/insecurity-proof.tex
 Underfull \hbox (badness 10000) in paragraph at lines 12--13
 
  []
@@ -1142,14 +1164,10 @@ en sends
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[12] [13]) (sections/agm-proof.tex [14] [15] [16] [17]
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[18]
+[15] [16] [17]) (sections/agm-proof.tex [18] [19] [20]
 Package hyperref Info: bookmark level for unknown lemma defaults to 0 on input 
 line 107.
- [19] [20]
+ [21] [22]
 Overfull \hbox (3.70499pt too wide) in paragraph at lines 169--170
 [][]$ \T1/lmr/m/n/10.95 and queries the aux-il-iary or-a-cle to re-ceive $[] \O
 T1/cmr/m/n/10.95 = (\OML/cmm/m/it/10.95 g[]; g[]; c[]; d[]; \OT1/cmr/m/n/10.95 
@@ -1158,7 +1176,7 @@ r/m/n/10.95 )[]\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 cd
 []\OT1/cmr/m/n/10.95 )[])$\T1/lmr/m/n/10.95 .
  []
 
-[21]
+[23]
 Overfull \hbox (3.70499pt too wide) in paragraph at lines 200--201
 [][]$ \T1/lmr/m/n/10.95 and queries the aux-il-iary or-a-cle to re-ceive $[] \O
 T1/cmr/m/n/10.95 = (\OML/cmm/m/it/10.95 g[]; g[]; c[]; d[]; \OT1/cmr/m/n/10.95 
@@ -1167,10 +1185,7 @@ r/m/n/10.95 )[]\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 cd
 []\OT1/cmr/m/n/10.95 )[])$\T1/lmr/m/n/10.95 .
  []
 
-[22]) [23] [24] (preamble.bbl) [25] (sections/cramer-shoup-proof.tex
-Package hyperref Info: bookmark level for unknown definition defaults to 0 on i
-nput line 45.
-
+) [24] [25] (preamble.bbl) [26] (sections/cramer-shoup-proof.tex
 Overfull \hbox (19.71599pt too wide) in paragraph at lines 53--54
 \T1/lmr/m/it/10.95 delayed-reveal-CCA se-cure with aux-il-iary in-for-ma-tion $
 [] \OT1/cmr/m/n/10.95 = (\OML/cmm/m/it/10.95 x[]; x[]; y[]; y[]; g[]; g[]; \OT1
@@ -1179,7 +1194,7 @@ Overfull \hbox (19.71599pt too wide) in paragraph at lines 53--54
 m/m/it/10.95 cd[]\OT1/cmr/m/n/10.95 )[])$\T1/lmr/m/it/10.95 . 
  []
 
-[26] [27]
+[27] [28]
 Overfull \hbox (42.15254pt too wide) in paragraph at lines 85--85
 []\T1/lmr/m/n/10.95 Suppose that the pub-lic key is $\OT1/cmr/m/n/10.95 (^^@\OM
 L/cmm/m/it/10.95 ; []; g[]; g[]; c; d; h\OT1/cmr/m/n/10.95 )$ \T1/lmr/m/n/10.95
@@ -1191,7 +1206,7 @@ x[]; x[]; y[]; y[]; z[]; z[]\OT1/cmr/m/n/10.95 )$\T1/lmr/m/n/10.95 .
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `\new@ifnextchar' on input line 95.
 
-[28]
+[29]
 Underfull \hbox (badness 10000) in paragraph at lines 112--113
 
  []
@@ -1216,20 +1231,20 @@ cmr/m/n/10.95 (\OML/cmm/m/it/10.95 g[]; \OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95
 L/cmm/m/it/10.95 :$
  []
 
-[29] [30] [31] [32]) [33] (preamble.aux)
+[30] [31] [32] [33]) [34] (preamble.aux)
 
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `preamble.out' has not changed.
-(rerunfilecheck)             Checksum: B5622AEA7346BD3DC1DA8DB192B65BAC;4305.
+(rerunfilecheck)             Checksum: CF671E6798D79325F20F919313FB1A6A;4753.
  ) 
 Here is how much of TeX's memory you used:
- 31643 strings out of 410636
- 627114 string characters out of 2815793
- 1015775 words of memory out of 3000000
- 52193 multiletter control sequences out of 15000+600000
- 540243 words of font info for 105 fonts, out of 8000000 for 9000
+ 31651 strings out of 410636
+ 627203 string characters out of 2815793
+ 1005408 words of memory out of 3000000
+ 52200 multiletter control sequences out of 15000+600000
+ 544514 words of font info for 106 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  99i,21n,104p,2040b,573s stack positions out of 10000i,1000n,20000p,200000b,80000s
 
-Output written on preamble.pdf (33 pages).
+Output written on preamble.pdf (34 pages).

@@ -15,18 +15,20 @@
 \contentsline {subsubsection}{\numberline {2.1.1}The CDH Assumption}{10}{subsubsection.2.1.1}%
 \contentsline {subsubsection}{\numberline {2.1.2}The DDH Assumption}{11}{subsubsection.2.1.2}%
 \contentsline {subsubsection}{\numberline {2.1.3}The DSDH Assumption}{11}{subsubsection.2.1.3}%
-\contentsline {subsection}{\numberline {2.2}Cramer-Shoup Encryption Scheme}{12}{subsection.2.2}%
-\contentsline {subsection}{\numberline {2.3}UC-PAKE}{12}{subsection.2.3}%
-\contentsline {section}{\numberline {3}Proof of UC-Insecurity}{12}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Formal Description of the Protocol}{12}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}KOY is UC-Insecure}{12}{subsection.3.2}%
-\contentsline {section}{\numberline {4}UC-Security of KOY in the Algebraic Group Model}{14}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Notation}{16}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Overview}{16}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}Proof of UC-Security}{18}{subsection.4.3}%
-\contentsline {section}{\numberline {A}Security of the Cramer-Shoup Encryption Scheme with Delayed Reveal of the Secret Key}{26}{appendix.A}%
-\contentsline {subsection}{\numberline {A.1}Security Against Delayed-Reveal Chosen Ciphertext Attack}{26}{subsection.A.1}%
-\contentsline {subsection}{\numberline {A.2}Analysis of DR-CCA Security of the Cramer-Shoup Encryption Scheme}{27}{subsection.A.2}%
-\contentsline {subsubsection}{\numberline {A.2.1}Overview}{27}{subsubsection.A.2.1}%
-\contentsline {subsubsection}{\numberline {A.2.2}Notation}{28}{subsubsection.A.2.2}%
-\contentsline {subsubsection}{\numberline {A.2.3}Proof of \cref {thm:drcca-cs}}{28}{subsubsection.A.2.3}%
+\contentsline {subsubsection}{\numberline {2.1.4}One-Time Signature Schemes}{12}{subsubsection.2.1.4}%
+\contentsline {subsubsection}{\numberline {2.1.5}Collision-Resistant Hash Functions}{12}{subsubsection.2.1.5}%
+\contentsline {subsection}{\numberline {2.2}Cramer-Shoup Encryption Scheme}{14}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}UC-PAKE}{14}{subsection.2.3}%
+\contentsline {section}{\numberline {3}Proof of UC-Insecurity}{15}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Formal Description of the Protocol}{15}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}KOY is UC-Insecure}{15}{subsection.3.2}%
+\contentsline {section}{\numberline {4}UC-Security of KOY in the Algebraic Group Model}{18}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Notation}{18}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Overview}{18}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Proof of UC-Security}{20}{subsection.4.3}%
+\contentsline {section}{\numberline {A}Security of the Cramer-Shoup Encryption Scheme with Delayed Reveal of the Secret Key}{27}{appendix.A}%
+\contentsline {subsection}{\numberline {A.1}Security Against Delayed-Reveal Chosen Ciphertext Attack}{27}{subsection.A.1}%
+\contentsline {subsection}{\numberline {A.2}Analysis of DR-CCA Security of the Cramer-Shoup Encryption Scheme}{28}{subsection.A.2}%
+\contentsline {subsubsection}{\numberline {A.2.1}Overview}{28}{subsubsection.A.2.1}%
+\contentsline {subsubsection}{\numberline {A.2.2}Notation}{29}{subsubsection.A.2.2}%
+\contentsline {subsubsection}{\numberline {A.2.3}Proof of \cref {thm:drcca-cs}}{29}{subsubsection.A.2.3}%
