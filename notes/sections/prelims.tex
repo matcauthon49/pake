@@ -2,63 +2,80 @@
 
 \subsection{Assumptions}
 
-Let $\mathcal{G}$ be an algorithm that on input $1^\lambda$ uniformly samples from a sequence of group distributions $(S_\lambda)_{\lambda\in\Z\geq 0}$ of group distributions of the form $\Gamma[\hat{\mathbb{G}}, \mathbb{G}, g, q]\in[S_\lambda]$, where $\hat{\mathbb{G}}$ is a finite multiplicative abelian group, $\G$ is a prime-order subgroup, $g$ is a generator of $\G$ and $q$ is the order of $\G$. We assume that group operations in $\G$ can be done in (expected) polynomial time in $\G$, including exponentiation, selecting a random group element, and membership. 
+Let $\lambda$ be the security parameter. Let $\mathcal{G}$ be a group generation algorithm that on input $1^\lambda$ outputs $\Gamma[\mathbb{G}, g, q]$, where $\G$ is a prime-order group, $g$ is a generator of $\G$, and $q$ is the order of $\G$ with $2^\lambda < q < 2^{\lambda+1}$. We assume that group operations in $\G$ can be done in polynomial time in $\lambda$, including exponentiation, sampling a random group element, and membership check. For simplicity, we may drop $1^\lambda$ and $\Gamma$ from the inputs of algorithms and do not explicitly write them.
 
-Note that a random group element can be chosen by selecting $x\rgets\Z_q$ and computing $g^x$. We define $\bar\G$ to be $\G\setminus\{1\}$; since $q$ is prime, $\bar\G$ is the set of generators of $\G$. If $x\rgets\bar\G$, then we obtain a random generator.
+We define $\bar\G$ to be $\G\setminus\{1\}$; since $q$ is prime, $\bar\G$ is the set of generators of $\G$. If $x\gets\bar\G$, then we obtain a random generator.
 
-\subsubsection{The CDH Assumption}
+Below we define two assumptions we use in this work, the \emph{Decisional Diffie--Hellman (DDH) assumption} and the \emph{Decisional Square Diffie--Hellman (DSDH) assumption}.
 
-Let $\mathcal{G}$ be as above. For all probabilistic polynomial-time $\adv$ and for each $\lambda\in\Z_{\geq 0}$, we define the CDH advantage of $\adv$ against $\mathcal{G}$ at $\lambda$ given $\Gamma$ as
-
-$$\advcdh_{\mathcal{G},\adv}(\lambda | \Gamma):\Pr[c=g^{xy}: x, y\rgets \Z_q, c\rgets\adv(1^\secpar,\Gamma,g^x,g^y)].$$
-
-The Computational Diffie-Hellman (CDH) assumption for $\mathcal{G}$ states that for every probabilistic, polynomial-time algorithm $\adv$, there exists some negligible function $\negl$ such that for all $\lambda\in\Z_{\geq 0}$, $$\advcdh_{\mathcal{G},\adv}(\lambda | \Gamma)\leq\negl(\lambda)$$ where $\Gamma\rgets[S_\lambda]$.
-
-\subsubsection{The DDH Assumption}
-
-Let $\mathcal{G}$ be as above. We define for each $\lambda\in\Z_{\geq 0}$ and for all $\Gamma[\hat\G, \G, g, q]\in[S_\lambda]$ the sets 
+\paragraph{The DDH and DSDH assumption.}
+Let $\mathcal{G}$ be as above. For any Probabilistic Polynomial-Time (PPT) distinguisher $\adv$, we define the DDH advantage of $\adv$ as
 \begin{equation*}
-	\randdh_{\lambda,\Gamma} := \{(g, g^x, g^y, g^{z}) : x,y\rgets\Z_q^{*}, z\rgets\Z_q\}
+	\advddh_{\mathcal{G},\adv}(\lambda | \Gamma) = \left|\Pr[\adv(g^x,g^y,g^{xy}) = 1 : x,y\gets\Z_q^*] - \Pr[\adv(g^x,g^y,g^z) = 1 : x,y\gets\Z_q^*, z\gets\Z_q]\right|
 \end{equation*}
-and
+and define the DSDH advantage of $\adv$ as
 \begin{equation*}
-	\ddh_{\lambda,\Gamma} := \{(g, g^x, g^y, g^{xy}) : x,y\rgets\Z_q^{*}\}.
+	\advsdh_{\mathcal{G},\adv}(\lambda | \Gamma) = \left|\Pr[\adv(g^x,g^{x^2}) = 1 : x\gets\Z_q^*] - \Pr[\adv(g^x,g^y) = 1 : x,y\gets\Z_q^*]\right|
 \end{equation*}
-Where $\ddh_{\lambda,\Gamma}$ is the set of Diffie-Hellman Triples. For any probabilistic polynomial-time distinguishing algorithm $\adv$ and for all $\lambda\in\Z_{\geq 0}$, we define the DDH advantage of $\adv$ against $\mathcal{G}$ at $\lambda$ given $\Gamma$ as
-\begin{equation*}
-	\advddh_{\mathcal{G},\adv}(\lambda | \Gamma) = \left|\Pr[\adv(1^\lambda,\Gamma,\rho) = 1 : \rho\rgets\randdh_{\lambda,\Gamma}] - \Pr[\adv(1^\lambda,\Gamma,\rho) = 1 : \rho\rgets\ddh_{\lambda,\Gamma}]\right|
-\end{equation*}
-The Decisional Diffie-Hellman (DDH) assumption for $\mathcal{G}$ states that for every probabilistic, polynomial-time algorithm $\adv$, there exists some negligible function $\negl$ such that for all $\lambda\in\Z_{\geq 0}$, $$\advddh_{\mathcal{G},\adv}(\lambda | \Gamma)\leq\negl(\lambda)$$ where $\Gamma\rgets[S_\lambda]$.
+The DDH (resp. DSDH) assumption for $\mathcal{G}$ states that for every PPT distinguisher $\adv$, there exists some negligible function $\negl$ such that for all $\lambda\in\Z_{> 0}$, $\advddh_{\mathcal{G},\adv}(\lambda | \Gamma)\leq\negl(\lambda)$ (resp. $\advsdh_{\mathcal{G},\adv}(\lambda | \Gamma)\leq\negl(\lambda)$).
 
-\subsubsection{The DSDH Assumption}
+\paragraph{Relation between DDH and DSDH.}
+It is known that the DSDH assumption implies the DDH assumption; we give a self-contained proof here.
+\xjy{FILL IN}
 
-Let $\mathcal{G}$ be as above. We define for each $\lambda\in\Z_{\geq 0}$ and for all $\Gamma[\hat\G, \G, g, q]\in[S_\lambda]$ the sets 
-\begin{equation*}
-	\randsdh_{\lambda,\Gamma} := \{(g, g^x, g^{y}) : x,y\rgets\Z_q^{*}\}
-\end{equation*}
-and
-\begin{equation*}
-	\sdh_{\lambda,\Gamma} := \{(g, g^x, g^{x^2}) : x\rgets\Z_q^{*}\}.
-\end{equation*}
-Where $\sdh_{\lambda,\Gamma}$ is the set of Square Diffie-Hellman Triples. For any probabilistic polynomial-time distinguishing algorithm $\adv$ and for all $\lambda\in\Z_{\geq 0}$, we define the DSDH advantage of $\adv$ against $\mathcal{G}$ at $\lambda$ given $\Gamma$ as
-\begin{equation*}
-	\advsdh_{\mathcal{G},\adv}(\lambda | \Gamma) = \left|\Pr[\adv(1^\lambda,\Gamma,\rho) = 1 : \rho\rgets\randsdh_{\lambda,\Gamma}] - \Pr[\adv(1^\lambda,\Gamma,\rho) = 1 : \rho\rgets\sdh_{\lambda,\Gamma}]\right|
-\end{equation*}
-The Decisional Square Diffie-Hellman (DSDH) assumption for $\mathcal{G}$ states that for every probabilistic, polynomial-time algorithm $\adv$, there exists some negligible function $\negl$ such that for all $\lambda\in\Z_{\geq 0}$, $$\advsdh_{\mathcal{G},\adv}(\lambda | \Gamma)\leq\negl(\lambda)$$ where $\Gamma\rgets[S_\lambda]$.
+%\subsubsection{The CDH Assumption}
 
-\subsubsection{One-Time Signature Schemes} We define the one-time signature scheme which we use in our protocol. 
+%Let $\mathcal{G}$ be as above. For all probabilistic polynomial-time $\adv$ and for each $\lambda\in\Z_{\geq 0}$, we define the CDH advantage of $\adv$ against $\mathcal{G}$ at $\lambda$ given $\Gamma$ as
 
+%$$\advcdh_{\mathcal{G},\adv}(\lambda | \Gamma):\Pr[c=g^{xy}: x, y\rgets \Z_q, c\rgets\adv(1^\secpar,\Gamma,g^x,g^y)].$$
 
-	A one-time signature scheme $\OTS$ is a triple of PPT algorithms $(\keygen,\sign,\verify)$ such that:
+%The Computational Diffie-Hellman (CDH) assumption for $\mathcal{G}$ states that for every probabilistic, polynomial-time algorithm $\adv$, there exists some negligible function $\negl$ such that for all $\lambda\in\Z_{\geq 0}$, $$\advcdh_{\mathcal{G},\adv}(\lambda | \Gamma)\leq\negl(\lambda)$$ where $\Gamma\rgets[S_\lambda]$.
+
+%\subsubsection{The DDH Assumption}
+
+%Let $\mathcal{G}$ be as above. We define for each $\lambda\in\Z_{\geq 0}$ and for all $\Gamma[\hat\G, \G, g, q]\in[S_\lambda]$ the sets 
+%\begin{equation*}
+%	\randdh_{\lambda,\Gamma} := \{(g, g^x, g^y, g^{z}) : x,y\rgets\Z_q^{*}, z\rgets\Z_q\}
+%\end{equation*}
+%and
+%\begin{equation*}
+%	\ddh_{\lambda,\Gamma} := \{(g, g^x, g^y, g^{xy}) : x,y\rgets\Z_q^{*}\}.
+%\end{equation*}
+%Where $\ddh_{\lambda,\Gamma}$ is the set of Diffie-Hellman Triples. For any probabilistic polynomial-time distinguishing algorithm $\adv$ and for all $\lambda\in\Z_{\geq 0}$, we define the DDH advantage of $\adv$ against $\mathcal{G}$ at $\lambda$ given $\Gamma$ as
+%\begin{equation*}
+%	\advddh_{\mathcal{G},\adv}(\lambda | \Gamma) = \left|\Pr[\adv(1^\lambda,\Gamma,\rho) = 1 : \rho\rgets\randdh_{\lambda,\Gamma}] - \Pr[\adv(1^\lambda,\Gamma,\rho) = 1 : \rho\rgets\ddh_{\lambda,\Gamma}]\right|
+%\end{equation*}
+%The Decisional Diffie-Hellman (DDH) assumption for $\mathcal{G}$ states that for every probabilistic, polynomial-time algorithm $\adv$, there exists some negligible function $\negl$ such that for all $\lambda\in\Z_{\geq 0}$, $$\advddh_{\mathcal{G},\adv}(\lambda | \Gamma)\leq\negl(\lambda)$$ where $\Gamma\rgets[S_\lambda]$.
+
+%\subsubsection{The DSDH Assumption}
+
+%Let $\mathcal{G}$ be as above. We define for each $\lambda\in\Z_{\geq 0}$ and for all $\Gamma[\hat\G, \G, g, q]\in[S_\lambda]$ the sets 
+%\begin{equation*}
+%	\randsdh_{\lambda,\Gamma} := \{(g, g^x, g^{y}) : x,y\rgets\Z_q^{*}\}
+%\end{equation*}
+%and
+%\begin{equation*}
+%	\sdh_{\lambda,\Gamma} := \{(g, g^x, g^{x^2}) : x\rgets\Z_q^{*}\}.
+%\end{equation*}
+%Where $\sdh_{\lambda,\Gamma}$ is the set of Square Diffie-Hellman Triples. For any probabilistic polynomial-time distinguishing algorithm $\adv$ and for all $\lambda\in\Z_{\geq 0}$, we define the DSDH advantage of $\adv$ against $\mathcal{G}$ at $\lambda$ given $\Gamma$ as
+%\begin{equation*}
+%	\advsdh_{\mathcal{G},\adv}(\lambda | \Gamma) = \left|\Pr[\adv(1^\lambda,\Gamma,\rho) = 1 : \rho\rgets\randsdh_{\lambda,\Gamma}] - \Pr[\adv(1^\lambda,\Gamma,\rho) = 1 : \rho\rgets\sdh_{\lambda,\Gamma}]\right|
+%\end{equation*}
+%The Decisional Square Diffie-Hellman (DSDH) assumption for $\mathcal{G}$ states that for every probabilistic, polynomial-time algorithm $\adv$, there exists some negligible function $\negl$ such that for all $\lambda\in\Z_{\geq 0}$, $$\advsdh_{\mathcal{G},\adv}(\lambda | \Gamma)\leq\negl(\lambda)$$ where $\Gamma\rgets[S_\lambda]$.
+
+\subsection{Cryptographic Primitives}
+
+\subsubsection{One-Time Signature Schemes} 
+	A \emph{one-time signature scheme} $\OTS$ is a triple of PPT algorithms $(\keygen,\sign,\verify)$ such that:
 	\begin{itemize}
-		\item The key generation algorithm $\keygen$ takes in a security parameter $1^\secpar$ and outputs a key pair $(\VK,\SK)$.
+		\item The key generation algorithm $\keygen$ takes as input the security parameter $1^\secpar$ and outputs a key pair $(\VK,\SK)$.
 		\item The signing algorithm $\sign$ takes as input $\SK$ and a message $m$ and returns a signature $\sigma$, denoted as $\sigma\gets\sign_\SK(m)$.
-		\item The verification algorithm $\verify$ takes as input a verification key $\VK$, a message $m$, and a signature $\sigma$ and returns a bit $b$, denoted as $b\gets\verify_\VK(m,\sigma)$.
+		\item The verification algorithm $\verify$ takes as input a verification key $\VK$, a message $m$, and a signature $\sigma$ and returns a bit $b$, denoted as $b := \verify_\VK(m,\sigma)$.
 	\end{itemize}
 	We require the scheme to satisfy the following properties:
 	\begin{itemize}
-		\item \textbf{Correctness}: For all $\secpar\in\Z_{\geq 0}$, if $(\VK,\SK)\rgets\keygen(1^\secpar)$, then for all $m$ and all $\sigma\gets\sign_\SK(m)$, we have $\verify_\VK(m,\sigma)=1$.
-		\item \textbf{One-Time Security:} There exists a negligible function $\negl$ such that for every PPT algorithm $\adv$, $$\Pr[\verify_\VK(m,\sigma)=1: (\VK,\SK)\rgets\keygen(1^\secpar), (m,\sigma)\gets\adv^{\sign_\SK(\cdot)}(1^\secpar,\VK)]\leq\negl(\secpar)$$ where $\adv$ makes only a single query to $\sign_\SK(\cdot)$ and $\sigma$ was not an output of $\sign_\SK(m)$.
+		\item \textbf{Correctness}: For all $\secpar\in\Z_{\geq 0}$, if $(\VK,\SK)\gets\keygen(1^\secpar)$, then for all $m$ and all $\sigma\gets\sign_\SK(m)$, we have $\verify_\VK(m,\sigma)=1$ with probability 1.
+		\item \textbf{One-time security:} There exists a negligible function $\negl$ such that for every PPT algorithm $\adv$, $$\Pr[\verify_\VK(m,\sigma)=1: (\VK,\SK)\gets\keygen(1^\secpar), (m,\sigma)\gets\adv^{\sign_\SK(\cdot)}(\VK)]\leq\negl(\secpar)$$ where $\adv$ makes only a single query to $\sign_\SK(\cdot)$ and $\sigma$ was not an output of $\sign_\SK(m)$.
 	\end{itemize}
 
 
@@ -164,4 +181,4 @@ We provide a formal description of the scheme in \cref{fig:cs03}. Apart from the
 %		\begin{framed}
 %			
 %		\end{framed}
-%	\end{figure}
+%	\end{figure} 
