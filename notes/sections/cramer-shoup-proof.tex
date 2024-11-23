@@ -1,28 +1,28 @@
-\section{Security of the Cramer-Shoup Encryption Scheme with Delayed Reveal of the Secret Key}
+\section{Security of the Cramer--Shoup Encryption Scheme with Delayed Reveal of the Secret Key}
 \label{appendix-a}
 
-In this section we prove the delayed-reveal-CCA security of the Cramer-Shoup Cryptosystem. We first start by formally defining the delayed-reveal-CCA game.
+In this section we prove the delayed-reveal-CCA-security of the Cramer--Shoup encryption scheme. We first start by formally defining the delayed-reveal-CCA game.
 
 \subsection{Security Against Delayed-Reveal Chosen Ciphertext Attack}
 
 \begin{figure}[ht!]
 	\begin{framed}\small
-		\textbf{Stage 1:} The adversary queries a \textit{key generation oracle}. The key generation oracle computes $(\PK,\SK)\leftarrow\enc.\keygen$ and responds with $\PK$.
+		\textbf{Stage 1:} The adversary queries a \textit{key generation oracle}. The key generation oracle computes $(\PK,\SK)\leftarrow\PKE.\keygen(1^\lambda)$ and responds with $\PK$.
 		
 		\vspace{2mm}
 		
 		\textbf{Stage 2:} The adversary makes a sequence of calls to a decryption oracle. For each  decryption oracle query, the adversary submits a ciphertext $\psi$, and the decryption
-		oracle responds with $\PKE.\dec(1^\lambda, \SK,\psi)$.
+		oracle responds with $\PKE.\dec(\SK,\psi)$.
 		
 		\vspace{2mm}
 		
 		\textbf{Stage 3:} The adversary submits two messages $m_0, m_1\in\PKE.\mathsf{MsgSpace}_{\lambda,\PK}$ to an encryption oracle. We require that $|m_0| = |m_1|$.
 		
-		On input $(m_0, m_1)$, the encryption oracle computes $$\sigma\rgets\{0,1\};\psi^{*}\rgets\PKE.\enc(1^\lambda,\PKE,m_\sigma)$$ and responds with the target ciphertext $\sigma^{*}$.
+		On input $(m_0, m_1)$, the encryption oracle computes $$b\rgets\{0,1\};\psi^*\gets\PKE.\enc(\PK,m_b)$$ and responds with the target ciphertext $\psi^{*}$.
 		
 		\vspace{2mm}
 		
-		\textbf{Stage 4:} The adversary continues to make calls to the decryption oracle, subject only to the restriction that a submitted ciphertext $\psi$ is not identical to $\psi^{*}$.
+		\textbf{Stage 4:} The adversary continues to make calls to the decryption oracle, subject only to the restriction that a submitted ciphertext $\psi$ is not equal to $\psi^{*}$.
 		
 		\vspace{2mm}
 		
@@ -34,13 +34,13 @@ In this section we prove the delayed-reveal-CCA security of the Cramer-Shoup Cry
 		
 		\vspace{2mm}
 		
-		\textbf{Stage 6:} The adversary outputs $\hat{\sigma}\in\{0,1\}$.
+		\textbf{Stage 6:} The adversary outputs $\hat{b}\in\{0,1\}$.
 	\end{framed}
 	\caption{The Delayed-Reveal-CCA game. The difference in stage $5$ is highlighted in \textcolor{MidnightBlue}{blue}, which represents the regular CCA-security game.}
 	\label{fig:dcca}
 \end{figure}
 
-We define the delayed-reveal-CCA advantage with auxiliary information $\aux$ of the adversary $\adv$ against $\PKE$ at $\lambda$, denoted as $\drcca(\lambda)$ to be $|\Pr[\sigma = \hat{\sigma}] - 1/2|$ in the above attack game in \cref{fig:dcca} with corresponding value of $\aux$. Informally, we say that a public-key cryptosystem is delayed-reveal-CCA secure with auxiliary information $\aux$ if the probability that $\sigma = \hat{\sigma}$ is negligible, ie. the adversary is able to correctly guess which message was encrypted with no more than negligible probability. This leads to the formal definition as below.
+We define the delayed-reveal-CCA advantage with auxiliary information $\aux$ of the adversary $\adv$ against $\PKE$ at $\lambda$, denoted as $\drcca(\lambda)$ to be $|\Pr[b = \hat{b}] - 1/2|$ in the above attack game in \cref{fig:dcca} with corresponding value of $\aux$. Informally, we say that a public-key cryptosystem is delayed-reveal-CCA secure with auxiliary information $\aux$ if the probability that $b = \hat{b}$ is negligible, ie. the adversary is able to correctly guess which message was encrypted with no more than negligible probability. This leads to the formal definition as below.
 
 \begin{definition}[Security Against Delayed-Reveal-Chosen Ciphertext Attack (DR-CCA)]
 	Let $\PKE$ be any public-key encryption scheme. We say that $\PKE$ is delayed-reveal-CCA secure with auxiliary information $\aux$ if there exists some negligible function such that for all $\lambda\in\Z_{\geq 0}$, $$\drcca(\lambda)\leq\negl(\lambda).$$
@@ -57,12 +57,12 @@ With this in hand, we can now formally state the theorem.
 
 \subsubsection{Overview}
 
-Our argument proceeds very closely to the proof of the CCA-security of the Cramer-Shoup encryption scheme outlined in Section 6.2 of \cite{cs01}. The argument follows a series of games starting at game $\game_0$, which corresponds to the actual attack, and ending at $\game_8$, which is a game in which the ciphertext returned to the adversary is completely independent of the hidden bit $\sigma$. In each game, $\sigma$ takes on identical values. We now define a few helpful variables to quantify the adversary's advantage in each game. Let $T_i$ be the event in game $\game_i$ that $\hat{\sigma}=\sigma$. We will show for each game that $|\Pr[T_{i-1} - \Pr[T_i]]$ is negligible. Game $\game_8$, which is completely independent of $\sigma$, naturally has probability $\Pr[T_8]=1/2$, because in this game the adversary can do no better than a coin toss. We also introduce the variable $\drcca_i(\lambda)$ to represent the \textit{advantage} of the adversary in game $\game_i$, which is defined as $|\Pr[T_i]-1/2|$. Ultimately our goal is to show that $\drcca_0(\lambda)\leq\negl(\lambda)$.
+Our argument proceeds very closely to the proof of the CCA-security of the Cramer-Shoup encryption scheme outlined in Section 6.2 of \cite{cs01}. The argument follows a series of games starting at game $\game_0$, which corresponds to the actual attack, and ending at $\game_8$, which is a game in which the ciphertext returned to the adversary is completely independent of the hidden bit $b$. In each game, $b$ takes on identical values. We now define a few helpful variables to quantify the adversary's advantage in each game. Let $T_i$ be the event in game $\game_i$ that $\hat{b}=b$. We will show for each game that $|\Pr[T_{i-1} - \Pr[T_i]]$ is negligible. Game $\game_8$, which is completely independent of $b$, naturally has probability $\Pr[T_8]=1/2$, because in this game the adversary can do no better than a coin toss. We also introduce the variable $\drcca_i(\lambda)$ to represent the \textit{advantage} of the adversary in game $\game_i$, which is defined as $|\Pr[T_i]-1/2|$. Ultimately our goal is to show that $\drcca_0(\lambda)\leq\negl(\lambda)$.
 
 The probability is taken over the following mutually independent random variables:	\begin{enumerate}
 	\item The internal coin tosses of $\adv$.
 	\item The values $\hk,w,x_1,x_2,y_1,y_2,z_1,z_2$ generated independently by the key generation algorithm.
-	\item The values $\sigma\in\{0,1\}$ and $r\in\Z_q$ which are generated by the encryption oracle.
+	\item The values $b\in\{0,1\}$ and $r\in\Z_q$ which are generated by the encryption oracle.
 \end{enumerate}
 
 Before continuing formally, we outline a brief sketch of each of the games.
@@ -72,9 +72,9 @@ Before continuing formally, we outline a brief sketch of each of the games.
 	\item Game $\game_2$ moves part of the auxiliary information, $\aux_1 =(g_1^{r^2}, g_2^{r^2},(h^r\cdot m_i)^{r},(cd^{\alpha})^{r^2})$ as an output of the decryption oracle. This can only increase the power of the adversary, since it is also allowed to make decryption oracle queries that involve the auxiliary information.
 	\item Game $\game_3$ replaces $x^{r^2}$ with random values, which follows from DSDH. It shows that the auxiliary information $\aux_1$ has no effect on the adversary's advantage.
 	\item Game $\game_4$ is a technical game that completes the argument of $\game_3$.
-	\item Game $\game_5$ replaces $u_2$ with a random value, which follows from DDH. This breaks the correlation between $u_1, u_2$ and $h^r\cdot m_\sigma$, allowing $m_\sigma$ to be replaced by a completely random value in future games.
-	\item Game $\game_6$ is really the core of the proof. In this game the decryption oracle is modified so that it additionally checks whether $u_2$ is indeed $g_2^r$ for some $r$. The indistinguishability of this game from the previous one follows from the fact that the adversary cannot with any nontrivial probability submit a valid ciphertext which does not carry the correlation $(g_1, g_2, h)$ that is given by the public key. In particular, note that $\game_5$ ensures that the target ciphertext $\psi^{*}$ does \textit{not} have that particular correlation. The immediate implication is that the adversary cannot with any nontrivial probability modify the target ciphertext $\psi^{*}$ in such a way that obtains even a different, valid ciphertext, let alone one that provides information about $m_\sigma$. However, the argument of indistinguishability is nontrivial and spreads across more games.
-	\item In game $\game_7$, $m_\sigma$ is replaced by a uniformly random value. We will show that both the advantage of this game, as well as the probability that the adversary is able to come up with some `bad' ciphertext which could have potentially provided information about $m_\sigma$, is negligible.
+	\item Game $\game_5$ replaces $u_2$ with a random value, which follows from DDH. This breaks the correlation between $u_1, u_2$ and $h^r\cdot m_b$, allowing $m_b$ to be replaced by a completely random value in future games.
+	\item Game $\game_6$ is really the core of the proof. In this game the decryption oracle is modified so that it additionally checks whether $u_2$ is indeed $g_2^r$ for some $r$. The indistinguishability of this game from the previous one follows from the fact that the adversary cannot with any nontrivial probability submit a valid ciphertext which does not carry the correlation $(g_1, g_2, h)$ that is given by the public key. In particular, note that $\game_5$ ensures that the target ciphertext $\psi^{*}$ does \textit{not} have that particular correlation. The immediate implication is that the adversary cannot with any nontrivial probability modify the target ciphertext $\psi^{*}$ in such a way that obtains even a different, valid ciphertext, let alone one that provides information about $m_b$. However, the argument of indistinguishability is nontrivial and spreads across more games.
+	\item In game $\game_7$, $m_b$ is replaced by a uniformly random value. We will show that both the advantage of this game, as well as the probability that the adversary is able to come up with some `bad' ciphertext which could have potentially provided information about $m_b$, is negligible.
 	\item Finally, game $\game_8$ bounds the probability of a `bad' ciphertext by modifying the decryption oracle, which now rejects if the adversary is able to reuse the MAC part $v$ of the ciphertext. The indistinguishability argument shows that if the adversary could make this query, then it either (a) broke the hash function, or (b) made an extremely unlikely guess, which it simply does not have enough information to with any nontrivial probability.
 \end{itemize}
 
@@ -107,7 +107,7 @@ These changes are purely conceptual and the values of $e'^{*}$ and $v^{*}$ are e
 
 \textbf{Game $\game_2$.} This is our first new game. This game is identical to $\game_1$ with the following modification.
 
-We modify the \textit{encryption} oracle in Stage $3$ such that along with a ciphertext $\sigma^{*}$, it also outputs the \textit{auxiliary information} $\aux_1 = (g_1^{r^2}, g_2^{r^2},(h^r\cdot m_i)^{r},(cd^{\alpha})^{r^2}) = (u_1^{*r}, u_2^{*r},e^{*r},v^{*r})$. Furthermore, we also modify the \textit{auxiliary} oracle such that it no longer outputs the previous string, instead outputting only $\aux_2 = (x_1,x_2,y_1,y_2)$. 
+We modify the \textit{encryption} oracle in Stage $3$ such that along with a ciphertext $b^{*}$, it also outputs the \textit{auxiliary information} $\aux_1 = (g_1^{r^2}, g_2^{r^2},(h^r\cdot m_i)^{r},(cd^{\alpha})^{r^2}) = (u_1^{*r}, u_2^{*r},e^{*r},v^{*r})$. Furthermore, we also modify the \textit{auxiliary} oracle such that it no longer outputs the previous string, instead outputting only $\aux_2 = (x_1,x_2,y_1,y_2)$. 
 
 Our analysis of this game is simple. Note that by providing the adversary the values $(g_1^{r^2}, g_2^{r^2},(h^r\cdot m_i)^{r},(cd^{\alpha})^{r^2})$ \textit{before} it can no longer make decryption oracle queries, we can only increase the power (and hence the advantage) of the adversary. It follows that $\drcca_1(\lambda)\leq\drcca_2(\lambda)$. Rephrasing, we can see that $$|\Pr[T_1]-1/2|\leq|\Pr[T_2]-1/2|$$ and hence it is enough to show that $|\Pr[T_2]-1/2|\leq\negl(\lambda)$. The assertion will follow immediately.\\
 
@@ -122,10 +122,10 @@ Note that the only difference between the games $\game_2$ and $\game_3$ is that 
 \begin{proof}
 	We will describe $\adv_\mathsf{DSDH}$ in detail. The algorithm takes in as input $1^\lambda$, a group description $\Gamma[\hat{\G},\G,g,q]\in[S_\lambda]$ and some tuple $(g^a, g^{b})$. The algorithm interacts with the DR-CCA adversary $\adv$. First, it begins by computing
 	$$\hk\rgets\mathsf{HF.Keyspace}_{\lambda, \Gamma}; w\rgets\Z^{*}_q; x_1,x_2,y_1,y_2,z_1,z_2\rgets\Z_q; c\gets g^{x_1+wx_2}; d\gets g^{y_1+wy_2}; h\gets g^{z_1+wz_2}.$$
-	Using the above, it generates a public key $\PK = (\Gamma, \hk, g,g^w, c, d, h)$ and a secret key $\SK = (\Gamma,\hk,x_1,x_2,y_1,y_2,z_1,z_2)$, and passes $\PK$ to $\adv$. We now show the behaviour of $\adv_\mathsf{DSDH}$ on encryption and decryption queries. Whenever it receives a ciphertext of the form $\psi = (u_1,u_2,e,v)$ to the decryption oracle, it uses $\SK$ to decrypt and outputs either $\bot$ or some $m$. Whenever $\adv$ submits $(m_0,m_1)$ to the encryption oracle, $\adv_\mathsf{DSDH}$ samples a uniform $\sigma\rgets\{0,1\}$ and computes
-	$$u_1^{*} = g^a; u_2^{*} = (g^a)^w; e^{*} = {u_1^{*}}^{z_1}{u_2^{*}}^{z_2}\cdot m_\sigma; v^{*} =\mathsf{HF}_{\hk}^{\lambda,\Gamma}(u_1^{*},u_2^{*},e^{*}); v^{*} = {u_1^{*}}^{x_1+v^{*}y_1}{u_2^{*}}^{x_2+v^{*}y_2}$$ and outputs the ciphertext--auxiliary information pair $(\psi^{*},\aux_1) = ((u_1^{*},u_2^{*},e^{*},v^{*}), (g^{b}, (g^{b})^w,e^{*2}, v^{*2}).$ On input $\mathsf{halt}$ to the auxiliary oracle, $\adv_\mathsf{DSDH}$ outputs $(x_1,x_2,y_1,y_2)$.
+	Using the above, it generates a public key $\PK = (\Gamma, \hk, g,g^w, c, d, h)$ and a secret key $\SK = (\Gamma,\hk,x_1,x_2,y_1,y_2,z_1,z_2)$, and passes $\PK$ to $\adv$. We now show the behaviour of $\adv_\mathsf{DSDH}$ on encryption and decryption queries. Whenever it receives a ciphertext of the form $\psi = (u_1,u_2,e,v)$ to the decryption oracle, it uses $\SK$ to decrypt and outputs either $\bot$ or some $m$. Whenever $\adv$ submits $(m_0,m_1)$ to the encryption oracle, $\adv_\mathsf{DSDH}$ samples a uniform $b\rgets\{0,1\}$ and computes
+	$$u_1^{*} = g^a; u_2^{*} = (g^a)^w; e^{*} = {u_1^{*}}^{z_1}{u_2^{*}}^{z_2}\cdot m_b; v^{*} =\mathsf{HF}_{\hk}^{\lambda,\Gamma}(u_1^{*},u_2^{*},e^{*}); v^{*} = {u_1^{*}}^{x_1+v^{*}y_1}{u_2^{*}}^{x_2+v^{*}y_2}$$ and outputs the ciphertext--auxiliary information pair $(\psi^{*},\aux_1) = ((u_1^{*},u_2^{*},e^{*},v^{*}), (g^{b}, (g^{b})^w,e^{*2}, v^{*2}).$ On input $\mathsf{halt}$ to the auxiliary oracle, $\adv_\mathsf{DSDH}$ outputs $(x_1,x_2,y_1,y_2)$.
 	
-	Once the game in $\game_2$ has been perfectly simulated, the adversary outputs $1$ if $\hat{\sigma} = \sigma$ and $0$ otherwise. It is clear from the above simulation that for any fixed $\lambda$ and $\Gamma$, 
+	Once the game in $\game_2$ has been perfectly simulated, the adversary outputs $1$ if $\hat{b} = b$ and $0$ otherwise. It is clear from the above simulation that for any fixed $\lambda$ and $\Gamma$, 
 	\begin{align*}
 		\Pr[T_2] &= \Pr[\adv_\mathsf{DSDH}(1^\lambda,\Gamma,\rho) = 1 : \rho\rgets\sdh_{\lambda,\Gamma}]\\
 		\Pr[T_3] &= \Pr[\adv_\mathsf{DSDH}(1^\lambda,\Gamma,\rho) = 1 : \rho\rgets\randsdh_{\lambda,\Gamma}].
@@ -150,11 +150,11 @@ In the games up to $\game_4$ we had $r^{*} = \hat{r}^{*}$, however in game $\gam
 \begin{proof}
 	The proof of this lemma is borrowed from \cite{cs01} and follows the same broad argument as that of \cref{lem:sdh-game}. The adversary $\adv_\mathsf{DDH}$ is initiated with $1^\lambda$, a group description $\Gamma$, and a tuple $(g_2, u_1, u_2)\in\G^3$.
 	
-	The adversary $\adv$ is used in the same way, with the decryption and auxiliary oracles having the same description. The only difference is how the encryption oracle responds with the target ciphertext. In this case, when $\adv_\mathsf{DDH}$ receives $(m_0,m_1)$, it computes $\sigma\rgets\{0,1\}$ and the following values:
-	$$e^{*} = {u_1^{*}}^{z_1}{u_2^{*}}^{z_2}\cdot m_\sigma; v^{*} =\mathsf{HF}_{\hk}^{\lambda,\Gamma}(u_1^{*},u_2^{*},e^{*}); v^{*} = {u_1^{*}}^{x_1+v^{*}y_1}{u_2^{*}}^{x_2+v^{*}y_2}.$$
+	The adversary $\adv$ is used in the same way, with the decryption and auxiliary oracles having the same description. The only difference is how the encryption oracle responds with the target ciphertext. In this case, when $\adv_\mathsf{DDH}$ receives $(m_0,m_1)$, it computes $b\rgets\{0,1\}$ and the following values:
+	$$e^{*} = {u_1^{*}}^{z_1}{u_2^{*}}^{z_2}\cdot m_b; v^{*} =\mathsf{HF}_{\hk}^{\lambda,\Gamma}(u_1^{*},u_2^{*},e^{*}); v^{*} = {u_1^{*}}^{x_1+v^{*}y_1}{u_2^{*}}^{x_2+v^{*}y_2}.$$
 	The auxiliary information $\aux_1$ is sampled in the same manner, with $g^s$ and $g^{s'}$ uniformly random elements of $\G$.
 	
-	Once the game in $\game_4$ has been perfectly simulated, the adversary outputs $1$ if $\hat{\sigma} = \sigma$ and $0$ otherwise. It is clear from the above simulation that for any fixed $\lambda$ and $\Gamma$, 
+	Once the game in $\game_4$ has been perfectly simulated, the adversary outputs $1$ if $\hat{b} = b$ and $0$ otherwise. It is clear from the above simulation that for any fixed $\lambda$ and $\Gamma$, 
 	\begin{align*}
 		\Pr[T_4] &= \Pr[\adv_\mathsf{DDH}(1^\lambda,\Gamma,\rho) = 1 : \rho\rgets\ddh_{\lambda,\Gamma}]\\
 		\Pr[T_5] &= \Pr[\adv_\mathsf{DDH}(1^\lambda,\Gamma,\rho) = 1 : \rho\rgets\randdh_{\lambda,\Gamma}].
@@ -180,11 +180,11 @@ We recall the following, which is Lemma 4 in \cite{cs01}.
 
 We will apply this lemma in our analysis. Note that the event $T_5\wedge\neg R_6$ and $T_6\wedge\neg R_6$ are identical. By the lemma, we get $$|\Pr[T_3]-\Pr[T_2]|\leq\Pr[R_3]$$ and it suffices to bound $\Pr[R_3]$. This will be done in games $\game_7$ and $\game_8$.
 
-\textbf{Game $\game_7$.} This game is identical to $\game_6$, however in this game the message is randomly selected instead of being $m_\sigma$. In particular, we modify the encryption oracle and replace $\estep{5}$ with
+\textbf{Game $\game_7$.} This game is identical to $\game_6$, however in this game the message is randomly selected instead of being $m_b$. In particular, we modify the encryption oracle and replace $\estep{5}$ with
 \begin{itemize}
 	\item[]$\estep{5}'$: $r\rgets\Z_q$; $e\gets g^r$.
 \end{itemize}
-It follows that $\Pr[T_7] = 1/2$, because now $\psi^{*}$ does not even involve $\sigma$, so the adversary's output is completely independent of it. We define the event $R_7$ which is the same as $R_6$, ie. some ciphertext $\psi$ is submitted to the decryption oracle which is rejected by $\dstep{4}'$ but would have passed $\dstep{4}$.
+It follows that $\Pr[T_7] = 1/2$, because now $\psi^{*}$ does not even involve $b$, so the adversary's output is completely independent of it. We define the event $R_7$ which is the same as $R_6$, ie. some ciphertext $\psi$ is submitted to the decryption oracle which is rejected by $\dstep{4}'$ but would have passed $\dstep{4}$.
 
 \begin{lemma} We have
 	\label{lem:t6t7}
@@ -208,7 +208,7 @@ We will require a less general version of this lemma, but it suffices for the pr
 \begin{proof}[Proof (of \cref{lem:t6t7})]
 	Our proof is essentially the same as that of \cite{cs01}, however the presence of the auxiliary information requires a more subtle analysis.
 	
-	Consider the variable $X=(\mathsf{coins},\hk,w,x_1,x_2,y_1,y_2,\sigma,r^{*},\hat{r}^{*})$, where $\mathsf{coins}$ is the internal randomness of the PPT adversary $\adv$, and the quantity $z$. Note that $X$ has the same values in $\game_6$ and $\game_7$.
+	Consider the variable $X=(\mathsf{coins},\hk,w,x_1,x_2,y_1,y_2,b,r^{*},\hat{r}^{*})$, where $\mathsf{coins}$ is the internal randomness of the PPT adversary $\adv$, and the quantity $z$. Note that $X$ has the same values in $\game_6$ and $\game_7$.
 	
 	Consider also the quantity $r^{*}$, which takes different values in $\game_6$ and $\game_7$. We can call these values $r_6^{*}$ and $r^{*}_7$ respectively. It is clear that both $R_6$ and $T_6$ are functions of $X,z$ and $r^{*}_6$. Also, the events $R_7$ and $T_7$ have the same functional dependence on $X,z$ and $r^{*}_7$. Thus, showing that the distributions
 	$$(X, z, r^{*}_6)\cong(X, z, r^{*}_7)$$ is enough to show the lemma. Now observe that if $X$ and $z$ are fixed, $r^{*}_7$ is uniform over $\Z_q$. Furthermore, note that the uniformity of $r^{*}_7$ is \textit{completely} independent of $\aux = (x_1,x_2,y_1,y_2)$, since $e$ is completely independent of $\aux$ as well. Hence, knowledge of $\aux$ has no bearing on the independence of $r^{*}_7$, and it remains so even if $\aux$ is public.
@@ -229,7 +229,7 @@ We will require a less general version of this lemma, but it suffices for the pr
 		\end{pmatrix}+
 		\begin{pmatrix}
 			0\\
-			\log_gm_{\sigma}
+			\log_gm_{b}
 		\end{pmatrix}.
 	\end{equation*}
 	Let the $2\times 2$ matrix be referred to as $M$. Then $M$ is fixed conditioned on $X$, but $z_1$ and $z_2$ are independently distributed over $\Z_q$ (even in the knowledge of $\aux$). Furthermore, $\det(M) = w(\hat{r}^{*} - r^{*})\neq 0$. The proposition then follows from \cref{lem:independence}.
@@ -266,4 +266,4 @@ Together, we show that $|\Pr[R_8]-\Pr[R_6]|\leq\negl\implies|\Pr[T_6]-1/2|\leq\n
 	Consider the proof of Lemma $8$ presented in \cite{cs01}. Both sub-parts of the proof rely on the fact that the vector $\aux = (x_1,x_2,y_1,y_2)$ is independent and uniformly distributed in the eyes of the adversary. Clearly this is not the case if $\aux$ is provided as auxiliary information. However, the proof only relies on the fact that $\aux$ be uniform and independent \textit{at the time the decryption query is made}. Indeed, by the definition of the DR-CCA game, it is clear that once the auxiliary oracle is queried, no more decryption queries are allowed to be made. Hence, at the time any decryption query is made, $\aux$ is uniform and independent, and the proof of Lemma $8$ follows without any additional concerns.
 \end{proof}
 
-With this, we have shown that the Cramer-Shoup encryption scheme as defined in \cref{fig:cs03} is DR-CCA secure with auxiliary information $\aux = (x_1,x_2,y_1,y_2, g_1^{r^2}, g_2^{r^2},(h^r\cdot m_i)^{r},(cd^{\alpha})^{r^2})$.
+With this, we have shown that the Cramer-Shoup encryption scheme as defined in \cref{fig:cs03} is DR-CCA secure with auxiliary information $\aux = (x_1,x_2,y_1,y_2, g_1^{r^2}, g_2^{r^2},(h^r\cdot m_i)^{r},(cd^{\alpha})^{r^2})$. 
