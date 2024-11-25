@@ -2,7 +2,7 @@
 
 \subsection{Assumptions}
 
-Let $\lambda$ be the security parameter. Let $\mathcal{G}$ be a group generation algorithm that on input $1^\lambda$ outputs $\Gamma[\mathbb{G}, g, q]$, where $\G$ is a prime-order group, $g$ is a generator of $\G$, and $q$ is the order of $\G$ with $2^\lambda < q < 2^{\lambda+1}$. We assume that group operations in $\G$ can be done in polynomial time in $\lambda$, including exponentiation, sampling a random group element, and membership check. For simplicity, we may drop $1^\lambda$ and $\Gamma$ from the inputs of algorithms and do not explicitly write them.
+Let $\lambda$ be the security parameter. Let $\mathcal{G}$ be a group generation algorithm that on input $1^\lambda$ outputs $\Gamma[\mathbb{G}, g, q]$, where $\G$ is a group of prime order $q$ with $2^\lambda < q < 2^{\lambda+1}$, and $g$ is a generator of $\G$. We assume that group operations in $\G$ can be done in polynomial time in $\lambda$, including exponentiation, sampling a random group element, and membership check. For simplicity, we may drop $1^\lambda$ and $\Gamma$ from the inputs of algorithms and do not explicitly write them.
 
 We define $\bar\G$ to be $\G\setminus\{1\}$; since $q$ is prime, $\bar\G$ is the set of generators of $\G$. If $x\gets\bar\G$, then we obtain a random generator.
 
@@ -11,11 +11,11 @@ Below we define two assumptions we use in this work, the \emph{Decisional Diffie
 \paragraph{The DDH and DSDH assumption.}
 Let $\mathcal{G}$ be as above. For any Probabilistic Polynomial-Time (PPT) distinguisher $\adv$, we define the DDH advantage of $\adv$ as
 \begin{equation*}
-	\advddh_{\mathcal{G},\adv}(\lambda | \Gamma) = \left|\Pr[\adv(g^x,g^y,g^{xy}) = 1 : x,y\gets\Z_q^*] - \Pr[\adv(g^x,g^y,g^z) = 1 : x,y\gets\Z_q^*, z\gets\Z_q]\right|
+	\advddh_{\mathcal{G},\adv}(\lambda | \Gamma) = \left|\Pr[\adv(g^x,g^y,g^{xy}) = 1 : x,y\rgets\Z_q^*] - \Pr[\adv(g^x,g^y,g^z) = 1 : x,y\rgets\Z_q^*, z\rgets\Z_q]\right|
 \end{equation*}
 and define the DSDH advantage of $\adv$ as
 \begin{equation*}
-	\advsdh_{\mathcal{G},\adv}(\lambda | \Gamma) = \left|\Pr[\adv(g^x,g^{x^2}) = 1 : x\gets\Z_q^*] - \Pr[\adv(g^x,g^y) = 1 : x,y\gets\Z_q^*]\right|
+	\advsdh_{\mathcal{G},\adv}(\lambda | \Gamma) = \left|\Pr[\adv(g^x,g^{x^2}) = 1 : x\rgets\Z_q^*] - \Pr[\adv(g^x,g^y) = 1 : x,y\rgets\Z_q^*]\right|
 \end{equation*}
 The DDH (resp. DSDH) assumption for $\mathcal{G}$ states that for every PPT distinguisher $\adv$, there exists some negligible function $\negl$ such that for all $\lambda\in\Z_{> 0}$, $\advddh_{\mathcal{G},\adv}(\lambda | \Gamma)\leq\negl(\lambda)$ (resp. $\advsdh_{\mathcal{G},\adv}(\lambda | \Gamma)\leq\negl(\lambda)$).
 
