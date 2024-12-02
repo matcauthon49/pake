@@ -4,18 +4,18 @@
 
 Let $\lambda$ be the security parameter. Let $\mathcal{G}$ be a group generation algorithm that on input $1^\lambda$ outputs $\Gamma[\mathbb{G}, g, q]$, where $\G$ is a group of prime order $q$ with $2^\lambda < q < 2^{\lambda+1}$, and $g$ is a generator of $\G$. We assume that group operations in $\G$ can be done in polynomial time in $\lambda$, including exponentiation, sampling a random group element, and membership check. For simplicity, we may drop $1^\lambda$ and $\Gamma$ from the inputs of algorithms and do not explicitly write them.
 
-We define $\bar\G$ to be $\G\setminus\{1\}$; since $q$ is prime, $\bar\G$ is the set of generators of $\G$. If $x\gets\bar\G$, then we obtain a random generator.
+We define $\bar\G$ to be $\G\setminus\{1\}$; since $q$ is prime, $\bar\G$ is the set of generators of $\G$. If $x\rgets\bar\G$, then we obtain a random generator.
 
 Below we define two assumptions we use in this work, the \emph{Decisional Diffie--Hellman (DDH) assumption} and the \emph{Decisional Square Diffie--Hellman (DSDH) assumption}.
 
 \paragraph{The DDH and DSDH assumption.}
 Let $\mathcal{G}$ be as above. For any Probabilistic Polynomial-Time (PPT) distinguisher $\adv$, we define the DDH advantage of $\adv$ as
 \begin{equation*}
-	\advddh_{\mathcal{G},\adv}(\lambda | \Gamma) = \left|\Pr[\adv(g^x,g^y,g^{xy}) = 1 : x,y\rgets\Z_q^*] - \Pr[\adv(g^x,g^y,g^z) = 1 : x,y\rgets\Z_q^*, z\rgets\Z_q]\right|
+	\advddh_{\mathcal{G},\adv}(\lambda | \Gamma) = \left|\Pr[\adv(g^x,g^y,g^{xy}) = 1 : x,y\rgets\Z_q] - \Pr[\adv(g^x,g^y,g^z) = 1 : x,y\rgets\Z_q, z\rgets\Z_q\setminus\{xy\}]\right|
 \end{equation*}
 and define the DSDH advantage of $\adv$ as
 \begin{equation*}
-	\advsdh_{\mathcal{G},\adv}(\lambda | \Gamma) = \left|\Pr[\adv(g^x,g^{x^2}) = 1 : x\rgets\Z_q^*] - \Pr[\adv(g^x,g^y) = 1 : x,y\rgets\Z_q^*]\right|
+	\advsdh_{\mathcal{G},\adv}(\lambda | \Gamma) = \left|\Pr[\adv(g^x,g^{x^2}) = 1 : x\rgets\Z_q] - \Pr[\adv(g^x,g^y) = 1 : x,y\rgets\Z_q]\right|
 \end{equation*}
 The DDH (resp. DSDH) assumption for $\mathcal{G}$ states that for every PPT distinguisher $\adv$, there exists some negligible function $\negl$ such that for all $\lambda\in\Z_{> 0}$, $\advddh_{\mathcal{G},\adv}(\lambda | \Gamma)\leq\negl(\lambda)$ (resp. $\advsdh_{\mathcal{G},\adv}(\lambda | \Gamma)\leq\negl(\lambda)$).
 
@@ -86,9 +86,9 @@ Informally, a function $H$ is collision-resistant if no PPT algorithm can find $
 Let $\adv$ be any PPT algorithm. For $\lambda\in\Z_{\geq 0}$, we define the CRH advantage of $\adv$ given $\Gamma$ as $$\advcrh_{\mathsf{HF},\adv}(\secpar | \Gamma):=\Pr[x\neq x'\wedge\mathsf{HF}_\hk^{\lambda,\Gamma}(x)=\mathsf{HF}_\hk^{\lambda,\Gamma}(x'): \hk\rgets\mathsf{HF.Keyspace}_{\lambda,\Gamma}, (x,x')\gets\adv(1^\secpar,\Gamma,\hk)]$$
 where $\Gamma\rgets[S_\lambda]$. We say that $\mathsf{HF}$ is collision-resistant if there exists some negligible function $\negl$ such that for all PPT $\adv$ and $\secpar\in\Z_{\geq 0}$, $$\advcrh_{\mathsf{HF},\adv}(\secpar|\Gamma)\leq\negl(\secpar)$$ where $\Gamma\rgets[S_\lambda]$.
 
-\subsection{Cramer-Shoup Encryption Scheme}
+\subsection{Cramer--Shoup Encryption Scheme}
 
-Our protocol uses the security of the Cramer-Shoup public-key encryption scheme, which is a scheme proven CCA secure under standard cryptographic assumptions (the Decisional Diffie-Hellman Assumption). We will use a modification of the Cramer-Shoup Scheme that supports \textit{labels} \cite{EC:KatOstYun01, iso}.
+Our protocol uses the security of the Cramer--Shoup public-key encryption scheme, which is a scheme proven CCA-secure under the DDH assumption. We will use a modification of the Cramer--Shoup scheme that supports \textit{labels} \cite{EC:KatOstYun01, iso}.
 
 	\begin{figure}[tbp]
 	\begin{framed}\small
@@ -128,10 +128,10 @@ Our protocol uses the security of the Cramer-Shoup public-key encryption scheme,
 			\item[]\textbf{$\dstep{3}$}: Compute $v'\gets\mathsf{HF}^{\lambda,\Gamma}_{\hk}(\lab,u_1,u_2,e)$.
 			\item[]\textbf{$\dstep{4}$}: Test if $v = u_1^{x_1+y_1\alpha}u_2^{x_2+y_2\alpha};$ output $\reject$ and halt if this is not the case.
 			\item[]\textbf{$\dstep{5}$}: Compute $e' = u_1^{z_1}u_2^{z_2}$.
-			\item[]\textbf{$\dstep{6}$}: Compute $m\gets e\cdot {e'}^{-1}$ and output $m$.
+			\item[]\textbf{$\dstep{6}$}: Output $m\gets e/e'$.
 		\end{itemize}
 	\end{framed}
-	\caption{The Cramer-Shoup Encryption Scheme with Labels.}
+	\caption{The Cramer--Shoup Encryption Scheme with Labels.}
 	\label{fig:cs03}
 	\end{figure}
 
