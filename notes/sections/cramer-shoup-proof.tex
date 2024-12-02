@@ -54,7 +54,7 @@ With this in hand, we can now formally state the theorem.
 
 \subsubsection{Overview}
 
-Our argument proceeds very closely to the proof of the (standard) CCA-security of the Cramer--Shoup encryption scheme \cite[Section~6.2]{cs01}. \xjy{I think Cramer and Shoup have two papers on the scheme; what are the differences?} The argument follows a series of games starting at game $\game_0$, which corresponds to the actual attack, and ending at $\game_8$, which is a game in which the ciphertext returned to the adversary is completely independent of the hidden bit $b$. In each game, $b$ takes on identical values. We now define a few helpful variables to quantify the adversary's advantage in each game. Let $T_i$ be the event in game $\game_i$ that $\hat{b}=b$. We will show for each game that $|\Pr[T_{i+1}] - \Pr[T_i]]$ is negligible. Game $\game_8$, which is completely independent of $b$, naturally has probability $\Pr[T_8]=1/2$, because in this game the adversary can do no better than a coin toss. We also introduce the variable $\drcca_i(\lambda)$ to represent the \textit{advantage} of the adversary in game $\game_i$, which is defined as $2|\Pr[T_i]-1/2|$. Ultimately our goal is to show that $\drcca_0(\lambda)\leq\negl(\lambda)$.
+Our argument proceeds very closely to the proof of the (standard) CCA-security of the Cramer--Shoup encryption scheme \cite[Section~6.2]{cs01}. The argument follows a series of games starting at game $\game_0$, which corresponds to the actual attack, and ending at $\game_8$, which is a game in which the ciphertext returned to the adversary is completely independent of the hidden bit $b$. In each game, $b$ takes on identical values. We now define a few helpful variables to quantify the adversary's advantage in each game. Let $T_i$ be the event in game $\game_i$ that $\hat{b}=b$. We will show for each game that $|\Pr[T_{i+1}] - \Pr[T_i]]$ is negligible. Game $\game_8$, which is completely independent of $b$, naturally has probability $\Pr[T_8]=1/2$, because in this game the adversary can do no better than a coin toss. We also introduce the variable $\drcca_i(\lambda)$ to represent the \textit{advantage} of the adversary in game $\game_i$, which is defined as $2|\Pr[T_i]-1/2|$. Ultimately our goal is to show that $\drcca_0(\lambda)\leq\negl(\lambda)$.
 
 The probability is taken over the following mutually independent random variables:	\begin{enumerate}
 	\item The internal coin tosses of $\adv$.
@@ -141,7 +141,7 @@ In the games up to $\game_4$ we had $r^{*} = \hat{r}^{*}$, however in game $\gam
 \begin{proof}
 	The proof of this lemma is borrowed from \cite{cs01} and follows the same broad argument as that of \cref{lem:sdh-game}. The DDH distinguisher $\adv_\mathsf{DDH}$ is initiated with a tuple $(g_2, u_1, u_2)\in\G^3$.
 	
-	The DR-CCA adversary $\adv$ is used in the same way \xjy{as \cref{lem:sdh-game}, right?}, with the decryption and auxiliary oracles having the same description. The only difference is how the encryption oracle computes the target ciphertext. In this case, when $\adv_\mathsf{DDH}$ receives $(m_0,m_1)$, it samples $b\rgets\{0,1\}$ and computes
+	The DR-CCA adversary $\adv$ is used in the same way as \cref{lem:sdh-game}, with the decryption and auxiliary oracles having the same description. The only difference is how the encryption oracle computes the target ciphertext. In this case, when $\adv_\mathsf{DDH}$ receives $(m_0,m_1)$, it samples $b\rgets\{0,1\}$ and computes
 	$$e^{*} := (u_1^{*})^{z_1}(u_2^{*})^{z_2}\cdot m_b; v^{*} :=\mathsf{HF}_{\hk}^{\lambda,\Gamma}(u_1^{*},u_2^{*},e^{*}); v^{*} := (u_1^{*})^{x_1+v^{*}y_1}(u_2^{*})^{x_2+v^{*}y_2}.$$
 	The auxiliary information $\aux_1$ is sampled in the same manner, with $g^s$ and $g^{s'}$ uniformly random elements of $\G$.
 	
@@ -175,6 +175,7 @@ We first notice that the decryption oracle does not make any direct use of $x_i,
 \begin{itemize}
 	\item[]$\estep{5}'$: $r\rgets\Z_q$; $e := g^r$.
 \end{itemize}
+\xjy{the $r$ here has nothing to do with the $r$ in $u_1$; need to use a different notation}
 It follows that $\Pr[T_7] = 1/2$, because now $b$ is not used anywhere in the game, so $\adv$'s output bit $\hat{b}$ is independent of it. We define event $R_7$ in $\game_7$ which is the same as $R_6$ in $\game_6$, i.e., some ciphertext $\psi$ is submitted to the decryption oracle which is rejected by $\dstep{4}'$ but would have passed $\dstep{4}$.
 
 \begin{lemma} We have
@@ -248,13 +249,13 @@ We will show two lemmas that complete the proof. The first lemma shows that the 
 
 \begin{lemma}
 	\label{lem:bounding-r8}
-	We have $$\Pr[R_8]\leq Q_\adv(\lambda)/q.$$
+	We have $$\Pr[R_8]\leq Q_\adv(\lambda)/q,$$
+where $Q_\adv(\lambda)$ is number of $\adv$'s decryption oracle queries.
 \end{lemma}
-\xjy{What is $Q_\adv$?}
 The proof of \cref{lem:hash} is identical to the proof of \cite[Lemma~7]{cs01} and is omitted. The proof of \cref{lem:bounding-r8} is also similar, yet must be adapted to our setting. 
 
 \begin{proof}[Proof (of \cref{lem:bounding-r8}).]
-	Consider the proof of \cite[Lemma~8]{cs01}. Both sub-parts of the proof rely on the fact that $\aux_2 = (x_1,x_2,y_1,y_2)$ is independent \xjy{you mean independent of the rest of the game?} and uniformly distributed in $\adv$'s view. Clearly this is not the case if $\aux_2$ is provided as auxiliary information. However, the proof only relies on the fact that $\aux_2$ be uniform and independent \textit{at the time the decryption query is made}. Indeed, by the definition of the DR-CCA game, it is clear that once the auxiliary oracle is queried, no more decryption queries are allowed to be made. Hence, at the time any decryption query is made, $\aux_2$ is uniform and independent, and the proof of \cite[Lemma~8]{cs01} follows without any additional concerns.
+	Consider the proof of \cite[Lemma~8]{cs01}. Both sub-parts of the proof rely on the fact that $\aux_2 = (x_1,x_2,y_1,y_2)$ is and uniformly distributed in $\adv$'s view, and independent of the rest of the game. Clearly this is not the case if $\aux_2$ is provided as auxiliary information. However, the proof only relies on the fact that $\aux_2$ be uniform and independent \textit{at the time the decryption query is made}. Indeed, by the definition of the DR-CCA game, it is clear that once the auxiliary oracle is queried, no more decryption queries are allowed to be made. Hence, at the time any decryption query is made, $\aux_2$ is uniform and independent, and the proof of \cite[Lemma~8]{cs01} follows without any additional concerns.
 \end{proof}
 
 In sum, we have shown that $|\Pr[R_8]-\Pr[R_6]|$ and $\Pr[R_8]$ are both negligible in $\lambda$, so $\Pr[R_6]$ is negligible in $\lambda$. This in turn implies that $|\Pr[T_0] - \Pr[T_7]|$ is negligible in $\lambda$; but $\Pr[T_7] = 1/2$, so $\drcca_0(\lambda) = 2|\Pr[T_0]-1/2|$ is negligible in $\lambda$. This completes the proof.
