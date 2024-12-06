@@ -108,7 +108,7 @@ Recall that $g_1 = g$ and $u_1^* = g_1^r$, so the only difference between the ga
 
 \begin{lemma}
 	\label{lem:sdh-game}
-	There exists some polynomial-time probabilistic algorithm $\adv_\mathsf{DSDH}$ such that $$|\Pr[T_3]-\Pr[T_2]|\leq\mathsf{AdvDSDH}_{\adv_\mathsf{DSDH}, \mathcal{G}}(\lambda|\Gamma).$$
+	There exists some PPT algorithm $\adv_\mathsf{DSDH}$ such that $$|\Pr[T_3]-\Pr[T_2]|\leq\mathsf{AdvDSDH}_{\adv_\mathsf{DSDH}, \mathcal{G}}(\lambda|\Gamma).$$
 \end{lemma}
 \begin{proof}
 	We will describe $\adv_\mathsf{DSDH}$ in detail. The algorithm takes in as input some tuple $(g^a, g^{b})$, and interacts with the DR-CCA adversary $\adv$. First, it begins by computing
@@ -136,7 +136,7 @@ The proof essentially follows the same as that of the previous game, and can be 
 In the games up to $\game_4$ we had $r^{*} = \hat{r}^{*}$, however in game $\game_5$ $r^{*}$ and $\hat{r}^{*}$ are independent of each other except that they cannot be equal. Note, however, that like in the previous game, we have a tuple $(g_2, u_1^{*}, u_2^{*})$ which in game $\game_4$ is uniform DH tuple while in game $\game_5$ is uniform tuple in $\G^3$. This leads to the following lemma, which says that any distinguisher for the two games immediately gives a distinguisher for the DDH instance.
 
 \begin{lemma}
-	There exists some probabilistic-polynomial time algorithm $\adv_\mathsf{DDH}$ such that $$|\Pr[T_5]-\Pr[T_4]|\leq\advddh_{\adv_\mathsf{DDH},\mathcal{G}}(\lambda | \Gamma).$$
+	There exists some PPT algorithm $\adv_\mathsf{DDH}$ such that $$|\Pr[T_5]-\Pr[T_4]|\leq\advddh_{\adv_\mathsf{DDH},\mathcal{G}}(\lambda | \Gamma).$$
 \end{lemma}
 \begin{proof}
 	The proof of this lemma is borrowed from \cite{cs01} and follows the same broad argument as that of \cref{lem:sdh-game}. The DDH distinguisher $\adv_\mathsf{DDH}$ is initiated with a tuple $(g_2, u_1, u_2)\in\G^3$.
@@ -147,7 +147,7 @@ In the games up to $\game_4$ we had $r^{*} = \hat{r}^{*}$, however in game $\gam
 	
 	When $\adv$ outputs bit $\hat{b}$, $\adv_\mathsf{DDH}$ outputs $1$ if $\hat{b} = b$ and $0$ otherwise. It is clear from the above simulation that for any fixed $\lambda$ and $\Gamma$, 
 	\begin{align*}
-		\Pr[T_4] &= \Pr[\adv_\mathsf{DDH}(g^a,g^b,g^c) = 1 : a,b\rgets\Z_q, c := ab]\\
+		\Pr[T_4] &= \Pr[\adv_\mathsf{DDH}(g^a,g^b,g^c) = 1 : a,b\rgets\Z_q, c := ab],\\
 		\Pr[T_5] &= \Pr[\adv_\mathsf{DDH}(g^a,g^b,g^c) = 1 : a,b\rgets\Z_q, c\rgets\Z_q\setminus\{ab\}].
 	\end{align*}
 	It immediately follows that 
