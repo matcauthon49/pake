@@ -93,7 +93,7 @@ For the target ciphertext $\psi^{*}$, we denote each of the variables with a $*$
 
 We modify game $\game_0$ to obtain the new game, which is identical except for a small modification to the encryption oracle. Instead of using the encryption algorithm as given to compute the target ciphertext $\psi^{*}$, we use a modified encryption algorithm, in which the steps $\estep{4}$ and $\estep{7}$ (see \cref{fig:cs03}) are replaced by 
 \begin{itemize}
-	\item[] $\estep{4}': e' := u_1^{z_1}u_2^{z_1}$. \xjy{I think it should be $u_1^{z_1}u_2^{z_2}$}
+	\item[] $\estep{4}': e' := u_1^{z_1}u_2^{z_2}$. 
 	\item[] $\estep{7}': v := u_1^{x_1+y_1\alpha}u_2^{x_2+y_2\alpha}$.
 \end{itemize}
 These changes are purely conceptual and the values of $(e')^*$ and $v^{*}$ are exactly the same in both games. It follows that $$\Pr[T_0]=\Pr[T_1].$$
@@ -173,9 +173,8 @@ We first notice that the decryption oracle does not make any direct use of $x_i,
 
 \textbf{Game $\game_7$.} This game is identical to $\game_6$, except that in this game the message encrypted in the target ciphertext is randomly selected instead of being $m_b$. In particular, we modify the encryption oracle and replace $\estep{5}$ with
 \begin{itemize}
-	\item[]$\estep{5}'$: $r\rgets\Z_q$; $e := g^r$.
+	\item[]$\estep{5}'$: $r'\rgets\Z_q$; $e := g^{r'}$.
 \end{itemize}
-\xjy{the $r$ here has nothing to do with the $r$ in $u_1$; need to use a different notation}
 It follows that $\Pr[T_7] = 1/2$, because now $b$ is not used anywhere in the game, so $\adv$'s output bit $\hat{b}$ is independent of it. We define event $R_7$ in $\game_7$ which is the same as $R_6$ in $\game_6$, i.e., some ciphertext $\psi$ is submitted to the decryption oracle which is rejected by $\dstep{4}'$ but would have passed $\dstep{4}$.
 
 \begin{lemma} We have

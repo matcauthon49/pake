@@ -1,5 +1,5 @@
 \newcommand{\etalchar}[1]{$^{#1}$}
-\begin{thebibliography}{CHK{\etalchar{+}}05}
+\begin{thebibliography}{KMTG05}
 
 \bibitem[ABB{\etalchar{+}}20]{C:ABBJKX20}
 Michel Abdalla, Manuel Barbosa, Tatiana Bradley, Stanislaw Jarecki, Jonathan
@@ -22,6 +22,11 @@ Michel Abdalla, Fabrice Benhamouda, and David Pointcheval.
 Michel Abdalla, Pierre-Alain Fouque, and David Pointcheval.
 \newblock Password-based authenticated key exchange in the three-party setting.
 \newblock pages 65--84, 2005.
+
+\bibitem[AHH21]{AC:AbdHaaHes21}
+Michel Abdalla, Bj{\"o}rn Haase, and Julia Hesse.
+\newblock Security analysis of {CPace}.
+\newblock pages 711--741, 2021.
 
 \bibitem[AP05]{RSA:AbdPoi05}
 Michel Abdalla and David Pointcheval.
@@ -51,6 +56,11 @@ Ran Canetti, Shai Halevi, Jonathan Katz, Yehuda Lindell, and Philip~D.
 \newblock Universally composable password-based key exchange.
 \newblock pages 404--421, 2005.
 
+\bibitem[{Cry}20]{pake-selection}
+{Crypto Forum Research Group}.
+\newblock {PAKE} selection, 2020.
+\newblock \url{https://github.com/cfrg/pake-selection}.
+
 \bibitem[CS03]{cs01}
 Ronald Cramer and Victor Shoup.
 \newblock Design and analysis of practical public-key encryption schemes secure
@@ -67,16 +77,90 @@ Georg Fuchsbauer, Eike Kiltz, and Julian Loss.
 \newblock The algebraic group model and its applications.
 \newblock pages 33--62, 2018.
 
+\bibitem[Gen08]{TCC:Gennaro08}
+Rosario Gennaro.
+\newblock Faster and shorter password-authenticated key exchange.
+\newblock pages 589--606, 2008.
+
+\bibitem[GJO10]{C:GoyJaiOst10}
+Vipul Goyal, Abhishek Jain, and Rafail Ostrovsky.
+\newblock Password-authenticated session-key generation on the internet in the
+  plain model.
+\newblock pages 277--294, 2010.
+
+\bibitem[GK10]{CCS:GroKat10}
+Adam Groce and Jonathan Katz.
+\newblock A new framework for efficient password-based authenticated key
+  exchange.
+\newblock pages 516--525, 2010.
+
+\bibitem[GL01]{C:GolLin01}
+Oded Goldreich and Yehuda Lindell.
+\newblock Session-key generation using human passwords only.
+\newblock pages 408--432, 2001.
+
 \bibitem[GL03]{EC:GenLin03}
 Rosario Gennaro and Yehuda Lindell.
 \newblock A framework for password-based authenticated key exchange.
 \newblock pages 524--543, 2003.
+
+\bibitem[HL19]{aucpace}
+Bj{\"o}rn Haase and Beno{\^\i}t Labrique.
+\newblock Au{CP}ace: Efficient verifier-based {PAKE} protocol tailored for the
+  {II}o{T}.
+\newblock {\em IACR Transactions on Cryptographic Hardware and Embedded
+  Systems}, pages 1--48, 2019.
+
+\bibitem[Jab97]{Jablon97}
+David~P. Jablon.
+\newblock Extended password key exchange protocols immune to dictionary
+  attacks.
+\newblock In {\em 6th IEEE International Workshops on Enabling Technologies:
+  Infrastructure for Collaborative Enterprises (WETICE 1997)}, pages 248--255,
+  Cambridge, MA, USA, June~18--20, 1997. IEEE Computer Society.
+
+\bibitem[Jar22]{pake-sok}
+Stanislaw Jarecki.
+\newblock Password authenticated key exchange: Protocols and security models.
+\newblock pages 213--255. 2022.
+
+\bibitem[JG04]{SAC:JiaGon04}
+Shaoquan Jiang and Guang Gong.
+\newblock Password based key exchange with mutual authentication.
+\newblock pages 267--279, 2004.
+
+\bibitem[JKX18]{EC:JarKraXu18}
+Stanislaw Jarecki, Hugo Krawczyk, and Jiayu Xu.
+\newblock {OPAQUE}: An asymmetric {PAKE} protocol secure against
+  pre-computation attacks.
+\newblock pages 456--486, 2018.
+
+\bibitem[KMTG05]{ACNS:KMTG05}
+Jonathan Katz, Philip~D. MacKenzie, Gelareh Taban, and Virgil~D. Gligor.
+\newblock Two-server password-only authenticated key exchange.
+\newblock pages 1--16, 2005.
 
 \bibitem[KOY01]{EC:KatOstYun01}
 Jonathan Katz, Rafail Ostrovsky, and Moti Yung.
 \newblock Efficient password-authenticated key exchange using human-memorable
   passwords.
 \newblock pages 475--494, 2001.
+
+\bibitem[KV09]{AC:KatVai09a}
+Jonathan Katz and Vinod Vaikuntanathan.
+\newblock Smooth projective hashing and password-based authenticated key
+  exchange from lattices.
+\newblock pages 636--652, 2009.
+
+\bibitem[KV11]{TCC:KatVai11}
+Jonathan Katz and Vinod Vaikuntanathan.
+\newblock Round-optimal password-based authenticated key exchange.
+\newblock pages 293--310, 2011.
+
+\bibitem[NV04]{TCC:NguVad04}
+Minh-Huyen Nguyen and Salil~P. Vadhan.
+\newblock Simpler session-key generation from short random passwords.
+\newblock pages 428--445, 2004.
 
 \bibitem[PS04]{STOC:PraSah04}
 Manoj Prabhakaran and Amit Sahai.
