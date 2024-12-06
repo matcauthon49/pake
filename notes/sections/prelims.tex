@@ -23,7 +23,19 @@ Note that in our definition of DDH, the random $g^z$ must not equal to $g^{xy}$.
 
 \paragraph{Relation between DDH and DSDH.}
 It is known that the DSDH assumption implies the DDH assumption; we give a self-contained proof here.
-\xjy{FILL IN}
+\begin{lemma}
+\label{lem:dsdh}
+If the DSDH assumption holds for a group generation algorithm $\mathcal{G}$, then the DDH assumption holds for $\mathcal{G}$.
+\end{lemma}
+\begin{proof}
+Given a DDH distinguisher $\adv_\mathsf{DDH}$, we construct a DSDH distinguisher $\adv_\mathsf{DSDH}$ as follows. Given input $(X,Y)$, $\adv_\mathsf{DSDH}$ samples a random $r\rgets\Z_q$ and runs $\adv_\mathsf{DDH}$ on $(X,X\cdot g^r,Y\cdot X^r)$. $\adv_\mathsf{DSDH}$ then outputs what $\adv_\mathsf{DDH}$ outputs.
+
+Suppose $X = g^x$. If $Y = g^{x^2}$, then $\adv_\mathsf{DDH}$'s input is $(g^x,g^{x+r},g^{x^2+rx})$ which is a DH tuple. If $Y$ is a random group element independent of $X$, then $\adv_\mathsf{DDH}$'s input is a uniformly random 3-tuple in $\G^3$. (Here we use the ``standard'' version of DDH where $g^z$ is uniformly random in $\G$, rather than $\G \setminus \{g^{xy}\}$.) It follows that the distinguishing advantage of $\adv_\mathsf{DSDH}$ is equal to that of $\adv_\mathsf{DDH}$, completing the proof.
+\end{proof}
+
+\begin{remark}
+Bao, Deng, and Zhu \cite[Section~3.2]{ICICS:BaoDenZhu03} give an alternative proof of \cref{lem:dsdh}, where $\adv_\mathsf{DSDH}$ samples random $r,s\rgets\Z_q$ and runs $\adv_\mathsf{DDH}$ on $(X^r,X^s,Y^{rs})$ --- that is, the first two group elements are both randomized. In fact it is sufficient to randomize only one of them.
+\end{remark}
 
 %\subsubsection{The CDH Assumption}
 
@@ -94,7 +106,7 @@ Our protocol uses the security of the Cramer--Shoup public-key encryption scheme
 
 	\begin{figure}[tbp]
 	\begin{framed}\small
-		\textbf{Key Generation:} On input $1^\lambda$ from $\lambda\in\mathbb{Z}_{\geq 0}$, compute
+		\textbf{Key Generation:} On input $1^\lambda$ for $\lambda\in\mathbb{Z}_{\geq 0}$, compute
 		\begin{align*}
 			&\Gamma[\hat{\mathbb{G}}, \mathbb{G}, g, q]\rgets\mathcal{G}(1^\lambda); \hk\rgets\mathsf{HF.Keyspace}_{\lambda,\Gamma}\\
 			&w\rgets\mathbb{Z}_q^{*}; x_1,x_2,y_1,y_2,z_1,z_2\rgets\mathbb{Z}_q\\
