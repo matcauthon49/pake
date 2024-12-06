@@ -7,6 +7,30 @@ Reallocating 'name_of_file' (item size: 1) to 14 items.
 Reallocating 'name_of_file' (item size: 1) to 15 items.
 Reallocating 'name_of_file' (item size: 1) to 11 items.
 Database file #1: crypto/crypto.bib
+Warning--string name "ccs10ed" is undefined
+--line 116629 of file crypto/crypto.bib
+Warning--string name "ccs10name" is undefined
+--line 116631 of file crypto/crypto.bib
+Warning--string name "ccs10addr" is undefined
+--line 116633 of file crypto/crypto.bib
+Warning--string name "ccs10month" is undefined
+--line 116635 of file crypto/crypto.bib
+Warning--string name "ccspub" is undefined
+--line 116637 of file crypto/crypto.bib
+Warning--string name "acns05ed" is undefined
+--line 158213 of file crypto/crypto.bib
+Warning--string name "acns05name" is undefined
+--line 158215 of file crypto/crypto.bib
+Warning--string name "acns05vol" is undefined
+--line 158217 of file crypto/crypto.bib
+Warning--string name "acns05addr" is undefined
+--line 158219 of file crypto/crypto.bib
+Warning--string name "acns05month" is undefined
+--line 158221 of file crypto/crypto.bib
+Warning--string name "acns05pub" is undefined
+--line 158223 of file crypto/crypto.bib
+Warning--string name "mylncs" is undefined
+--line 158225 of file crypto/crypto.bib
 Warning--string name "asiacrypt21ed" is undefined
 --line 224323 of file crypto/crypto.bib
 Warning--string name "asiacrypt21name3" is undefined
@@ -21,6 +45,34 @@ Warning--string name "asiacrypt21pub" is undefined
 --line 224333 of file crypto/crypto.bib
 Warning--string name "mylncs" is undefined
 --line 224335 of file crypto/crypto.bib
+Warning--string name "asiacrypt21ed" is undefined
+--line 225585 of file crypto/crypto.bib
+Warning--string name "asiacrypt21name4" is undefined
+--line 225587 of file crypto/crypto.bib
+Warning--string name "asiacrypt21vol4" is undefined
+--line 225589 of file crypto/crypto.bib
+Warning--string name "asiacrypt21addr" is undefined
+--line 225591 of file crypto/crypto.bib
+Warning--string name "asiacrypt21month" is undefined
+--line 225593 of file crypto/crypto.bib
+Warning--string name "asiacrypt21pub" is undefined
+--line 225595 of file crypto/crypto.bib
+Warning--string name "mylncs" is undefined
+--line 225597 of file crypto/crypto.bib
+Warning--string name "asiacrypt09ed" is undefined
+--line 249273 of file crypto/crypto.bib
+Warning--string name "asiacrypt09name" is undefined
+--line 249275 of file crypto/crypto.bib
+Warning--string name "asiacrypt09vol" is undefined
+--line 249277 of file crypto/crypto.bib
+Warning--string name "asiacrypt09addr" is undefined
+--line 249279 of file crypto/crypto.bib
+Warning--string name "asiacrypt09month" is undefined
+--line 249281 of file crypto/crypto.bib
+Warning--string name "asiacrypt09pub" is undefined
+--line 249283 of file crypto/crypto.bib
+Warning--string name "mylncs" is undefined
+--line 249285 of file crypto/crypto.bib
 Warning--string name "crypto20ed" is undefined
 --line 331465 of file crypto/crypto.bib
 Warning--string name "crypto20name1" is undefined
@@ -63,6 +115,34 @@ Warning--string name "crypto18pub" is undefined
 --line 337953 of file crypto/crypto.bib
 Warning--string name "mylncs" is undefined
 --line 337955 of file crypto/crypto.bib
+Warning--string name "crypto10ed" is undefined
+--line 355015 of file crypto/crypto.bib
+Warning--string name "crypto10name" is undefined
+--line 355017 of file crypto/crypto.bib
+Warning--string name "crypto10vol" is undefined
+--line 355019 of file crypto/crypto.bib
+Warning--string name "cryptoaddr" is undefined
+--line 355021 of file crypto/crypto.bib
+Warning--string name "crypto10month" is undefined
+--line 355023 of file crypto/crypto.bib
+Warning--string name "crypto10pub" is undefined
+--line 355025 of file crypto/crypto.bib
+Warning--string name "mylncs" is undefined
+--line 355027 of file crypto/crypto.bib
+Warning--string name "crypto01ed" is undefined
+--line 365945 of file crypto/crypto.bib
+Warning--string name "crypto01name" is undefined
+--line 365947 of file crypto/crypto.bib
+Warning--string name "crypto01vol" is undefined
+--line 365949 of file crypto/crypto.bib
+Warning--string name "cryptoaddr" is undefined
+--line 365951 of file crypto/crypto.bib
+Warning--string name "crypto01month" is undefined
+--line 365953 of file crypto/crypto.bib
+Warning--string name "crypto01pub" is undefined
+--line 365955 of file crypto/crypto.bib
+Warning--string name "mylncs" is undefined
+--line 365957 of file crypto/crypto.bib
 Warning--string name "csf24name" is undefined
 --line 392007 of file crypto/crypto.bib
 Warning--string name "csf24addr" is undefined
@@ -85,6 +165,20 @@ Warning--string name "rsa05pub" is undefined
 --line 423641 of file crypto/crypto.bib
 Warning--string name "mylncs" is undefined
 --line 423643 of file crypto/crypto.bib
+Warning--string name "eurocrypt18ed" is undefined
+--line 495423 of file crypto/crypto.bib
+Warning--string name "eurocrypt18name3" is undefined
+--line 495425 of file crypto/crypto.bib
+Warning--string name "eurocrypt18vol3" is undefined
+--line 495427 of file crypto/crypto.bib
+Warning--string name "eurocrypt18addr" is undefined
+--line 495429 of file crypto/crypto.bib
+Warning--string name "eurocrypt18month" is undefined
+--line 495431 of file crypto/crypto.bib
+Warning--string name "eurocrypt18pub" is undefined
+--line 495433 of file crypto/crypto.bib
+Warning--string name "mylncs" is undefined
+--line 495435 of file crypto/crypto.bib
 Warning--string name "eurocrypt05ed" is undefined
 --line 513629 of file crypto/crypto.bib
 Warning--string name "eurocrypt05name" is undefined
@@ -189,6 +283,20 @@ Warning--string name "pkc05pub" is undefined
 --line 1150837 of file crypto/crypto.bib
 Warning--string name "mylncs" is undefined
 --line 1150839 of file crypto/crypto.bib
+Warning--string name "sac04ed" is undefined
+--line 1261763 of file crypto/crypto.bib
+Warning--string name "sac04name" is undefined
+--line 1261765 of file crypto/crypto.bib
+Warning--string name "sac04vol" is undefined
+--line 1261767 of file crypto/crypto.bib
+Warning--string name "sac04addr" is undefined
+--line 1261769 of file crypto/crypto.bib
+Warning--string name "sac04month" is undefined
+--line 1261771 of file crypto/crypto.bib
+Warning--string name "sac04pub" is undefined
+--line 1261773 of file crypto/crypto.bib
+Warning--string name "mylncs" is undefined
+--line 1261775 of file crypto/crypto.bib
 Warning--string name "stoc04ed" is undefined
 --line 1467997 of file crypto/crypto.bib
 Warning--string name "stoc04name" is undefined
@@ -199,16 +307,63 @@ Warning--string name "stoc04month" is undefined
 --line 1468003 of file crypto/crypto.bib
 Warning--string name "stocpub" is undefined
 --line 1468005 of file crypto/crypto.bib
+Warning--string name "tcc11ed" is undefined
+--line 1535113 of file crypto/crypto.bib
+Warning--string name "tcc11name" is undefined
+--line 1535115 of file crypto/crypto.bib
+Warning--string name "tcc11vol" is undefined
+--line 1535117 of file crypto/crypto.bib
+Warning--string name "tcc11addr" is undefined
+--line 1535119 of file crypto/crypto.bib
+Warning--string name "tcc11month" is undefined
+--line 1535121 of file crypto/crypto.bib
+Warning--string name "tcc11pub" is undefined
+--line 1535123 of file crypto/crypto.bib
+Warning--string name "mylncs" is undefined
+--line 1535125 of file crypto/crypto.bib
+Warning--string name "tcc08ed" is undefined
+--line 1539051 of file crypto/crypto.bib
+Warning--string name "tcc08name" is undefined
+--line 1539053 of file crypto/crypto.bib
+Warning--string name "tcc08vol" is undefined
+--line 1539055 of file crypto/crypto.bib
+Warning--string name "tcc08addr" is undefined
+--line 1539057 of file crypto/crypto.bib
+Warning--string name "tcc08month" is undefined
+--line 1539059 of file crypto/crypto.bib
+Warning--string name "tcc08pub" is undefined
+--line 1539061 of file crypto/crypto.bib
+Warning--string name "mylncs" is undefined
+--line 1539063 of file crypto/crypto.bib
+Warning--string name "tcc04ed" is undefined
+--line 1543023 of file crypto/crypto.bib
+Warning--string name "tcc04name" is undefined
+--line 1543025 of file crypto/crypto.bib
+Warning--string name "tcc04vol" is undefined
+--line 1543027 of file crypto/crypto.bib
+Warning--string name "tcc04addr" is undefined
+--line 1543029 of file crypto/crypto.bib
+Warning--string name "tcc04month" is undefined
+--line 1543031 of file crypto/crypto.bib
+Warning--string name "tcc04pub" is undefined
+--line 1543033 of file crypto/crypto.bib
+Warning--string name "mylncs" is undefined
+--line 1543035 of file crypto/crypto.bib
 Database file #2: crypto/abbrev3.bib
 Reallocating 'str_pool' (item size: 1) to 130000 items.
 Reallocating 'str_pool' (item size: 1) to 195000 items.
 Reallocating 'str_pool' (item size: 1) to 260000 items.
 Database file #3: references.bib
-Warning--I didn't find a database entry for "..."
+You're missing a field name---line 151 of file references.bib
+ : 
+ : %    booktitle = {Contributions to Mathematical Psychology},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
 Warning--empty booktitle in C:ABBJKX20
 Warning--empty booktitle in AC:ABKLX21
 Warning--empty booktitle in PKC:AbdBenPoi15
 Warning--empty booktitle in PKC:AbdFouPoi05
+Warning--empty booktitle in AC:AbdHaaHes21
 Warning--empty booktitle in RSA:AbdPoi05
 Warning--empty booktitle in C:BauFucLos20
 Warning--empty booktitle in SP:BelMer92
@@ -216,49 +371,61 @@ Warning--empty booktitle in EC:BelPoiRog00
 Warning--empty booktitle in EC:CHKLM05
 Warning--empty booktitle in CSF:DayLeh24
 Warning--empty booktitle in C:FucKilLos18
+Warning--empty booktitle in TCC:Gennaro08
+Warning--empty booktitle in C:GoyJaiOst10
+Warning--empty booktitle in CCS:GroKat10
+Warning--empty booktitle in C:GolLin01
 Warning--empty booktitle in EC:GenLin03
+Warning--empty booktitle in pake-sok
+Warning--empty publisher in pake-sok
+Warning--empty booktitle in SAC:JiaGon04
+Warning--empty booktitle in EC:JarKraXu18
+Warning--empty booktitle in ACNS:KMTG05
 Warning--empty booktitle in EC:KatOstYun01
+Warning--empty booktitle in AC:KatVai09a
+Warning--empty booktitle in TCC:KatVai11
+Warning--empty booktitle in TCC:NguVad04
 Warning--empty booktitle in STOC:PraSah04
 Warning--empty booktitle in PKC:RoyXu23
-You've used 17 entries,
+You've used 32 entries,
             2543 wiz_defined-function locations,
-            16404 strings with 197177 characters,
-and the built_in function-call counts, 9029 in all, are:
-= -- 915
-> -- 401
-< -- 16
-+ -- 144
-- -- 139
-* -- 574
-:= -- 1328
-add.period$ -- 51
-call.type$ -- 17
-change.case$ -- 117
-chr.to.int$ -- 17
-cite$ -- 32
-duplicate$ -- 394
-empty$ -- 677
-format.name$ -- 154
-if$ -- 1968
+            16487 strings with 199322 characters,
+and the built_in function-call counts, 16544 in all, are:
+= -- 1701
+> -- 672
+< -- 34
++ -- 234
+- -- 228
+* -- 1018
+:= -- 2394
+add.period$ -- 98
+call.type$ -- 32
+change.case$ -- 208
+chr.to.int$ -- 32
+cite$ -- 60
+duplicate$ -- 750
+empty$ -- 1273
+format.name$ -- 262
+if$ -- 3642
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 16
-newline$ -- 89
-num.names$ -- 51
-pop$ -- 163
+missing$ -- 30
+newline$ -- 164
+num.names$ -- 96
+pop$ -- 299
 preamble$ -- 1
-purify$ -- 134
+purify$ -- 240
 quote$ -- 0
-skip$ -- 391
+skip$ -- 739
 stack$ -- 0
-substring$ -- 601
-swap$ -- 146
-text.length$ -- 16
-text.prefix$ -- 1
+substring$ -- 1129
+swap$ -- 278
+text.length$ -- 34
+text.prefix$ -- 5
 top$ -- 0
-type$ -- 136
-warning$ -- 15
-while$ -- 96
-width$ -- 20
-write$ -- 208
-(There were 112 warnings)
+type$ -- 256
+warning$ -- 28
+while$ -- 179
+width$ -- 35
+write$ -- 392
+(There was 1 error message)
