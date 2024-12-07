@@ -151,9 +151,9 @@ The KOY protocol uses the Cramer--Shoup public-key encryption scheme, which is p
 
 We provide a formal description of the scheme in \cref{fig:cs03}. Apart from the (standard) CCA-security of the scheme, we rely on a stronger variant of security we term \textit{delayed-reveal-CCA-security (DR-CCA-security)}, in which the adversary is revealed certain (potentially sensitive) information \textit{after} all decryption queries have been made. This modified security property is crucial to our security proof. We postpone discussion of DR-CCA security to \cref{appendix-a}.
 
-\subsection{UC-PAKE}
+\subsection{UC PAKE}
 	
-	We recall the standard UC-PAKE functionality \cite{EC:CHKLM05} in \cref{fig:pake-functionality}. A more detailed explanation can be found in \cite{PKC:RoyXu23}.
+	We recall the standard UC PAKE functionality \cite{EC:CHKLM05} in \cref{fig:pake-functionality}. A more detailed explanation can be found in \cite[Section~2.2]{PKC:RoyXu23}.
 	
 	\begin{figure}[tbp]
 		\begin{framed}\small
@@ -164,11 +164,11 @@ We provide a formal description of the scheme in \cref{fig:cs03}. Apart from the
 					\item If $\pw^* = \pw$, then mark the record $\compromised$ and send ``correct guess'' to $\SIM$.
 					\item If $\pw^* \neq \pw$, then mark the record $\interrupted$ and send ``wrong guess'' to $\SIM$.
 				\end{itemize}
-				\item On $(\NewKey, sid, \party, K^* \in \{0,1\}^\secpar)$ from $\SIM$, if there is a record $\left<\party, \party', \pw\right>$, and this is the first $\NewKey$ message for $sid$ and $\party$, then output $(sid, K)$ to $\party$, where $K$ is defined as follows:
+				\item On $(\NewKey, sid, \party, \sk^* \in \{0,1\}^\secpar)$ from $\SIM$, if there is a record $\left<\party, \party', \pw\right>$, and this is the first $\NewKey$ message for $sid$ and $\party$, then output $(sid, \sk)$ to $\party$, where $\sk$ is defined as follows:
 				\begin{itemize}
-					\item If the record is $\compromised$, or either $\party$ or $\party'$ is corrupted, then set $K := K^*$.
-					\item If the record is $\fresh$, a key $(sid, K')$ has been output to $\party'$, at which time there was a record $\left<\party', \party, \pw\right>$ marked $\fresh$, then set $K := K'$.
-					\item Otherwise sample $K \gets \{0,1\}^\secpar$.
+					\item If the record is $\compromised$, or either $\party$ or $\party'$ is corrupted, then set $\sk := \sk^*$.
+					\item If the record is $\fresh$, a key $(sid, \sk')$ has been output to $\party'$, at which time there was a record $\left<\party', \party, \pw\right>$ marked $\fresh$, then set $\sk := \sk'$.
+					\item Otherwise sample $\sk \rgets \{0,1\}^\secpar$.
 				\end{itemize}
 				Finally, mark the record $\completed$.
 			\end{itemize}
@@ -180,11 +180,11 @@ We provide a formal description of the scheme in \cref{fig:cs03}. Apart from the
 	We briefly describe how adversarial attacks are modelled within the scope of the functionality, which is crucial to our security analysis.
 	
 	\begin{itemize}
-		\item In the case of an \textit{eavesdropping} attack, both sessions $\party$ and $\party'$ are marked as $\fresh$. In this case the protocol execution in the real world is correct, and $\testpwd$ command is sent to $\pake$. In this case, a session key $K$ is selected first \textit{uniformly}, and the other session key $K':=K$. This corresponds to a correct protocol execution without adversary interference.
-		\item In the case of an eavesdropping attack with \textit{incorrect password}, it is true that $\pw\neq\pw'$ and no $\testpwd$ is sent. In this case, however, independently random keys $K$ and $K'$ are sampled.
-		\item In case of a successful guessing attack, the simulator sends a $\testpwd$ query and receives `correct guess' while the session is marked as $\compromised$. The simulator then submits a key $K^{*}$ (which is output in the real protocol and can be determined from the actions of the adversary) to $\pake$ which sets the key of the party to $K^{*}$. \textit{Note that this is a significant departure from the game-based security definition of PAKE.} In the game-based security definition, all security guarantees are lost in the case of a correct password guess, and the simulation can be terminated (by outputting some target message such as $\bot$). In the UC-PAKE security definition, simulation must continue, and the output of the protocol must be the `detrmined' key $K^{*}$, which may need to be \textit{extracted} from the adversary's messages.
-		\item If the session is $\interrupted$, this corresponds to a failed guessing attack by the adversary. In this case, the session keys of $\party$ and $\party'$ are uniform and independent, and the adversary gains no knowledge of either of the session keys.
-		\item If a session is $\fresh$ but the corresponding session of $\party'$ is attacked, then the adversary should gain no information about the key of $\party$, and it must be output uniformly at random.
+		\item In the case of an \textit{eavesdropping attack}, both instances $\party$ and $\party'$ are marked as $\fresh$. If $\pw = \pw'$, i.e., the two parties' passwords match, then the protocol execution in the real world is correct, and no $\testpwd$ command is sent to $\pake$. In this case, a session key $\sk$ is sampled first \textit{uniformly}, and the other session key $\sk'$ is set to be equal to $\sk$. This corresponds to a correct protocol execution without adversary interference.
+		\item In the case of an eavesdropping attack with \textit{incorrect password}, it is true that $\pw\neq\pw'$ and no $\testpwd$ is sent. In this case, the two parties' keys $\sk$ and $\sk'$ are independently random.
+		\item In case of a successful online guessing attack, the simulator sends a $\testpwd$ command and receives ``correct guess'' while the session is marked as $\compromised$. The simulator then submits a key $\sk^{*}$ (which is output in the real protocol and can be determined from the actions of the adversary) to $\pake$ which sets the key of the party to $\sk^{*}$. \textit{Note that this is a significant departure from the game-based security definition of PAKE.} In the game-based security definition, all security guarantees are lost in the case of a correct password guess, and the simulation can be terminated (by outputting some target message such as $\nabla$, as in \cite{EC:KatOstYun01}). In the UC-security definition, simulation must continue, and the simulator must be able to determine the attacked party's output key $\sk^{*}$ from the adversary's messages.
+		\item If the session is $\interrupted$, this corresponds to a failed online guessing attack by the adversary. In this case, the session keys of $\party$ and $\party'$ are uniform and independent, and the adversary gains no knowledge of either.
+		\item If a session is $\fresh$ but the counterparty's session is attacked (no matter whether successful or not), then the adversary should gain no information about the key of $\party$, and it must be output uniformly at random.
 	\end{itemize}
 	
 	Our proof of security relies heavily on simulating each of the above cases.
