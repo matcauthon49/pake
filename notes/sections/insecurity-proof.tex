@@ -3,43 +3,43 @@
 
 \subsection{Formal Description of the Protocol}
 
-We provide a formal description of the PAKE protocol of KOY in \cref{fig:koy}. A high-level description was provided in \cref{description}.
+We provide a formal description of the PAKE protocol of KOY in \cref{fig:koy}, adapted to UC formalism. (A high-level description was provided in \cref{description}.) We assume w.l.o.g. that the session ID $\sid$ contains the names of the protocol parties.
 
 	\begin{figure}[tbp]
 	\FrameSep5pt
 	\begin{framed}\small
 
-		\textbf{Initialization}: Let $\Gamma[\hat{\G},\G,g,q]\rgets[S_\secpar]$. Set $g_1\gets g$ and set $g_2, c, d, h\rgets\overline{\G}$. Furthermore, $\hk\rgets\mathsf{HF.Keyspace}_{\lambda,\Gamma}$. Output $\crs = (\Gamma,g_1, g_2,h,c,d,\hk)$.\\
+		\textbf{Initialization}: Let $\Gamma[\G,g,q]\rgets[S_\secpar]$. Set $g_1 := g$ and sample $g_2, c, d, h\rgets\overline{\G}$. Furthermore, sample $\hk\rgets\mathsf{HF.Keyspace}_{\lambda,\Gamma}$. Output $\crs := (\Gamma,g_1, g_2,h,c,d,\hk)$ as the public parameter.\\
 		
 		\textbf{Protocol Execution}: We describe the execution of the protocol below.
 		
 		\begin{enumerate}
 			\item \textbf{Initiation.} Party $\party$ sends the message $(\newsession,\sid,\party,\party',\role)$. Party $\party'$ replies with $(\newsession,\sid,\party',\party,\role)$.
-			\item \textbf{Round $\round_1$.} $\user$ gets $(\VK,\SK)\rgets\OTS.\gen(1^\secpar)$ and selects $r_1\rgets\Z_q$. It sets
+			\item \textbf{Round $\round_1$.} On input $(\newsession,\sid,\user,\server,\pw_\user,\text{``client''})$, $\user$ runs $(\VK,\SK)\rgets\OTS.\gen(1^\secpar)$ and samples $r_1\rgets\Z_q$. It then sets
 			\begin{align*}
 				A &:= g_1^{r_1} \\B &:= g_2^{r_1}\\ C &:= h^{r_1}\cdot\pw_\user  \\ \alpha &:= \mathsf{HF}_{\hk}^{\lambda,\Gamma}(\sid,\VK,A,B,C) \\ D &:= (cd^{\alpha})^{r_1}
 			\end{align*}
-			and sends $\msg{1} = (\sid,\VK,A,B,C,D)$.
-			\item \textbf{Round $\round_2$.} $\server$ selects $x_2,y_2,z_2,w_2,r_2\rgets\Z_q$ and sets
+			and sends $\msg{1} := (\sid,\VK,A,B,C,D)$.
+			\item \textbf{Round $\round_2$.} On input $(\newsession,\sid,\user,\server,\pw_\server,\text{``server''})$ and $\msg{1}$ from $\user$, $\server$ samples $x_2,y_2,z_2,w_2,r_2\rgets\Z_q$ and sets
 			\begin{align*}
 				\alpha' &:= \mathsf{HF}_\hk^{\secpar,\Gamma}(\sid,\VK,A,B,C)\\
 				E &:= g_1^{x_2}g_2^{y_2}h^{z_2}(cd^{\alpha'})^{w_2}\\
 				F &:= g_1^{r_2}\\
 				G &:= g_2^{r_2}\\
-				I &:= h^{r_2}\cdot\pw_\user\\
+				I &:= h^{r_2}\cdot\pw_\server\\
 				\beta &:= \mathsf{HF}_\hk^{\secpar,\Gamma}(\msg{1},\sid,E,F,G,I)\\
 				J &:= (cd^{\beta})^{r_2}
 			\end{align*}
-			and sends $\msg{2}=(\sid,E,F,G,I,J)$.
-			\item \textbf{Round $\round_3$ (Client).} $\user$ selects $x_1,y_1,z_1,w_1\rgets\Z_q$ and sets
+			and sends $\msg{2}:=(\sid,E,F,G,I,J)$.
+			\item \textbf{Round $\round_3$ (Client).} On $\msg{2}$ from $\server$, $\user$ samples $x_1,y_1,z_1,w_1\rgets\Z_q$ and sets
 			\begin{align*}
-			 \beta' &:= \mathsf{HF}_\hk^{\secpar,\Gamma}(\msg{1},\sid,E,F,G,I)\\
+			 \beta' &:= \mathsf{HF}_\hk^{\secpar,\Gamma}(\sid,\msg{1},E,F,G,I)\\
 			 K &:= g_1^{x_1}g_2^{x_2}h^{z_1}(cd^{\beta'})^{w_1}\\
-			 \mathsf{sig} &\gets\sign_\SK(\msg{1}\|\msg{2}\|K)
+			 \mathsf{sig} &\gets\sign_\SK(\msg{1},\msg{2},K)
 			\end{align*}
-			and sends $\msg{3} = (K,\mathsf{sig})$. It finds $I' = I/\pw_\user$ and outputs $$\sk_\user := E^{r_1}F^{x_1}G^{y_1}(I')^{z_1}J^{w_1}.$$
-			\item \textbf{Round $\round_3$ (Server).} Server receives $\msg{3}$ and checks if $\mathsf{Vrfy}_\VK(\msg{1}\|\msg{2}\|K,\mathsf{sig})=1$. If not, it outputs $\sk_\server=\mathsf{NULL}$. Else, it finds $C'=C/\pw_\user$ and outputs 
-			$$\sk_\server := A^{x_2}B^{y_2}(C')^{z_2}D^{w_2}K^{r_2}.$$
+			and sends $\msg{3} := (\sid, K,\mathsf{sig})$ to $\server$. It then computes $I' := I/\pw_\user$ and outputs $$(\sid,\sk_\user := E^{r_1}F^{x_1}G^{y_1}(I')^{z_1}J^{w_1}).$$
+			\item \textbf{Round $\round_3$ (Server).} On $\msg{3}$ from $\user$, server checks if $\mathsf{Vrfy}_\VK(\msg{1},\msg{2},K;\mathsf{sig})=1$. If not, it outputs $\sk_\server=\bot$. Else, it computes $C':=C/\pw_\server$ and outputs 
+			$$(\sid,\sk_\server := A^{x_2}B^{y_2}(C')^{z_2}D^{w_2}K^{r_2}).$$
 		\end{enumerate}
 		
 	\end{framed}
