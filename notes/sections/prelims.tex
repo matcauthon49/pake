@@ -102,7 +102,7 @@ where $\Gamma\rgets[S_\lambda]$. We say that $\mathsf{HF}$ is collision-resistan
 
 \subsection{Cramer--Shoup Encryption Scheme}
 
-Our protocol uses the security of the Cramer--Shoup public-key encryption scheme, which is a scheme proven CCA-secure under the DDH assumption. We will use a modification of the Cramer--Shoup scheme that supports \textit{labels} \cite{EC:KatOstYun01, iso}.
+The KOY protocol uses the Cramer--Shoup public-key encryption scheme, which is proven CCA-secure under the DDH assumption. In fact, we will use a modification of the Cramer--Shoup scheme that supports \textit{labels} \cite{EC:KatOstYun01, iso}.
 
 	\begin{figure}[tbp]
 	\begin{framed}\small
@@ -110,46 +110,46 @@ Our protocol uses the security of the Cramer--Shoup public-key encryption scheme
 		\begin{align*}
 			&\Gamma[\hat{\mathbb{G}}, \mathbb{G}, g, q]\rgets\mathcal{G}(1^\lambda); \hk\rgets\mathsf{HF.Keyspace}_{\lambda,\Gamma}\\
 			&w\rgets\mathbb{Z}_q^{*}; x_1,x_2,y_1,y_2,z_1,z_2\rgets\mathbb{Z}_q\\
-			&g_1\gets g; g_2\gets g^{w}; c = g_1^{x_1}g_2^{x_2}; d\gets g_1^{y_1}g_2^{y_2}; h\gets g_1^{z_1}g_2^{z_2}
+			&g_1 := g; g_2 := g^{w}; c := g_1^{x_1}g_2^{x_2}; d := g_1^{y_1}g_2^{y_2}; h := g_1^{z_1}g_2^{z_2}
 		\end{align*}
-		and output the public key $\PK = (\Gamma,\hk,g_1,g_2,c,d,h)$ and the secret key $\SK = (\Gamma, \hk, x_1,x_2,y_1,y_2,z_1,z_2).$
+		and output the public key $\PK := (\Gamma,\hk,g_1,g_2,c,d,h)$ and the secret key $\SK := (\Gamma, \hk, x_1,x_2,y_1,y_2,z_1,z_2)$.
 		
 		\vspace{4mm}
 		
-		\textbf{Encryption:} Given $1^\lambda$ for $\lambda\in\mathbb{Z}_{\geq 0}$, a public key $$\PK=(\Gamma,\hk,g_1,g_2,c,d,h)\in[\mathcal{G}_\lambda]\times[\mathsf{HF.Keyspace}_{\lambda,\Gamma}]\times\G^4,$$ a message $m\in G$ and a label $\lab$, compute
+		\textbf{Encryption:} Given a public key $$\PK=(\Gamma,\hk,g_1,g_2,c,d,h)\in[\mathcal{G}_\lambda]\times[\mathsf{HF.Keyspace}_{\lambda,\Gamma}]\times\G^4,$$ a message $m\in G$ and a label $\lab$, compute
 		
 		\begin{itemize}
 			\itemsep=0em
 			\item[]\textbf{$\estep{1}$}: $r\rgets\mathbb{Z}_q$;
-			\item[]\textbf{$\estep{2}$}: $u_1\rgets g_1^r$;
-			\item[]\textbf{$\estep{3}$}: $u_2\rgets g_2^r$;
-			\item[]\textbf{$\estep{4}$}: $e'\gets h^r$;
-			\item[]\textbf{$\estep{5}$}: $e\gets e'\cdot m$;
-			\item[]\textbf{$\estep{6}$}: $\alpha\gets\mathsf{HF}^{\lambda,\Gamma}_{\hk}(\lab, u_1, u_2, e)$;
-			\item[]\textbf{$\estep{7}$}: $v\gets (cd^\alpha)^r$;
+			\item[]\textbf{$\estep{2}$}: $u_1 := g_1^r$;
+			\item[]\textbf{$\estep{3}$}: $u_2 := g_2^r$;
+			\item[]\textbf{$\estep{4}$}: $e' := h^r$;
+			\item[]\textbf{$\estep{5}$}: $e := e'\cdot m$;
+			\item[]\textbf{$\estep{6}$}: $\alpha:=\mathsf{HF}^{\lambda,\Gamma}_{\hk}(\lab, u_1, u_2, e)$;
+			\item[]\textbf{$\estep{7}$}: $v := (cd^\alpha)^r$;
 		\end{itemize}
-		and output the ciphertext $\psi = (u_1, u_2, e, v)$.
+		and output the ciphertext $\psi := (u_1, u_2, e, v)$.
 		
 		\vspace{4mm}
 		
-		\textbf{Decryption:} Given $1^\lambda$ for $\lambda\in\mathbb{Z}_{\geq 0}$, a secret key $$\SK=(\Gamma, \hk, x_1,x_2,y_1,y_2,z_1,z_2)\in[\mathcal{G}_\lambda]\times[\mathsf{HF.Keyspace}_{\lambda,\Gamma}]\times\mathbb{Z}_q^{6},$$
+		\textbf{Decryption:} Given a secret key $$\SK=(\Gamma, \hk, x_1,x_2,y_1,y_2,z_1,z_2)\in[\mathcal{G}_\lambda]\times[\mathsf{HF.Keyspace}_{\lambda,\Gamma}]\times\mathbb{Z}_q^{6},$$
 		along with a ciphertext $\psi$ and a label $\lab$, do the following.
 		
 		\begin{itemize}
 			\itemsep=0em
 			\item[]\textbf{$\dstep{1}$}: Parse $\psi$ as a $4$-tuple $(u_1,u_2,e,v)\in\G^4$, output $\reject$ and halt if $\psi$ is not of this form.
-			\item[]\textbf{$\dstep{2}$}: Test if $u_1, u_2$ and $e$ belong to $\G$; output $\reject$ and halt if this is not the case.
-			\item[]\textbf{$\dstep{3}$}: Compute $v'\gets\mathsf{HF}^{\lambda,\Gamma}_{\hk}(\lab,u_1,u_2,e)$.
-			\item[]\textbf{$\dstep{4}$}: Test if $v = u_1^{x_1+y_1\alpha}u_2^{x_2+y_2\alpha};$ output $\reject$ and halt if this is not the case.
-			\item[]\textbf{$\dstep{5}$}: Compute $e' = u_1^{z_1}u_2^{z_2}$.
-			\item[]\textbf{$\dstep{6}$}: Output $m\gets e/e'$.
+			\item[]\textbf{$\dstep{2}$}: Test if $u_1, u_2, e \in \G$; output $\reject$ and halt if this is not the case.
+			\item[]\textbf{$\dstep{3}$}: Compute $v':=\mathsf{HF}^{\lambda,\Gamma}_{\hk}(\lab,u_1,u_2,e)$.
+			\item[]\textbf{$\dstep{4}$}: Test if $v = u_1^{x_1+y_1\alpha}u_2^{x_2+y_2\alpha}$; output $\reject$ and halt if this is not the case.
+			\item[]\textbf{$\dstep{5}$}: Compute $e' := u_1^{z_1}u_2^{z_2}$.
+			\item[]\textbf{$\dstep{6}$}: Output $m := e/e'$.
 		\end{itemize}
 	\end{framed}
 	\caption{The Cramer--Shoup Encryption Scheme with Labels.}
 	\label{fig:cs03}
 	\end{figure}
 
-We provide a formal description of the scheme in \cref{fig:cs03}. Apart from the CCA security of the scheme, we rely on a modified variant of security we term \textit{delayed-reveal-CCA} security, in which the adversary is revealed certain (potentially sensitive) information \textit{after} all decryption queries have been made. This modified security property is crucial to our security proof. We postpone discussion of DR-CCA security to \cref{appendix-a}.
+We provide a formal description of the scheme in \cref{fig:cs03}. Apart from the (standard) CCA-security of the scheme, we rely on a stronger variant of security we term \textit{delayed-reveal-CCA-security (DR-CCA-security)}, in which the adversary is revealed certain (potentially sensitive) information \textit{after} all decryption queries have been made. This modified security property is crucial to our security proof. We postpone discussion of DR-CCA security to \cref{appendix-a}.
 
 \subsection{UC-PAKE}
 	
