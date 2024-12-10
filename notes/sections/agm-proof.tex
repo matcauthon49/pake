@@ -181,13 +181,13 @@ Since $\msg{1}^*$ is honestly generated, $\msg{1}^* = \msg{1}$. By the definitio
 	It is clear that $\red$ simulates $\game_5$ if the returned ciphertext $\psi^{*}$ is an encryption of $\pw_\server$, while $\red$ simulates $\game_6$ if the returned ciphertext is an encryption of $g^{N+1}$. It follows that $$|\Pr[Z_5]-\Pr[Z_6]|\leq\drcca_{\adv}(\lambda)\leq \negl(\lambda).\eqno\qedhere$$ 
 \end{proof}
 
-\textbf{Game $\game_7$.} In this game the challenger deals with incoming message $\msg{2}^{*}$. If $\msg{2}^{*}$ is honestly generated, then the challenger outputs $\sk_\user \rgets \G$.
+\textbf{Game $\game_7$.} In this game the challenger deals with incoming message $\msg{2}^{*}$. If $\msg{2}^{*}$ is adversarially generated and invalid, then the challenger outputs $\sk_\user \rgets \G$.
 
-The proof of indistinguishability of this game is closely related to that of game $\game_4$. It is true here that either $F^{\chi_1+\beta\zeta_1}G^{\chi_2+\beta\zeta_2}\neq J$ or $I/\pw_\user\neq F^\kappa$. \xjy{I don't think this is the case: what if the adversary is passive and $\pw_\user = \pw_\server$?} A linear family similar to \cref{eq:linear} follows, and the proof of linear independence is also nearly identical. We can conclude that the session key is uniform in $\game_6$, and equivalence follows immediately: $$\Pr[Z_6]=\Pr[Z_7].$$
+The proof of indistinguishability of this game is closely related to that of game $\game_4$. Note that here either $F^{\chi_1+\beta\zeta_1}G^{\chi_2+\beta\zeta_2}\neq J$ or $I/\pw_\user\neq F^\kappa$. A linear system similar to \cref{eq:linear} follows, and the proof of linear independence is also nearly identical. We can conclude that the session key is uniform in $\game_6$, and equivalence follows immediately: $$\Pr[Z_6]=\Pr[Z_7].$$
 
-\textbf{Game $\game_8$.} In this game the challenger deals with incoming message $\msg{2}^{*}$. If $\msg{2}^{*}$ is adversarially generated and invalid, then the challenger outputs $\sk_\user \rgets \G$.
+\textbf{Game $\game_8$.} In this game the challenger again deals with incoming message $\msg{2}^{*}$. If $\msg{2}^{*}$ is honestly generated, then the challenger outputs $\sk_\user \rgets \G$.
 
-Note that it is true here as well that either $F^{\chi_1+\beta\zeta_1}G^{\chi_2+\beta\zeta_2}\neq J$ or $I/\pw_\user\neq F^\kappa$. The argument is identical to $\game_7$, \xjy{the argument in $\game_7$ needs to change, so probably cannot say ``identical to $\game_7$'' here} and we get $$\Pr[Z_7]=\Pr[Z_8].$$
+Note that in game $\game_6$ $I$ is set to $h^{r_2} \cdot g^{N+1} = g^{r_2\kappa} \cdot g^{N+1} = F^\kappa \cdot g^{N+1}$, so if $\msg{2}^*$ is honestly generated, it is guaranteed that $I/\pw_\user\neq F^\kappa$. Then the argument is identical to $\game_7$, and we get $$\Pr[Z_7]=\Pr[Z_8].$$
 
 \textbf{Game $\game_9$.} In this game the challenger modifies the client's response to the opening $\newsession$ message. It computes $C:=h^{r}g_1^{N+1}$, similar to how it does in game $\game_6$, encrypting a ``dummy'' password not in the dictionary. 
 
@@ -196,7 +196,7 @@ Note that it is true here as well that either $F^{\chi_1+\beta\zeta_1}G^{\chi_2+
 \end{lemma}
 
 \begin{proof}
-	Like the proof of $\game_5$, we will show that any environment $\mathcal{Z}$ which can distinguish between the two games can be used to build an reduction which breaks the DR-CCA-security of Cramer--Shoup with labels.
+	Like the proof of $\game_6$, we will show that any environment $\mathcal{Z}$ which can distinguish between the two games can be used to build an reduction which breaks the DR-CCA-security of Cramer--Shoup with labels.
 	
 	The description of the adversary $\red$ is as follows. $\red$ begins by querying the key generation oracle and receiving the public key $\PK = (\Gamma,\hk,g_1,g_2,c,d,h)$. It sets the $\crs = (\Gamma,g_1,g_2,h,c,d,\hk)$ and begins a simulation for the challenger and a dummy adversary. This simulation proceeds as in $\game_7$, with the following difference:
 	
