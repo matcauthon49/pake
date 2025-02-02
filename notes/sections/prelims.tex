@@ -15,7 +15,7 @@ Let $\mathcal{G}$ be as above. For any Probabilistic Polynomial-Time (PPT) disti
 \end{equation*}
 and define the DSDH advantage of $\adv$ as
 \begin{equation*}
-	\advsdh_{\mathcal{G},\adv}(\lambda | \Gamma) = \left|\Pr[\adv(g^x,g^{x^2}) = 1 : x\rgets\Z_q] - \Pr[\adv(g^x,g^y) = 1 : x,y\rgets\Z_q]\right|
+	\advsdh_{\mathcal{G},\adv}(\lambda | \Gamma) = \left|\Pr[\adv(g^x,g^{x^2}) = 1 : x\rgets\Z_q] - \Pr[\adv(g^x,g^y) = 1 : x,y\rgets\Z_q]\right|.
 \end{equation*}
 The DDH (resp. DSDH) assumption for $\mathcal{G}$ states that for every PPT distinguisher $\adv$, there exists some negligible function $\negl$ such that for all $\lambda\in\Z_{> 0}$, $\advddh_{\mathcal{G},\adv}(\lambda | \Gamma)\leq\negl(\lambda)$ (resp. $\advsdh_{\mathcal{G},\adv}(\lambda | \Gamma)\leq\negl(\lambda)$).
 
@@ -34,7 +34,7 @@ Suppose $X = g^x$. If $Y = g^{x^2}$, then $\adv_\mathsf{DDH}$'s input is $(g^x,g
 \end{proof}
 
 \begin{remark}
-Bao, Deng, and Zhu \cite[Section~3.2]{ICICS:BaoDenZhu03} give an alternative proof of \cref{lem:dsdh}, where $\adv_\mathsf{DSDH}$ samples random $r,s\rgets\Z_q$ and runs $\adv_\mathsf{DDH}$ on $(X^r,X^s,Y^{rs})$ --- that is, the first two group elements are both randomized. In fact it is sufficient to randomize only one of them.
+Bao, Deng and Zhu \cite[Section~3.2]{ICICS:BaoDenZhu03} give an alternative proof of \cref{lem:dsdh}, where $\adv_\mathsf{DSDH}$ samples random $r,s\rgets\Z_q$ and runs $\adv_\mathsf{DDH}$ on $(X^r,X^s,Y^{rs})$ --- that is, the first two group elements are both randomized. In fact it is sufficient to randomize only one of them, making the reduction slightly more efficient.
 \end{remark}
 
 %\subsubsection{The CDH Assumption}
@@ -84,7 +84,7 @@ Bao, Deng, and Zhu \cite[Section~3.2]{ICICS:BaoDenZhu03} give an alternative pro
 	\begin{itemize}
 		\item The key generation algorithm $\keygen$ takes as input the security parameter $1^\secpar$ and outputs a key pair $(\VK,\SK)$.
 		\item The signing algorithm $\sign$ takes as input $\SK$ and a message $m$ and returns a signature $\sigma$, denoted as $\sigma\gets\sign_\SK(m)$.
-		\item The verification algorithm $\verify$ takes as input a verification key $\VK$, a message $m$, and a signature $\sigma$ and returns a bit $b$, denoted as $b := \verify_\VK(m,\sigma)$.
+		\item The (deterministic) verification algorithm $\verify$ takes as input a verification key $\VK$, a message $m$, and a signature $\sigma$ and returns a bit $b$, denoted as $b := \verify_\VK(m,\sigma)$.
 	\end{itemize}
 	We require the scheme to satisfy the following properties:
 	\begin{itemize}
